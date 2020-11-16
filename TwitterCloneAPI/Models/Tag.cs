@@ -7,7 +7,7 @@ namespace TwitterCloneAPI.Models
 {
     public class Tag
     {
-        private int tagid;
+        private int id;
         private int postid;
         private string tagtext;
 
@@ -16,20 +16,20 @@ namespace TwitterCloneAPI.Models
 
         }
 
-        public Tag(int tagid, int postid, string tagtext)
+        public Tag(int id, int postid, string tagtext)
         {
-            this.tagid = tagid;
+            this.id = id;
             this.postid = postid;
             this.tagtext = tagtext;
         }
 
-        public int TagID
+        public int Id
         {
-            get { return this.tagid; }
-            set { this.tagid = value; }
+            get { return this.id; }
+            set { this.id = value; }
         }
 
-        public int PostID
+        public int PostId
         {
             get { return this.postid; }
             set { this.postid = value; }

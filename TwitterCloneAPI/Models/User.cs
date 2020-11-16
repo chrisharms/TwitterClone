@@ -7,7 +7,7 @@ namespace TwitterCloneAPI.Models
 {
     public class User
     {
-        private int userid;
+        private string username;
         private string firstname;
         private string lastname;
         private string password;
@@ -15,18 +15,18 @@ namespace TwitterCloneAPI.Models
         private string homeaddress;
         private string billingaddress;
         private string emailaddress;
-        private int phone;
-        private string secretquestion;
-        private string secretanswer;
+        private string phone;
+        private int secretquestions;
+        private string secretanswers;
 
         public User()
         {
 
         }
 
-        public User(int userid, string firstname, string lastname, string password, string profileimage, string homeaddress, string billingaddress, string emailaddress, int phone, string secretquestion, string secretanswer)
+        public User(string username, string firstname, string lastname, string password, string profileimage, string homeaddress, string billingaddress, string emailaddress, string phone, int secretquestions, string secretanswers)
         {
-            this.userid = userid;
+            this.username = username;
             this.firstname = firstname;
             this.lastname = lastname;
             this.password = password;
@@ -35,14 +35,14 @@ namespace TwitterCloneAPI.Models
             this.billingaddress = billingaddress;
             this.emailaddress = emailaddress;
             this.phone = phone;
-            this.secretanswer = secretanswer;
-            this.secretquestion = secretquestion;
+            this.secretanswers = secretanswers;
+            this.secretquestions = secretquestions;
         }
 
-        public int UserID
+        public string Username
         {
-            get { return this.userid; }
-            set { this.userid = value; }
+            get { return this.username; }
+            set { this.username = value; }
         }
         public string FirstName
         {
@@ -79,20 +79,20 @@ namespace TwitterCloneAPI.Models
             get { return this.emailaddress; }
             set { this.emailaddress = value; }
         }
-        public int Phone
+        public string Phone
         {
             get { return this.phone; }
             set { this.phone = value; }
         }
-        public string SecretQuestion
+        public int SecretQuestions
         {
-            get { return this.secretquestion; }
-            set { this.secretquestion = value; }
+            get { return this.secretquestions; }
+            set { this.secretquestions = value; }
         }
-        public string SecretAnswer
+        public string SecretAnswers
         {
-            get { return this.secretanswer; }
-            set { this.secretanswer = value; }
+            get { return this.secretanswers; }
+            set { this.secretanswers = value; }
         }
     }
 }

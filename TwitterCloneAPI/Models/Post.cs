@@ -7,28 +7,28 @@ namespace TwitterCloneAPI.Models
 {
     public class Post
     {
-        private int postid;
+        private int id;
         private DateTime postdate;
         private string posttext;
-        private string postimage;
+        private string postphoto;
 
         public Post()
         {
 
         }
 
-        public Post(int postid, DateTime postdate, string posttext, string postimage)
+        public Post(int id, DateTime postdate, string posttext, string postphoto)
         {
-            this.postid = postid;
+            this.id = id;
             this.posttext = posttext;
             this.postdate = postdate;
-            this.postimage = postimage;
+            this.postphoto = postphoto;
         }
        
-        public int PostID
+        public int Id
         {
-            get { return this.postid; }
-            set { this.postid = value; }
+            get { return this.id; }
+            set { this.id = value; }
         }
         public DateTime PostDate
         {
@@ -40,10 +40,10 @@ namespace TwitterCloneAPI.Models
             get { return this.posttext; }
             set { this.posttext = value; }
         }
-        public string PostImage
+        public string PostPhoto
         {
-            get { return this.postimage; }
-            set { this.postimage = value; }
+            get { return this.postphoto; }
+            set { this.postphoto = value; }
         }
     }
 }

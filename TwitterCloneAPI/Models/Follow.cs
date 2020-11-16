@@ -7,8 +7,8 @@ namespace TwitterCloneAPI.Models
 {
     public class Follow
     {
-        private int userid;
-        private int followuserid;
+        private string username;
+        private string followusername;
         private DateTime followdate;
 
         public Follow()
@@ -16,22 +16,22 @@ namespace TwitterCloneAPI.Models
 
         }
 
-        public Follow(int userid, int followuserid, DateTime followdate)
+        public Follow(string username, string followusername, DateTime followdate)
         {
-            this.userid = userid;
+            this.username = username;
             this.followdate = followdate;
-            this.followuserid = followuserid;
+            this.followusername = followusername;
         }
 
-        public int UserID
+        public string Username
         {
-            get { return this.userid; }
-            set { this.userid = value; }
+            get { return this.username; }
+            set { this.username = value; }
         }
-        public int FollowUserID
+        public string FollowUsername
         {
-            get { return this.followuserid; }
-            set { this.followuserid = value; }
+            get { return this.followusername; }
+            set { this.followusername = value; }
         }
         public DateTime FollowDate
         {
