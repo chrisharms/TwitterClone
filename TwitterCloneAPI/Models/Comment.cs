@@ -17,12 +17,12 @@ namespace TwitterCloneAPI.Models
 
         }
 
-        public Comment(int id, int commentUsername, int commentPostId, string commenTText)
+        public Comment(int id, int commentUsername, int commentPostId, string commentText)
         {
             Id = id;
             CommentUsername = commentUsername;
             CommentPostId = commentPostId;
-            CommentText = commenTText;
+            CommentText = commentText;
         }
 
     }
