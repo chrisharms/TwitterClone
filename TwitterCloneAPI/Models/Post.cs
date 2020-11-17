@@ -7,43 +7,25 @@ namespace TwitterCloneAPI.Models
 {
     public class Post
     {
-        private int id;
-        private DateTime postdate;
-        private string posttext;
-        private string postphoto;
+        public int Id { get; set; }
+        public string PostDate { get; set; }
+        public string PostText { get; set; }
+        public string PostPhoto { get; set; }
+        public string Username { get; set; }
 
         public Post()
         {
 
         }
 
-        public Post(int id, DateTime postdate, string posttext, string postphoto)
+        public Post(int id, string postdate, string posttext, string postphoto, string username)
         {
-            this.id = id;
-            this.posttext = posttext;
-            this.postdate = postdate;
-            this.postphoto = postphoto;
+            Id = id;
+            PostText = posttext;
+            PostDate = postdate;
+            PostPhoto = postphoto;
+            Username = username;
         }
        
-        public int Id
-        {
-            get { return this.id; }
-            set { this.id = value; }
-        }
-        public DateTime PostDate
-        {
-            get { return this.postdate; }
-            set { this.postdate = value; }
-        }
-        public string PostText
-        {
-            get { return this.posttext; }
-            set { this.posttext = value; }
-        }
-        public string PostPhoto
-        {
-            get { return this.postphoto; }
-            set { this.postphoto = value; }
-        }
     }
 }

@@ -7,43 +7,23 @@ namespace TwitterCloneAPI.Models
 {
     public class Comment
     {
-        private int id;
-        private int commentpostid;
-        private int commentparent;
-        private string commenttext;
+        public int Id;
+        public int CommentUsername;
+        public int CommentPostId;
+        public string CommentText;
 
         public Comment()
         {
 
         }
 
-        public Comment(int id, int commentpostid, int commentparent, string commenttext)
+        public Comment(int id, int commentUsername, int commentPostId, string commenTText)
         {
-            this.id = id;
-            this.commentpostid = commentpostid;
-            this.commentparent = commentparent;
-            this.commenttext = commenttext;
+            Id = id;
+            CommentUsername = commentUsername;
+            CommentPostId = commentPostId;
+            CommentText = commenTText;
         }
 
-        public int Id
-        {
-            get { return this.id; }
-            set { this.id = value; }
-        }
-        public int CommentPostId
-        {
-            get { return this.commentpostid; }
-            set { this.commentpostid = value; }
-        }
-        public int CommentParent
-        {
-            get { return this.commentparent; }
-            set { this.commentparent = value; }
-        }
-        public string CommentText
-        {
-            get { return this.commenttext; }
-            set { this.commenttext = value; }
-        }
     }
 }

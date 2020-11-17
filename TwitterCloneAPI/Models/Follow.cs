@@ -7,36 +7,21 @@ namespace TwitterCloneAPI.Models
 {
     public class Follow
     {
-        private string username;
-        private string followusername;
-        private DateTime followdate;
+        public string Username { get; set; }
+        public string FollowUsername { get; set; }
+        public string FollowDate { get; set; }
 
         public Follow()
         {
 
         }
 
-        public Follow(string username, string followusername, DateTime followdate)
+        public Follow(string username, string followusername, string followdate)
         {
-            this.username = username;
-            this.followdate = followdate;
-            this.followusername = followusername;
+            Username = username;
+            FollowDate = followdate;
+            FollowUsername = followusername;
         }
 
-        public string Username
-        {
-            get { return this.username; }
-            set { this.username = value; }
-        }
-        public string FollowUsername
-        {
-            get { return this.followusername; }
-            set { this.followusername = value; }
-        }
-        public DateTime FollowDate
-        {
-            get { return this.followdate; }
-            set { this.followdate = value; }
-        }
     }
 }
