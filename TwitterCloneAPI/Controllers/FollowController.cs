@@ -4,12 +4,68 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TwitterCloneAPI.Models;
+using TwitterClassLibrary;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace TwitterCloneAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/FollowController")]
 
     public class FollowController : Controller
     {
+        [HttpGet("GetFollowsByUser/{Username}")]
+        public List<Follow> GetFollows(string Username)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_GetFollowsByUser";
+            cmd.Parameters.AddWithValue("@Username", Username);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            DataTable follows = ds.Tables[0];
+            List<Follow> followList = new List<Follow>();
+            for (int i = 0; i < follows.Rows.Count; i++)
+            {
+                Follow follow = new Follow();
+                follow.Username = follows.Rows[i]["Username"].ToString();
+                follow.FollowUsername = follows.Rows[i]["FollowUsername"].ToString();
+                follow.FollowDate = follows.Rows[i]["FollowDate"].ToString();
+                followList.Add(follow);
+            }
+
+            return followList;
+        }
+
+        [HttpPost("CreateFollow")]
+        public int CreateFollow([FromBody] Follow follow)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_CreateFollow";
+            cmd.Parameters.AddWithValue("@Username", follow.Username);
+            cmd.Parameters.AddWithValue("@FollowUsername", follow.FollowUsername);
+            cmd.Parameters.AddWithValue("@FollowDate", follow.FollowDate);
+
+            int count = db.DoUpdateUsingCmdObj(cmd);
+            return count;
+        }
+
+        [HttpDelete("DeleteFollow/{Username}/{FollowUsername}")]
+        public int DeleteFollow(string Username, string FollowUsername)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_DeleteFollow";
+            cmd.Parameters.AddWithValue("@Username", Username);
+            cmd.Parameters.AddWithValue("@FollowUsername", FollowUsername);
+
+            int count = db.DoUpdateUsingCmdObj(cmd);
+            return count;
+        }
     }
 }
