@@ -15,6 +15,7 @@ namespace TwitterCloneAPI.Controllers
 
     public class FollowController : Controller
     {
+
         [HttpGet("GetFollowsByUser/{Username}")]
         public List<Follow> GetFollows(string Username)
         {
@@ -37,6 +38,30 @@ namespace TwitterCloneAPI.Controllers
             }
 
             return followList;
+        }
+
+        [HttpGet("GetUserFollowers/{Username}")]
+        public List<Follow> GetFollowers(string Username)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_GetUserFollowers";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Username", Username);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            DataTable followers = ds.Tables[0];
+            List<Follow> followerList = new List<Follow>();
+            for (int i = 0; i < followers.Rows.Count; i++)
+            {
+                Follow follower = new Follow();
+                follower.Username = followers.Rows[i]["Username"].ToString();
+                follower.FollowUsername = followers.Rows[i]["FollowUsername"].ToString();
+                follower.FollowDate = followers.Rows[i]["FollowDate"].ToString();
+                followerList.Add(follower);
+            }
+
+            return followerList;
         }
 
         [HttpPost("CreateFollow")]
