@@ -1,0 +1,12 @@
+﻿body {
+}
+@media screen and (min-width: 600px) {
+    #divLogin {
+        width: 500px;
+    }
+    #divRegister {
+        width: 500px;
+    }
+
+}
+
