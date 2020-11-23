@@ -4,10 +4,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Utilities
+
+namespace TwitterClassLibrary   
 {
     public class DBObjCreator
     {
@@ -67,6 +66,54 @@ namespace Utilities
 
                 DataTable dt = dbc.GetDataSetUsingCmdObj(cmd).Tables[0];
                 return dt.Rows[0].ItemArray;
+            }
+            catch (Exception e)
+            {
+                ex = e;
+                return null;
+            }
+        }
+
+
+        public static List<object[]> ReadDBObjs(string commandName, ref Exception ex, string key = null, string value = null, List<Type> filterType = null)
+        {
+            List<object[]> records = new List<object[]>();
+            try
+            {
+                if (filterType != null && filterType.Count != 1)
+                {
+                    return null;
+                }
+                else if (filterType != null)
+                {
+                    Convert.ChangeType(value, filterType[0]);
+                }
+
+                DBConnect dbc = new DBConnect();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = commandName;
+                //Could use a dictionary<string, string> and iterate over the key collection if we wanted to allow multiple filters(input params)
+                if (key != null && value != null)
+                {
+                    SqlParameter inputParam = new SqlParameter($@"{key}", value)
+                    {
+                        Direction = ParameterDirection.Input
+                    };
+                    cmd.Parameters.Add(inputParam);
+                }
+                else if ((key != null && value == null) || (key == null && value != null))
+                {
+                    return null;
+                }
+
+                DataTable dt = dbc.GetDataSetUsingCmdObj(cmd).Tables[0];
+                foreach (DataRow row in dt.AsEnumerable())
+                {
+                    records.Add(row.ItemArray);
+                }
+
+                return records;
             }
             catch (Exception e)
             {
