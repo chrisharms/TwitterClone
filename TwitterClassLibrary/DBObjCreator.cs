@@ -10,6 +10,14 @@ namespace TwitterClassLibrary
 {
     public class DBObjCreator
     {
+        /// <summary>
+        /// Create an object of any type as long as the Objects attributes
+        /// match up to its DB representation(Names of fields/Attributes must match exactly)
+        /// </summary>
+        /// <typeparam name="T">The type of the object you want to convert a record to</typeparam>
+        /// <param name="rowData">The object array representing the DB row</param>
+        /// <param name="t">The type of the object to convert to</param>
+        /// <returns>An object of Type t</returns>
         public static T CreateObj<T>(object[] rowData, Type t)
         {
             try
@@ -25,87 +33,22 @@ namespace TwitterClassLibrary
                 return (T)Convert.ChangeType(new object(), typeof(T));
             }
         }
+
         /// <summary>
-        /// Run a DB Command to retrieve data from the database. 
-        /// Made for use with DBObjCreator.CreatObj() method
+        /// Retrieve all records returned by a given SQL stored procedure command
         /// </summary>
-        /// <param name="commandName"></param>
-        /// <param name="key">Optional key, this is the field to use in a where statement</param>
-        /// <param name="value">Optional value, this is the value to use for the field in the where statement. If you have a key, you must have a value.</param>
-        /// <returns>Returns an object array of the first row that matches</returns>
-        public static object[] ReadDBObj(string commandName, ref Exception ex, string key = null, string value = null, List<Type> filterType = null)
-        {
-            try
-            {
-                if (filterType != null && filterType.Count != 1)
-                {
-                    return null;
-                }
-                else if(filterType != null)
-                {
-                    Convert.ChangeType(value, filterType[0]);
-                }
-
-                DBConnect dbc = new DBConnect();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = commandName;
-                //Could use a dictionary<string, string> and iterate over the key collection if we wanted to allow multiple filters(input params)
-                if (key != null && value != null)
-                {
-                    SqlParameter inputParam = new SqlParameter($@"{key}", value)
-                    {
-                        Direction = ParameterDirection.Input
-                    };
-                    cmd.Parameters.Add(inputParam);
-                }
-                else if ((key != null && value == null) || (key == null && value != null))
-                {
-                    return null;
-                }
-
-                DataTable dt = dbc.GetDataSetUsingCmdObj(cmd).Tables[0];
-                return dt.Rows[0].ItemArray;
-            }
-            catch (Exception e)
-            {
-                ex = e;
-                return null;
-            }
-        }
-
-
-        public static List<object[]> ReadDBObjs(string commandName, ref Exception ex, string key = null, string value = null, List<Type> filterType = null)
+        /// <param name="commandName">The name of the command to run</param>
+        /// <param name="ex">An exception reference for error handling</param>
+        /// <returns>A list of records in the form of object arrays</returns>
+        public static List<object[]> ReadDBObjs(string commandName, ref Exception ex)
         {
             List<object[]> records = new List<object[]>();
             try
             {
-                if (filterType != null && filterType.Count != 1)
-                {
-                    return null;
-                }
-                else if (filterType != null)
-                {
-                    Convert.ChangeType(value, filterType[0]);
-                }
-
                 DBConnect dbc = new DBConnect();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = commandName;
-                //Could use a dictionary<string, string> and iterate over the key collection if we wanted to allow multiple filters(input params)
-                if (key != null && value != null)
-                {
-                    SqlParameter inputParam = new SqlParameter($@"{key}", value)
-                    {
-                        Direction = ParameterDirection.Input
-                    };
-                    cmd.Parameters.Add(inputParam);
-                }
-                else if ((key != null && value == null) || (key == null && value != null))
-                {
-                    return null;
-                }
 
                 DataTable dt = dbc.GetDataSetUsingCmdObj(cmd).Tables[0];
                 foreach (DataRow row in dt.AsEnumerable())
@@ -120,6 +63,58 @@ namespace TwitterClassLibrary
                 ex = e;
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Retrieve all records returned by a given SQL stored procedure command that uses a where clause
+        /// </summary>
+        /// <param name="commandName">The name of the command to run</param>
+        /// <param name="ex">An exception reference for error handling</param>
+        /// <param name="filters">A list of tuples containing the field to use for a where clause, the vaue to use for the field, and the type of given value/field.</param>
+        /// <returns>Returns a list of records from the db in the form of an object array.</returns>
+        public static List<object[]> ReadDBObjsWithWhere(string commandName, ref Exception ex, List<(string field, dynamic value, Type type)> filters)
+        {
+            List<object[]> records = new List<object[]>();
+            try
+            {
+                DBConnect dbc = new DBConnect();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = commandName;
+
+                foreach ((string field, dynamic value, Type type) filter in filters)
+                {
+                    if(string.IsNullOrEmpty(filter.field) || filter.value.GetType() != filter.type)
+                    {
+                        return null;
+                    }
+
+                    SqlParameter inputParam = new SqlParameter($@"{filter.field}", filter.value)
+                    {
+                        Direction = ParameterDirection.Input
+                    };
+                    cmd.Parameters.Add(inputParam);
+                }
+            
+                DataTable dt = dbc.GetDataSetUsingCmdObj(cmd).Tables[0];
+                foreach (DataRow row in dt.AsEnumerable())
+                {
+                    records.Add(row.ItemArray);
+                }
+
+                return records;
+            }
+            catch (Exception e)
+            {
+                ex = e;
+                return null;
+            }
+        }
+
+
+        public static (string field, dynamic value, Type type) CreateFilter(string field, dynamic value, Type t)
+        {
+            return (field, value, t);
         }
     }
 }

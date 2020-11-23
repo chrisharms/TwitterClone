@@ -15,7 +15,9 @@ namespace TwitterCloneAPI.Controllers
         public int GetUsersPostCount(string Username)
         {
             Exception ex = null;
-            List<object[]> records = DBObjCreator.ReadDBObjs("TP_GetUsersPosts", ref ex, "UserName", $"{Username}");
+            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+            filter.Add(DBObjCreator.CreateFilter("Username", $"{Username}", typeof(string)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUsersPosts", ref ex, filter);
             return records.Count;
         }
 
@@ -23,7 +25,9 @@ namespace TwitterCloneAPI.Controllers
         public List<Post> GetUsersPosts(string Username)
         {
             Exception ex = null;
-            List<object[]> records = DBObjCreator.ReadDBObjs("TP_GetUsersPosts", ref ex, "UserName", $"{Username}");
+            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+            filter.Add(DBObjCreator.CreateFilter("Username", $"{Username}", typeof(string)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUsersPosts", ref ex, filter);
             List<Post> posts = new List<Post>();
             records.ForEach(o => posts.Add(DBObjCreator.CreateObj<Post>(o, typeof(Post))));
             return posts;
