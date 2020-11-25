@@ -4,8 +4,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using TwitterClassLibrary.Connection;
 
-namespace TwitterClassLibrary
+namespace TwitterClassLibrary.DBObjWriter
 {
 public class DBObjWriter
 {

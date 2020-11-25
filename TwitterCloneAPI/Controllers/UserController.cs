@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using TwitterClassLibrary;
+using TwitterClassLibrary.Connection;
 using TwitterCloneAPI.Models;
+using TwitterClassLibrary.DBObjCreator;
+using TwitterClassLibrary.DBObjWriter;
 
 namespace TwitterCloneAPI.Controllers
 {

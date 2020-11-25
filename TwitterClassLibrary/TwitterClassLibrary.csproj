@@ -44,21 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comment.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="DBObjCreator.cs" />
     <Compile Include="DBObjWriter.cs" />
-    <Compile Include="Follow.cs" />
+    <Compile Include="Models\Follow.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TwitterClone\TwitterClone.csproj">
-      <Project>{b3ef388f-2e5a-4093-94f4-07f5cdc4e05a}</Project>
-      <Name>TwitterClone</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

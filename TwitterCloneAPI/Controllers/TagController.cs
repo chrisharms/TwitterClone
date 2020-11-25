@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TwitterClassLibrary;
+using TwitterClassLibrary.Connection;
 using System.Data;
 using TwitterCloneAPI.Models;
 using System.Data.SqlClient;
