@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace TwitterCloneAPI.Models
 {
+    [Serializable]
     public class Follow
     {
         public string Username { get; set; }

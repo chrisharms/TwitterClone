@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace TwitterClassLibrary
 {
+    [Serializable]
     public class Follow
     {
         public string Username { get; set; }

@@ -1,4 +1,4 @@
-﻿#lblSecretQuestion {
+﻿#lblPasswordSecretQuestion, #lblUsernameSecretQuestion {
     font-weight: bold;
 }
 @media screen and (min-width: 600px) {

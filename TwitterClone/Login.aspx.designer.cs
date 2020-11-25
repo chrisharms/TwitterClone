@@ -40,6 +40,15 @@ namespace TwitterClone {
         protected global::System.Web.UI.WebControls.Button btnRegister;
         
         /// <summary>
+        /// lnkGuest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkGuest;
+        
+        /// <summary>
         /// divLogin control.
         /// </summary>
         /// <remarks>
@@ -130,6 +139,78 @@ namespace TwitterClone {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForgotUsername;
         
         /// <summary>
+        /// txtVerifyEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtVerifyEmail;
+        
+        /// <summary>
+        /// smlVerifyEmailHelp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl smlVerifyEmailHelp;
+        
+        /// <summary>
+        /// btnVerifyEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVerifyEmail;
+        
+        /// <summary>
+        /// divUsernameSecretQuestion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUsernameSecretQuestion;
+        
+        /// <summary>
+        /// lblUsernameSecretQuestion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUsernameSecretQuestion;
+        
+        /// <summary>
+        /// txtUsernameSecretAnswer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUsernameSecretAnswer;
+        
+        /// <summary>
+        /// smlForgotUsernameHelp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl smlForgotUsernameHelp;
+        
+        /// <summary>
+        /// btnRetrieveUsername control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRetrieveUsername;
+        
+        /// <summary>
         /// divForgotPassword control.
         /// </summary>
         /// <remarks>
@@ -139,13 +220,13 @@ namespace TwitterClone {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForgotPassword;
         
         /// <summary>
-        /// lblSecretQuestion control.
+        /// lblPasswordSecretQuestion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblSecretQuestion;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPasswordSecretQuestion;
         
         /// <summary>
         /// txtSecretAnswer control.

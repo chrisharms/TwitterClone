@@ -23,6 +23,10 @@
                     <asp:Button runat="server" CssClass="btn btn-light btn-lg m-2" Text="Register" ID="btnRegister" OnClick="btnRegister_Click"/>
 
                 </div>
+                <div class="form-group mt-3 text-center">
+                    
+                    <asp:LinkButton runat="server" CssClass="form-text text-info" ID="lnkGuest">Continue as Guest</asp:LinkButton>
+                </div>
             </div>
             <div class="container mt-5" id="divLogin" runat="server" visible="false">
                 <div class="form-group">
@@ -48,12 +52,27 @@
                 </div>
             </div>
             <div class="container mt-5" id="divForgotUsername" runat="server" visible="false">
-
+                <div class="form-group" runat="server">
+                    <label>Verify Email Address</label>
+                    <asp:TextBox runat="server" ID="txtVerifyEmail" CssClass="form-control"></asp:TextBox>
+                    <small id="smlVerifyEmailHelp" runat="server" class="form-text text-danger"></small>
+                    <asp:Button runat="server" CssClass="btn btn-danger mt-3" Text="Verify" ID="btnVerifyEmail" OnClick="btnVerifyEmail_Click"/>
+                </div>
+                <div class="form-group mt-5" id="divUsernameSecretQuestion" runat="server" visible="false">
+                    <label>Please answer the secret question to retrieve your username.</label><br />
+                    <label runat="server" id="lblUsernameSecretQuestion"></label>
+                    <asp:TextBox runat="server" CssClass="form-control" ID="txtUsernameSecretAnswer"></asp:TextBox>
+                    <small id="smlForgotUsernameHelp" runat="server" class="form-text text-danger"></small>
+                    <div class="form-group text-center">
+                        <asp:Button runat="server" CssClass="btn btn-danger m-3" Text="Get My Username" ID="btnRetrieveUsername" OnClick="btnRetrieveUsername_Click"/>
+                    </div>
+                </div>
+                
             </div>
             <div class="container mt-5" id="divForgotPassword" runat="server" visible="false">
                 <div class="form-group">
                     <label>Please answer the secret question to retrieve your password.</label><br />
-                    <label runat="server" id="lblSecretQuestion">What is your name?</label>
+                    <label runat="server" id="lblPasswordSecretQuestion">What is your name?</label>
                     <asp:TextBox runat="server" CssClass="form-control" ID="txtSecretAnswer"></asp:TextBox>
                     <small id="smlForgotPasswordHelp" runat="server" class="form-text text-danger"></small>
                 </div>
@@ -109,19 +128,28 @@
                 </div>
                 <div class="form-group">
                     <label>Security Question 1</label>
-                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSecurity1"></asp:DropDownList>
+                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSecurity1">
+                        <asp:ListItem Value="0">What is your oldest sibling's name?</asp:ListItem>
+                        <asp:ListItem Value="1">What is the name of the elementary school you want to?</asp:ListItem>
+                    </asp:DropDownList>
                     <asp:TextBox runat="server" CssClass="form-control mt-3" ID="txtRegSecurity1"></asp:TextBox>
                     <small id="smlRegQuestion1Help" runat="server" class="form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Security Question 2</label>
-                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSecurity2"></asp:DropDownList>
+                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSecurity2">
+                        <asp:ListItem Value="2">What was the name of your favorite pet?</asp:ListItem>
+                        <asp:ListItem Value="3">What is your favorite color?</asp:ListItem>
+                    </asp:DropDownList>
                     <asp:TextBox runat="server" CssClass="form-control mt-3" ID="txtRegSecurity2"></asp:TextBox>
                     <small id="smlRegQuestion2Help" runat="server" class="form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Security Question 3</label>
-                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSecurity3"></asp:DropDownList>
+                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSecurity3">
+                        <asp:ListItem Value="4">What is the name of your first employer?</asp:ListItem>
+                        <asp:ListItem Value="5">What is the name of your favorite movie?</asp:ListItem>
+                    </asp:DropDownList>
                     <asp:TextBox runat="server" CssClass="form-control mt-3" ID="txtRegSecurity3"></asp:TextBox>
                     <small id="smlRegQuestion3Help" runat="server" class="form-text text-danger"></small>
                 </div>

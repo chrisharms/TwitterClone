@@ -31,6 +31,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="ValidateEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateEmailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="AddUser">
         <s:complexType>
           <s:sequence>
@@ -49,7 +63,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="BillingAddress" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="SecretQuestions" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecretQuestions" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="SecretAnswers" type="s:string" />
         </s:sequence>
       </s:complexType>
@@ -57,6 +71,34 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="AddUserResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserResult" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserByEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserByEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserByEmailResult" type="tns:User" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -74,11 +116,29 @@
   <wsdl:message name="ValidateUsernameSoapOut">
     <wsdl:part name="parameters" element="tns:ValidateUsernameResponse" />
   </wsdl:message>
+  <wsdl:message name="ValidateEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateEmail" />
+  </wsdl:message>
+  <wsdl:message name="ValidateEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateEmailResponse" />
+  </wsdl:message>
   <wsdl:message name="AddUserSoapIn">
     <wsdl:part name="parameters" element="tns:AddUser" />
   </wsdl:message>
   <wsdl:message name="AddUserSoapOut">
     <wsdl:part name="parameters" element="tns:AddUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserByEmail" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserByEmailResponse" />
   </wsdl:message>
   <wsdl:portType name="UserServiceSoap">
     <wsdl:operation name="ValidateUser">
@@ -89,9 +149,21 @@
       <wsdl:input message="tns:ValidateUsernameSoapIn" />
       <wsdl:output message="tns:ValidateUsernameSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="ValidateEmail">
+      <wsdl:input message="tns:ValidateEmailSoapIn" />
+      <wsdl:output message="tns:ValidateEmailSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="AddUser">
       <wsdl:input message="tns:AddUserSoapIn" />
       <wsdl:output message="tns:AddUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input message="tns:GetUserSoapIn" />
+      <wsdl:output message="tns:GetUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <wsdl:input message="tns:GetUserByEmailSoapIn" />
+      <wsdl:output message="tns:GetUserByEmailSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="UserServiceSoap" type="tns:UserServiceSoap">
@@ -114,8 +186,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ValidateEmail">
+      <soap:operation soapAction="http://tempuri.org/ValidateEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AddUser">
       <soap:operation soapAction="http://tempuri.org/AddUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="http://tempuri.org/GetUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <soap:operation soapAction="http://tempuri.org/GetUserByEmail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -144,8 +243,35 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ValidateEmail">
+      <soap12:operation soapAction="http://tempuri.org/ValidateEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AddUser">
       <soap12:operation soapAction="http://tempuri.org/AddUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap12:operation soapAction="http://tempuri.org/GetUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <soap12:operation soapAction="http://tempuri.org/GetUserByEmail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

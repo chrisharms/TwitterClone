@@ -77,10 +77,14 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Verification.aspx" />
     <None Include="Web References\UserService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Web References\UserService\User.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="Web References\UserService\UserService.disco" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -105,6 +109,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Verification.aspx.cs">
+      <DependentUpon>Verification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Verification.aspx.designer.cs">
+      <DependentUpon>Verification.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Web References\UserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -128,6 +139,10 @@
     <ProjectReference Include="..\TwitterClassLibrary\TwitterClassLibrary.csproj">
       <Project>{e30e9457-edaf-43bb-9b34-3ea783b5e749}</Project>
       <Name>TwitterClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwitterCloneSOAP\TwitterCloneSOAP.csproj">
+      <Project>{eb4a4f25-414c-4fa8-b161-c1649e71a2e1}</Project>
+      <Name>TwitterCloneSOAP</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -55,11 +55,86 @@ namespace TwitterCloneSOAP
             }
             return true;
         }
+        [WebMethod]
+        public bool ValidateEmail(string email)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_ValidateEmail";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@EmailAddress", email);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return false;
+            }
+            return true;
+        }
 
         [WebMethod]
         public bool AddUser(User user)
         {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_CreateUser";
+            cmd.Parameters.AddWithValue("@Username", user.Username);
+            cmd.Parameters.AddWithValue("@Password", user.Password);
+            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", user.LastName);
+            cmd.Parameters.AddWithValue("@ProfileImage", user.ProfileImage);
+            cmd.Parameters.AddWithValue("@HomeAddress", user.HomeAddress);
+            cmd.Parameters.AddWithValue("@BillingAddress", user.BillingAddress);
+            cmd.Parameters.AddWithValue("@EmailAddress", user.EmailAddress);
+            cmd.Parameters.AddWithValue("@Phone", user.Phone);
+            cmd.Parameters.AddWithValue("@SecretQuestions", user.SecretQuestions);
+            cmd.Parameters.AddWithValue("@SecretAnswers", user.SecretAnswers);
+
+            int count = db.DoUpdateUsingCmdObj(cmd);
+            if (count > 0)
+            {
+                return true;
+            }
             return false;
+        }
+
+        [WebMethod]
+        public User GetUser(string username)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_GetUser";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Username", username);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            DataRow userRow = ds.Tables[0].Rows[0];
+            User user = new User(userRow["Username"].ToString(), userRow["FirstName"].ToString(), userRow["Lastname"].ToString(), 
+                userRow["Password"].ToString(), userRow["ProfileImage"].ToString(), userRow["HomeAddress"].ToString(), 
+                userRow["BillingAddress"].ToString(), userRow["EmailAddress"].ToString(), userRow["Phone"].ToString(), 
+                userRow["SecretQuestions"].ToString(), userRow["SecretAnswers"].ToString());
+
+            return user;
+        }
+
+        [WebMethod]
+        public User GetUserByEmail(string email)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_GetUserByEmail";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@EmailAddress", email);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            DataRow userRow = ds.Tables[0].Rows[0];
+            User user = new User(userRow["Username"].ToString(), userRow["FirstName"].ToString(), userRow["Lastname"].ToString(),
+                userRow["Password"].ToString(), userRow["ProfileImage"].ToString(), userRow["HomeAddress"].ToString(),
+                userRow["BillingAddress"].ToString(), userRow["EmailAddress"].ToString(), userRow["Phone"].ToString(),
+                userRow["SecretQuestions"].ToString(), userRow["SecretAnswers"].ToString());
+
+            return user;
         }
     }
 }

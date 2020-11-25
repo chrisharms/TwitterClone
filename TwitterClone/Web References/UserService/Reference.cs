@@ -33,7 +33,13 @@ namespace TwitterClone.UserService {
         
         private System.Threading.SendOrPostCallback ValidateUsernameOperationCompleted;
         
+        private System.Threading.SendOrPostCallback ValidateEmailOperationCompleted;
+        
         private System.Threading.SendOrPostCallback AddUserOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetUserOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetUserByEmailOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -80,7 +86,16 @@ namespace TwitterClone.UserService {
         public event ValidateUsernameCompletedEventHandler ValidateUsernameCompleted;
         
         /// <remarks/>
+        public event ValidateEmailCompletedEventHandler ValidateEmailCompleted;
+        
+        /// <remarks/>
         public event AddUserCompletedEventHandler AddUserCompleted;
+        
+        /// <remarks/>
+        public event GetUserCompletedEventHandler GetUserCompleted;
+        
+        /// <remarks/>
+        public event GetUserByEmailCompletedEventHandler GetUserByEmailCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ValidateUser", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -143,6 +158,35 @@ namespace TwitterClone.UserService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ValidateEmail", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool ValidateEmail(string email) {
+            object[] results = this.Invoke("ValidateEmail", new object[] {
+                        email});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ValidateEmailAsync(string email) {
+            this.ValidateEmailAsync(email, null);
+        }
+        
+        /// <remarks/>
+        public void ValidateEmailAsync(string email, object userState) {
+            if ((this.ValidateEmailOperationCompleted == null)) {
+                this.ValidateEmailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnValidateEmailOperationCompleted);
+            }
+            this.InvokeAsync("ValidateEmail", new object[] {
+                        email}, this.ValidateEmailOperationCompleted, userState);
+        }
+        
+        private void OnValidateEmailOperationCompleted(object arg) {
+            if ((this.ValidateEmailCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ValidateEmailCompleted(this, new ValidateEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/AddUser", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public bool AddUser(User user) {
             object[] results = this.Invoke("AddUser", new object[] {
@@ -168,6 +212,64 @@ namespace TwitterClone.UserService {
             if ((this.AddUserCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.AddUserCompleted(this, new AddUserCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetUser", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public User GetUser(string username) {
+            object[] results = this.Invoke("GetUser", new object[] {
+                        username});
+            return ((User)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetUserAsync(string username) {
+            this.GetUserAsync(username, null);
+        }
+        
+        /// <remarks/>
+        public void GetUserAsync(string username, object userState) {
+            if ((this.GetUserOperationCompleted == null)) {
+                this.GetUserOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetUserOperationCompleted);
+            }
+            this.InvokeAsync("GetUser", new object[] {
+                        username}, this.GetUserOperationCompleted, userState);
+        }
+        
+        private void OnGetUserOperationCompleted(object arg) {
+            if ((this.GetUserCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetUserCompleted(this, new GetUserCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetUserByEmail", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public User GetUserByEmail(string email) {
+            object[] results = this.Invoke("GetUserByEmail", new object[] {
+                        email});
+            return ((User)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetUserByEmailAsync(string email) {
+            this.GetUserByEmailAsync(email, null);
+        }
+        
+        /// <remarks/>
+        public void GetUserByEmailAsync(string email, object userState) {
+            if ((this.GetUserByEmailOperationCompleted == null)) {
+                this.GetUserByEmailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetUserByEmailOperationCompleted);
+            }
+            this.InvokeAsync("GetUserByEmail", new object[] {
+                        email}, this.GetUserByEmailOperationCompleted, userState);
+        }
+        
+        private void OnGetUserByEmailOperationCompleted(object arg) {
+            if ((this.GetUserByEmailCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetUserByEmailCompleted(this, new GetUserByEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -216,7 +318,7 @@ namespace TwitterClone.UserService {
         
         private string phoneField;
         
-        private int secretQuestionsField;
+        private string secretQuestionsField;
         
         private string secretAnswersField;
         
@@ -311,7 +413,7 @@ namespace TwitterClone.UserService {
         }
         
         /// <remarks/>
-        public int SecretQuestions {
+        public string SecretQuestions {
             get {
                 return this.secretQuestionsField;
             }
@@ -385,6 +487,32 @@ namespace TwitterClone.UserService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void ValidateEmailCompletedEventHandler(object sender, ValidateEmailCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ValidateEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ValidateEmailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AddUserCompletedEventHandler(object sender, AddUserCompletedEventArgs e);
     
     /// <remarks/>
@@ -405,6 +533,58 @@ namespace TwitterClone.UserService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetUserCompletedEventHandler(object sender, GetUserCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public User Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((User)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetUserByEmailCompletedEventHandler(object sender, GetUserByEmailCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetUserByEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetUserByEmailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public User Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((User)(this.results[0]));
             }
         }
     }

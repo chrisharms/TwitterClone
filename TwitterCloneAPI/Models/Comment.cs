@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace TwitterCloneAPI.Models
 {
+    [Serializable]
     public class Comment
     {
         public int Id;

@@ -11,8 +11,11 @@ namespace TwitterClone
     public partial class Login : System.Web.UI.Page
     {
         string[] securityQuestions = { "What is your oldest sibling's name?",
-            "What is the name of your elementary school?",
-            ""};
+            "What is the name of the elementary school you want to?",
+            "What was the name of your favorite pet?",
+            "What is your favorite color?",
+            "What is the name of your first employer?",
+            "What is the name of your favorite movie?"};
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.Cookies["Username"] != null)
@@ -41,6 +44,37 @@ namespace TwitterClone
 
         protected void lnkForgotPassword_Click(object sender, EventArgs e)
         {
+            string username = txtLogUsername.Text;
+            if (username == "")
+            {
+                smlLogUsernameHelp.InnerText = "Enter your username to retrieve password";
+                return;
+            }
+            else
+            {
+                smlLogUsernameHelp.InnerText = "";
+            }
+
+            UserService.UserService proxy = new UserService.UserService();
+            bool verify = proxy.ValidateUsername(username);
+            if (verify)
+            {
+                smlLogUsernameHelp.InnerText = "Username is not registered";
+                return;
+            }
+
+            UserService.User serviceUser = proxy.GetUser(username);
+            User recoverUser = new User(serviceUser.Username, serviceUser.FirstName, serviceUser.LastName,
+                serviceUser.Password, serviceUser.ProfileImage, serviceUser.HomeAddress, serviceUser.BillingAddress,
+                serviceUser.EmailAddress, serviceUser.Phone, serviceUser.SecretQuestions, serviceUser.SecretAnswers);
+
+            int arrayIndex;
+            int secretQuestion = recoverUser.GetRandomQuestion(out arrayIndex);
+            lblPasswordSecretQuestion.InnerText = securityQuestions[secretQuestion];
+
+            Session["UsernameRetrieve"] = username;
+            Session["RetrievedPassword"] = recoverUser.Password;
+            Session["SecretAnswer"] = recoverUser.GetSecretAnswer(arrayIndex);
             divLogin.Visible = false;
             divForgotPassword.Visible = true;
         }
@@ -111,12 +145,15 @@ namespace TwitterClone
             string emailAddress = txtRegEmail.Text;
             string homeAddress = txtRegHomeAddress.Text;
             string billingAddress = txtRegBillingAddress.Text;
-            int phoneNumber;
+            long phoneNumber;
             string profileImage = txtRegImage.Text;
             string securityQuestion1 = txtRegSecurity1.Text;
             string securityQuestion2 = txtRegSecurity2.Text;
             string securityQuestion3 = txtRegSecurity3.Text;
+            string secretAnswers = securityQuestion1 + "," + securityQuestion2 + "," + securityQuestion3;
+            string secretQuestions = ddlSecurity1.SelectedValue + "," + ddlSecurity2.SelectedValue + "," + ddlSecurity3.SelectedValue;
             bool good = true;
+
             if (username == "")
             {
                 smlRegUsernameHelp.InnerText = "Please enter a username";
@@ -180,7 +217,7 @@ namespace TwitterClone
             {
                 smlRegBillingAddressHelp.InnerText = "";
             }
-            if (!Int32.TryParse(txtRegPhone.Text, out phoneNumber))
+            if (!Int64.TryParse(txtRegPhone.Text, out phoneNumber))
             {
                 smlRegPhoneHelp.InnerText = "Please enter a valid phone number";
                 good = false;
@@ -243,11 +280,42 @@ namespace TwitterClone
                 smlRegUsernameHelp.InnerText = "";
             }
 
-            // FINISH THIS
-            int[] secretquestions = { 1, 2, 3 };
-            string[] secretAnswers = { "test", "test", "test" };
-            User user = new User(username, firstName, lastName, password, profileImage, homeAddress, billingAddress, emailAddress, phoneNumber.ToString(), 1 , secretAnswers.ToString());
+            bool validateEmail = proxy.ValidateEmail(emailAddress);
+            if (!validateEmail)
+            {
+                smlRegEmailHelp.InnerText = "Email is taken, please try again with a new one";
+                return;
+            }
+            else
+            {
+                smlRegEmailHelp.InnerText = "";
+            }
 
+            
+            UserService.User user1 = new UserService.User();
+            user1.Username = username;
+            user1.FirstName = firstName;
+            user1.LastName = lastName;
+            user1.Password = password;
+            user1.EmailAddress = emailAddress;
+            user1.HomeAddress = homeAddress;
+            user1.BillingAddress = billingAddress;
+            user1.Phone = phoneNumber.ToString();
+            user1.ProfileImage = profileImage;
+            user1.SecretQuestions = secretQuestions;
+            user1.SecretAnswers = secretAnswers;
+
+
+            bool addUser = proxy.AddUser(user1);
+            if (!addUser)
+            {
+                smlRegUsernameHelp.InnerText = "User registration failed, try again later";
+                return;
+            }
+            else
+            {
+                smlRegUsernameHelp.InnerText = "";
+            }
 
             Session["Username"] = txtRegUsername.Text;
             if (chkRegCookie.Checked)
@@ -259,7 +327,90 @@ namespace TwitterClone
 
         protected void btnFindPassword_Click(object sender, EventArgs e)
         {
+            string userAnswer = txtSecretAnswer.Text;
+            if (userAnswer == "")
+            {
+                smlForgotPasswordHelp.InnerText = "Please answer the security question";
+                return;
+            }
+            else
+            {
+                smlForgotPasswordHelp.InnerText = "";
+            }
+            
+            if (userAnswer == Session["SecretAnswer"].ToString())
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Recovery Successful! Your Password = " + Session["RetrievedPassword"] + "')", true);
+            }
+            else
+            {
+                smlForgotPasswordHelp.InnerText = "Answer incorrect, try again";
+                return;
+            }
+        }
 
+        protected void btnVerifyEmail_Click(object sender, EventArgs e)
+        {
+            string email = txtVerifyEmail.Text;
+            if (email == "")
+            {
+                smlVerifyEmailHelp.InnerText = "Please enter your email address";
+                return;
+            }
+            else
+            {
+                smlVerifyEmailHelp.InnerText = "";
+            }
+
+            UserService.UserService proxy = new UserService.UserService();
+            bool verifyEmail = proxy.ValidateEmail(email);
+            if (verifyEmail)
+            {
+                smlVerifyEmailHelp.InnerText = "Email does not belong to a profile, try again";
+                return;
+            }
+            else
+            {
+                smlVerifyEmailHelp.InnerText = "";
+            }
+
+            UserService.User serviceUser = proxy.GetUserByEmail(email);
+            User recoverUser = new User(serviceUser.Username, serviceUser.FirstName, serviceUser.LastName,
+                serviceUser.Password, serviceUser.ProfileImage, serviceUser.HomeAddress, serviceUser.BillingAddress,
+                serviceUser.EmailAddress, serviceUser.Phone, serviceUser.SecretQuestions, serviceUser.SecretAnswers);
+
+            int arrayIndex;
+            int secretQuestion = recoverUser.GetRandomQuestion(out arrayIndex);
+            lblUsernameSecretQuestion.InnerText = securityQuestions[secretQuestion];
+
+            Session["UsernameRetrieve"] = recoverUser.Username;
+            Session["SecretAnswer"] = recoverUser.GetSecretAnswer(arrayIndex);
+
+            divUsernameSecretQuestion.Visible = true;
+        }
+
+        protected void btnRetrieveUsername_Click(object sender, EventArgs e)
+        {
+            string userAnswer = txtUsernameSecretAnswer.Text;
+            if (userAnswer == "")
+            {
+                smlForgotUsernameHelp.InnerText = "Please answer the security question";
+                return;
+            }
+            else
+            {
+                smlForgotUsernameHelp.InnerText = "";
+            }
+
+            if (userAnswer == Session["SecretAnswer"].ToString())
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Recovery Successful! Your Username = " + Session["UsernameRetrieve"] + "')", true);
+            }
+            else
+            {
+                smlForgotUsernameHelp.InnerText = "Answer incorrect, please try again";
+                return;
+            }
         }
     }
 }
