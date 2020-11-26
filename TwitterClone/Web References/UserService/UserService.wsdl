@@ -65,6 +65,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="SecretQuestions" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="SecretAnswers" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Verified" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="AddUserResponse">

@@ -19,13 +19,14 @@ namespace TwitterClassLibrary
         public string Phone { get; set; }
         public string SecretQuestions { get; set; }
         public string SecretAnswers { get; set; }
+        public string Verified { get; set; }
 
         public User()
         {
 
         }
 
-        public User(string username, string firstname, string lastname, string password, string profileimage, string homeaddress, string billingaddress, string emailaddress, string phone, string secretquestions, string secretanswers)
+        public User(string username, string firstname, string lastname, string password, string profileimage, string homeaddress, string billingaddress, string emailaddress, string phone, string secretquestions, string secretanswers, string verified)
         {
             Username = username;
             FirstName = firstname;
@@ -38,6 +39,7 @@ namespace TwitterClassLibrary
             Phone = phone;
             SecretAnswers = secretanswers;
             SecretQuestions = secretquestions;
+            Verified = verified;
         }
 
         public int GetRandomQuestion(out int index)

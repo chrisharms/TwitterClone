@@ -113,7 +113,7 @@ namespace TwitterCloneSOAP
             User user = new User(userRow["Username"].ToString(), userRow["FirstName"].ToString(), userRow["Lastname"].ToString(), 
                 userRow["Password"].ToString(), userRow["ProfileImage"].ToString(), userRow["HomeAddress"].ToString(), 
                 userRow["BillingAddress"].ToString(), userRow["EmailAddress"].ToString(), userRow["Phone"].ToString(), 
-                userRow["SecretQuestions"].ToString(), userRow["SecretAnswers"].ToString());
+                userRow["SecretQuestions"].ToString(), userRow["SecretAnswers"].ToString(), userRow["Verified"].ToString());
 
             return user;
         }
@@ -132,7 +132,7 @@ namespace TwitterCloneSOAP
             User user = new User(userRow["Username"].ToString(), userRow["FirstName"].ToString(), userRow["Lastname"].ToString(),
                 userRow["Password"].ToString(), userRow["ProfileImage"].ToString(), userRow["HomeAddress"].ToString(),
                 userRow["BillingAddress"].ToString(), userRow["EmailAddress"].ToString(), userRow["Phone"].ToString(),
-                userRow["SecretQuestions"].ToString(), userRow["SecretAnswers"].ToString());
+                userRow["SecretQuestions"].ToString(), userRow["SecretAnswers"].ToString(), userRow["Verified"].ToString());
 
             return user;
         }

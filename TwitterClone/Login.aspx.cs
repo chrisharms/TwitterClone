@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -66,7 +67,7 @@ namespace TwitterClone
             UserService.User serviceUser = proxy.GetUser(username);
             User recoverUser = new User(serviceUser.Username, serviceUser.FirstName, serviceUser.LastName,
                 serviceUser.Password, serviceUser.ProfileImage, serviceUser.HomeAddress, serviceUser.BillingAddress,
-                serviceUser.EmailAddress, serviceUser.Phone, serviceUser.SecretQuestions, serviceUser.SecretAnswers);
+                serviceUser.EmailAddress, serviceUser.Phone, serviceUser.SecretQuestions, serviceUser.SecretAnswers, serviceUser.Verified);
 
             int arrayIndex;
             int secretQuestion = recoverUser.GetRandomQuestion(out arrayIndex);
@@ -304,6 +305,7 @@ namespace TwitterClone
             user1.ProfileImage = profileImage;
             user1.SecretQuestions = secretQuestions;
             user1.SecretAnswers = secretAnswers;
+            user1.Verified = "false";
 
 
             bool addUser = proxy.AddUser(user1);
@@ -323,6 +325,13 @@ namespace TwitterClone
                 Response.Cookies["Username"].Value = txtRegUsername.Text;
             }
 
+            MailMessage verificationMail = new MailMessage(new MailAddress("tug92197@temple.edu"), new MailAddress(emailAddress));
+            verificationMail.Subject = "Not Twitter: New Account Verification";
+            verificationMail.Body = "http://localhost:62631/Verification.aspx?username=" + username;
+            SmtpClient client = new SmtpClient();
+            client.Host = "smtp.gmail.com";
+            client.Port = 587;
+            client.EnableSsl = true;
         }
 
         protected void btnFindPassword_Click(object sender, EventArgs e)
@@ -377,7 +386,7 @@ namespace TwitterClone
             UserService.User serviceUser = proxy.GetUserByEmail(email);
             User recoverUser = new User(serviceUser.Username, serviceUser.FirstName, serviceUser.LastName,
                 serviceUser.Password, serviceUser.ProfileImage, serviceUser.HomeAddress, serviceUser.BillingAddress,
-                serviceUser.EmailAddress, serviceUser.Phone, serviceUser.SecretQuestions, serviceUser.SecretAnswers);
+                serviceUser.EmailAddress, serviceUser.Phone, serviceUser.SecretQuestions, serviceUser.SecretAnswers, serviceUser.Verified);
 
             int arrayIndex;
             int secretQuestion = recoverUser.GetRandomQuestion(out arrayIndex);
@@ -411,6 +420,12 @@ namespace TwitterClone
                 smlForgotUsernameHelp.InnerText = "Answer incorrect, please try again";
                 return;
             }
+        }
+
+        protected void lnkGuest_Click(object sender, EventArgs e)
+        {
+            Session["Guest"] = "true";
+            Response.Redirect("Home.aspx");
         }
     }
 }

@@ -322,6 +322,8 @@ namespace TwitterClone.UserService {
         
         private string secretAnswersField;
         
+        private string verifiedField;
+        
         /// <remarks/>
         public string Username {
             get {
@@ -429,6 +431,16 @@ namespace TwitterClone.UserService {
             }
             set {
                 this.secretAnswersField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Verified {
+            get {
+                return this.verifiedField;
+            }
+            set {
+                this.verifiedField = value;
             }
         }
     }

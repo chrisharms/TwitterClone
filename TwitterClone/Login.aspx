@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group mt-3 text-center">
                     
-                    <asp:LinkButton runat="server" CssClass="form-text text-info" ID="lnkGuest">Continue as Guest</asp:LinkButton>
+                    <asp:LinkButton runat="server" CssClass="form-text text-info" ID="lnkGuest" OnClick="lnkGuest_Click">Continue as Guest</asp:LinkButton>
                 </div>
             </div>
             <div class="container mt-5" id="divLogin" runat="server" visible="false">
@@ -56,6 +56,9 @@
                     <label>Verify Email Address</label>
                     <asp:TextBox runat="server" ID="txtVerifyEmail" CssClass="form-control"></asp:TextBox>
                     <small id="smlVerifyEmailHelp" runat="server" class="form-text text-danger"></small>
+                    
+                </div>
+                <div class="form-group text-center" runat="server">
                     <asp:Button runat="server" CssClass="btn btn-danger mt-3" Text="Verify" ID="btnVerifyEmail" OnClick="btnVerifyEmail_Click"/>
                 </div>
                 <div class="form-group mt-5" id="divUsernameSecretQuestion" runat="server" visible="false">
