@@ -41,6 +41,10 @@ namespace TwitterClone.UserService {
         
         private System.Threading.SendOrPostCallback GetUserByEmailOperationCompleted;
         
+        private System.Threading.SendOrPostCallback IsUserVerifiedOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UpdateUserVerificationOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -96,6 +100,12 @@ namespace TwitterClone.UserService {
         
         /// <remarks/>
         public event GetUserByEmailCompletedEventHandler GetUserByEmailCompleted;
+        
+        /// <remarks/>
+        public event IsUserVerifiedCompletedEventHandler IsUserVerifiedCompleted;
+        
+        /// <remarks/>
+        public event UpdateUserVerificationCompletedEventHandler UpdateUserVerificationCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ValidateUser", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -270,6 +280,64 @@ namespace TwitterClone.UserService {
             if ((this.GetUserByEmailCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetUserByEmailCompleted(this, new GetUserByEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IsUserVerified", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool IsUserVerified(string username) {
+            object[] results = this.Invoke("IsUserVerified", new object[] {
+                        username});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void IsUserVerifiedAsync(string username) {
+            this.IsUserVerifiedAsync(username, null);
+        }
+        
+        /// <remarks/>
+        public void IsUserVerifiedAsync(string username, object userState) {
+            if ((this.IsUserVerifiedOperationCompleted == null)) {
+                this.IsUserVerifiedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIsUserVerifiedOperationCompleted);
+            }
+            this.InvokeAsync("IsUserVerified", new object[] {
+                        username}, this.IsUserVerifiedOperationCompleted, userState);
+        }
+        
+        private void OnIsUserVerifiedOperationCompleted(object arg) {
+            if ((this.IsUserVerifiedCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.IsUserVerifiedCompleted(this, new IsUserVerifiedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdateUserVerification", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool UpdateUserVerification(string username) {
+            object[] results = this.Invoke("UpdateUserVerification", new object[] {
+                        username});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpdateUserVerificationAsync(string username) {
+            this.UpdateUserVerificationAsync(username, null);
+        }
+        
+        /// <remarks/>
+        public void UpdateUserVerificationAsync(string username, object userState) {
+            if ((this.UpdateUserVerificationOperationCompleted == null)) {
+                this.UpdateUserVerificationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateUserVerificationOperationCompleted);
+            }
+            this.InvokeAsync("UpdateUserVerification", new object[] {
+                        username}, this.UpdateUserVerificationOperationCompleted, userState);
+        }
+        
+        private void OnUpdateUserVerificationOperationCompleted(object arg) {
+            if ((this.UpdateUserVerificationCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdateUserVerificationCompleted(this, new UpdateUserVerificationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -597,6 +665,58 @@ namespace TwitterClone.UserService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((User)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void IsUserVerifiedCompletedEventHandler(object sender, IsUserVerifiedCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class IsUserVerifiedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal IsUserVerifiedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void UpdateUserVerificationCompletedEventHandler(object sender, UpdateUserVerificationCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpdateUserVerificationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpdateUserVerificationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }

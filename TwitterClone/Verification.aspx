@@ -15,9 +15,13 @@
         <div class="container">
                 <div class="jumbotron m-4">
                     <h1>Not Twitter</h1>
-                    <p>You must verify your new account before gaining access to it. Please click the button below to verify that you are creating an account for the specified user.</p>
+                    <p runat="server" id="pEmailVerify">You must verify your new account before gaining access to it. Please click the button below to verify that you are creating an account for the specified user.</p>
+                    <p runat="server" id="pAppVerify">An email was sent to the email address provided for a verification step, please click the verification link in that email to start using your account.</p>
+                    <p runat="server" id="pVerified">You have already verified your account, you can now login to access the application.</p>
                     <h5 runat="server" id="h5Username">Username: </h5>
-                    <asp:Button runat="server" CssClass="btn btn-success mt-4" Text="Verify User"/>
+                    <asp:Button runat="server" CssClass="btn btn-success mt-4" ID="btnVerifyUser" Text="Verify User" OnClick="btnVerifyUser_Click"/>
+                    <asp:Button runat="server" CssClass="btn btn-info mt-4" ID="btnLogout" Text="Logout" OnClick="btnLogout_Click"/>
+                    <asp:Button runat="server" CssClass="btn btn-info mt-4" ID="btnLogin" Text="Login" OnClick="btnLogin_Click"/>
                 </div>
                 
             </div>

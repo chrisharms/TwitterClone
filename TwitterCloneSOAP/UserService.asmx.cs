@@ -136,5 +136,38 @@ namespace TwitterCloneSOAP
 
             return user;
         }
+        [WebMethod]
+        public bool IsUserVerified(string username)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_IsUserVerified";
+            cmd.Parameters.AddWithValue("@Username", username);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        [WebMethod]
+        public bool UpdateUserVerification(string username)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_UpdateUserVerification";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Username", username);
+
+            int count = db.DoUpdateUsingCmdObj(cmd);
+            if (count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

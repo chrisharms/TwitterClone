@@ -11,7 +11,21 @@ namespace TwitterClone
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["Username"] == null && Session["Guest"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+            if (Session["Username"] != null)
+            {
+                string username = Session["Username"].ToString();
+                UserService.UserService proxy = new UserService.UserService();
+                bool verified = proxy.IsUserVerified(username);
+                if (!verified)
+                {
+                    Response.Redirect("Verification.aspx?mail=false");
+                }
+            }
+            
         }
     }
 }

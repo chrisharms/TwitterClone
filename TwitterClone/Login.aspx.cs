@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
@@ -23,6 +24,10 @@ namespace TwitterClone
             {
                 // Username cookie exists, user doesn't need to log in again
                 Session["Username"] = Request.Cookies["Username"].Value;
+                Response.Redirect("Home.aspx");
+            }
+            if (Session["Username"] != null)
+            {
                 Response.Redirect("Home.aspx");
             }
         }
@@ -134,7 +139,17 @@ namespace TwitterClone
                 Response.Cookies["Username"].Value = txtLogUsername.Text;
             }
 
-            Response.Redirect("Home.aspx");
+
+            bool verified = proxy.IsUserVerified(username);
+            if (!verified)
+            {
+                Response.Redirect("Verification.aspx?mail=false");
+            }
+            else
+            {
+                Response.Redirect("Home.aspx");
+            }
+            
         }
 
         protected void btnSubmitRegister_Click(object sender, EventArgs e)
@@ -325,13 +340,21 @@ namespace TwitterClone
                 Response.Cookies["Username"].Value = txtRegUsername.Text;
             }
 
-            MailMessage verificationMail = new MailMessage(new MailAddress("tug92197@temple.edu"), new MailAddress(emailAddress));
+            MailAddress fromAddress = new MailAddress("charms1843@gmail.com", "Not Twitter");
+            MailAddress toAddress = new MailAddress(emailAddress, "New User");
+            MailMessage verificationMail = new MailMessage(fromAddress.Address, toAddress.Address);
             verificationMail.Subject = "Not Twitter: New Account Verification";
-            verificationMail.Body = "http://localhost:62631/Verification.aspx?username=" + username;
+            verificationMail.Body = "Click this link to verify your new account. http://localhost:62631/Verification.aspx?uname=" + username + "&mail=true";
             SmtpClient client = new SmtpClient();
             client.Host = "smtp.gmail.com";
             client.Port = 587;
             client.EnableSsl = true;
+            client.UseDefaultCredentials = false;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Credentials = new NetworkCredential(fromAddress.Address, "christopher625");
+            client.Send(verificationMail);
+
+            Response.Redirect("Verification.aspx?mail=false");
         }
 
         protected void btnFindPassword_Click(object sender, EventArgs e)
