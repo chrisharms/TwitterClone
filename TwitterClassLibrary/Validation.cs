@@ -30,9 +30,9 @@ namespace TwitterClassLibrary.Validation
             return DateTime.TryParse(date, out dt);
         }
 
-        public static bool ValidateInteger(string date, ref int value)
+        public static bool ValidatePositiveInteger(string input, ref int value)
         {
-            return int.TryParse(date, out value) && value > 0;
+            return int.TryParse(input, out value) && value > 0;
         }
     }
 }
