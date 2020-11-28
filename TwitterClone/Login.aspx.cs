@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.UI;
 using TwitterClassLibrary;
+using TwitterClassLibrary.BCrypt;
 
 namespace TwitterClone
 {
@@ -165,6 +168,10 @@ namespace TwitterClone
             string secretAnswers = securityQuestion1 + "," + securityQuestion2 + "," + securityQuestion3;
             string secretQuestions = ddlSecurity1.SelectedValue + "," + ddlSecurity2.SelectedValue + "," + ddlSecurity3.SelectedValue;
             bool good = true;
+
+            MD5CryptoServiceProvider hasher = new MD5CryptoServiceProvider();
+            string addSalt = string.Concat("ummm salty ", password);
+            byte[] hash = hasher.ComputeHash(Encoding.Unicode.GetBytes(addSalt));
 
             if (username == "")
             {
@@ -446,5 +453,21 @@ namespace TwitterClone
             Session["Guest"] = "true";
             Response.Redirect("Home.aspx");
         }
+
+        private static string EncryptPassword(string password)
+        {
+            string mySalt = BCrypt.GenerateSalt();
+            string myHash = BCrypt.HashPassword(password, mySalt);
+            if (BCrypt.CheckPassword(password, myHash))
+                return myHash;
+            else
+                return "";
+        }
+        //Pass this method the users entered plain text and the password stored in the DB
+        private static bool DecryptPassword(string password, string hashedPw)
+        {
+            return BCrypt.CheckPassword(password, hashedPw);
+        }
+
     }
 }
