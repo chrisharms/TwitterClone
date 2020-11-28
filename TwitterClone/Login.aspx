@@ -74,13 +74,22 @@
             </div>
             <div class="container mt-5" id="divForgotPassword" runat="server" visible="false">
                 <div class="form-group">
-                    <label>Please answer the secret question to retrieve your password.</label><br />
+                    <label>Please answer the secret question to update your password.</label><br />
                     <label runat="server" id="lblPasswordSecretQuestion">What is your name?</label>
                     <asp:TextBox runat="server" CssClass="form-control" ID="txtSecretAnswer"></asp:TextBox>
                     <small id="smlForgotPasswordHelp" runat="server" class="form-text text-danger"></small>
                 </div>
                 <div class="form-group text-center">
-                    <asp:Button runat="server" CssClass="btn btn-danger m-3" Text="Get My Password" ID="btnFindPassword" OnClick="btnFindPassword_Click"/>
+                    <asp:Button runat="server" CssClass="btn btn-danger m-3" Text="Verify" ID="btnFindPassword" OnClick="btnFindPassword_Click"/>
+                </div>
+                <div class="form-group" runat="server" id="divUpdatePassword" visible="false">
+                    <label>Enter your new password</label><br />
+                    <asp:TextBox runat="server" CssClass="form-control" ID="txtNewPassword"></asp:TextBox>
+                    <small id="smlNewPasswordHelp" runat="server" class="form-text text-danger"></small>
+                    <div class="form-group text-center">
+                        <asp:Button runat="server" CssClass="btn btn-danger m-3" Text="Update Password" ID="btnUpdatePassword" OnClick="btnUpdatePassword_Click" />
+                    </div>
+                    
                 </div>
             </div>
             <div class="container mt-5" id="divRegister" runat="server" visible="false">

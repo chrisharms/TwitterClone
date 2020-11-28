@@ -17,6 +17,8 @@ namespace TwitterClone
             }
             if (Session["Username"] != null)
             {
+                lblUserInfo.Text = Session["Username"].ToString();
+                lnkLogin.Visible = false;
                 string username = Session["Username"].ToString();
                 UserService.UserService proxy = new UserService.UserService();
                 bool verified = proxy.IsUserVerified(username);
@@ -25,12 +27,22 @@ namespace TwitterClone
                     Response.Redirect("Verification.aspx?mail=false");
                 }
             }
+            if (Session["Guest"] != null)
+            {
+                lnkBtnLogout.Visible = false;
+                lnkMyProfile.Visible = false;
+                lblUserInfo.Visible = false;
+            }
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             Session.Abandon();
-            Response.Redirect("Home.aspx");
+            if (Request.Cookies["Username"] != null)
+            {
+                Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
+            }
+            Response.Redirect("Login.aspx");
         }
     }
 }

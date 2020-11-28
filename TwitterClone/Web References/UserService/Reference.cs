@@ -45,6 +45,8 @@ namespace TwitterClone.UserService {
         
         private System.Threading.SendOrPostCallback UpdateUserVerificationOperationCompleted;
         
+        private System.Threading.SendOrPostCallback UpdatePasswordOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -106,6 +108,9 @@ namespace TwitterClone.UserService {
         
         /// <remarks/>
         public event UpdateUserVerificationCompletedEventHandler UpdateUserVerificationCompleted;
+        
+        /// <remarks/>
+        public event UpdatePasswordCompletedEventHandler UpdatePasswordCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ValidateUser", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -338,6 +343,37 @@ namespace TwitterClone.UserService {
             if ((this.UpdateUserVerificationCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.UpdateUserVerificationCompleted(this, new UpdateUserVerificationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdatePassword", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool UpdatePassword(string username, string password) {
+            object[] results = this.Invoke("UpdatePassword", new object[] {
+                        username,
+                        password});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpdatePasswordAsync(string username, string password) {
+            this.UpdatePasswordAsync(username, password, null);
+        }
+        
+        /// <remarks/>
+        public void UpdatePasswordAsync(string username, string password, object userState) {
+            if ((this.UpdatePasswordOperationCompleted == null)) {
+                this.UpdatePasswordOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdatePasswordOperationCompleted);
+            }
+            this.InvokeAsync("UpdatePassword", new object[] {
+                        username,
+                        password}, this.UpdatePasswordOperationCompleted, userState);
+        }
+        
+        private void OnUpdatePasswordOperationCompleted(object arg) {
+            if ((this.UpdatePasswordCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdatePasswordCompleted(this, new UpdatePasswordCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -708,6 +744,32 @@ namespace TwitterClone.UserService {
         private object[] results;
         
         internal UpdateUserVerificationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void UpdatePasswordCompletedEventHandler(object sender, UpdatePasswordCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpdatePasswordCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpdatePasswordCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
