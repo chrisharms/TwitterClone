@@ -29,14 +29,16 @@ namespace TwitterCloneSOAP
             cmd.CommandText = "TP_VerifyUser";
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Username", username);
-            cmd.Parameters.AddWithValue("@Password", password);
 
             DataSet ds = db.GetDataSetUsingCmdObj(cmd);
-            if (ds.Tables[0].Rows.Count > 0)
+            if (ds.Tables[0].Rows.Count == 0)
             {
-                return true;
+                return false;
             }
-            return false;
+
+            string hashPW = ds.Tables[0].Rows[0]["Password"].ToString();
+
+            return PasswordEncryption.DecryptPassword(password, hashPW);
         }
 
         [WebMethod]
@@ -168,6 +170,25 @@ namespace TwitterCloneSOAP
                 return true;
             }
             return false;
+        }
+
+        [WebMethod]
+        public bool UpdatePassword(string username, string password)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_UpdatePassword";
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Username", username);
+            cmd.Parameters.AddWithValue("@Password", password);
+
+            int count = db.DoUpdateUsingCmdObj(cmd);
+            if (count > 0)
+            {
+                return true;
+            }
+            return false;
+
         }
     }
 }

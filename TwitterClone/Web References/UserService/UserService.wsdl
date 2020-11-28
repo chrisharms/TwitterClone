@@ -131,6 +131,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="UpdatePassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdatePasswordResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="ValidateUserSoapIn">
@@ -181,6 +196,12 @@
   <wsdl:message name="UpdateUserVerificationSoapOut">
     <wsdl:part name="parameters" element="tns:UpdateUserVerificationResponse" />
   </wsdl:message>
+  <wsdl:message name="UpdatePasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePassword" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePasswordResponse" />
+  </wsdl:message>
   <wsdl:portType name="UserServiceSoap">
     <wsdl:operation name="ValidateUser">
       <wsdl:input message="tns:ValidateUserSoapIn" />
@@ -213,6 +234,10 @@
     <wsdl:operation name="UpdateUserVerification">
       <wsdl:input message="tns:UpdateUserVerificationSoapIn" />
       <wsdl:output message="tns:UpdateUserVerificationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <wsdl:input message="tns:UpdatePasswordSoapIn" />
+      <wsdl:output message="tns:UpdatePasswordSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="UserServiceSoap" type="tns:UserServiceSoap">
@@ -289,6 +314,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <soap:operation soapAction="http://tempuri.org/UpdatePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="UserServiceSoap12" type="tns:UserServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -357,6 +391,15 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateUserVerification">
       <soap12:operation soapAction="http://tempuri.org/UpdateUserVerification" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <soap12:operation soapAction="http://tempuri.org/UpdatePassword" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -119,7 +119,6 @@ namespace TwitterClone
             }
 
             UserService.UserService proxy = new UserService.UserService();
-
             bool verify = proxy.ValidateUser(username, password);
             if (!verify)
             {
@@ -315,7 +314,7 @@ namespace TwitterClone
             user1.Username = username;
             user1.FirstName = firstName;
             user1.LastName = lastName;
-            user1.Password = password;
+            user1.Password = PasswordEncryption.EncryptPassword(password);
             user1.EmailAddress = emailAddress;
             user1.HomeAddress = homeAddress;
             user1.BillingAddress = billingAddress;
@@ -375,7 +374,7 @@ namespace TwitterClone
             
             if (userAnswer == Session["SecretAnswer"].ToString())
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Recovery Successful! Your Password = " + Session["RetrievedPassword"] + "')", true);
+                divUpdatePassword.Visible = true;
             }
             else
             {
@@ -454,20 +453,33 @@ namespace TwitterClone
             Response.Redirect("Home.aspx");
         }
 
-        private static string EncryptPassword(string password)
+        protected void btnUpdatePassword_Click(object sender, EventArgs e)
         {
-            string mySalt = BCrypt.GenerateSalt();
-            string myHash = BCrypt.HashPassword(password, mySalt);
-            if (BCrypt.CheckPassword(password, myHash))
-                return myHash;
-            else
-                return "";
-        }
-        //Pass this method the users entered plain text and the password stored in the DB
-        private static bool DecryptPassword(string password, string hashedPw)
-        {
-            return BCrypt.CheckPassword(password, hashedPw);
-        }
 
+            string username = Session["UsernameRetrieve"].ToString();
+            string password = txtNewPassword.Text;
+            if (password == "")
+            {
+                smlNewPasswordHelp.InnerText = "Please enter a valid password";
+                return;
+            }
+            else
+            {
+                smlNewPasswordHelp.InnerText = "";
+            }
+
+            UserService.UserService proxy = new UserService.UserService();
+            bool updatePW = proxy.UpdatePassword(username, PasswordEncryption.EncryptPassword(password));
+            if (!updatePW)
+            {
+                smlNewPasswordHelp.InnerText = "Password update failed, contact developers";
+                return;
+            }
+            else
+            {
+                smlNewPasswordHelp.InnerText = "";
+                Response.Redirect("Login.aspx");
+            }
+        }
     }
 }
