@@ -13,19 +13,21 @@ namespace TwitterCloneAPI.Models
         public string PostText { get; set; }
         public string PostPhoto { get; set; }
         public string Username { get; set; }
+        public int Likes { get; set; }
 
         public Post()
         {
 
         }
 
-        public Post(int id, string postdate, string posttext, string postphoto, string username)
+        public Post(int id, string postdate, string posttext, string postphoto, string username, int likes)
         {
             Id = id;
             PostText = posttext;
             PostDate = postdate;
             PostPhoto = postphoto;
             Username = username;
+            Likes = likes;
         }
        
     }

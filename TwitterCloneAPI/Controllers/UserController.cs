@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using TwitterClassLibrary.Connection;
 using TwitterCloneAPI.Models;
 using TwitterClassLibrary.DBObjCreator;
-using TwitterClassLibrary.DBObjWriter;
+
 
 namespace TwitterCloneAPI.Controllers
 {
-    [Route("api/[controller]")]
-
+    [Route("api/[controller]")] //api/User
     public class UserController : Controller
     {
+
         [HttpGet("GetUserPostCount/{Username}")] //https://localhost:44312/api/User/GetUserPostCount/TestUser
         public int GetUsersPostCount(string Username)
         {
@@ -35,17 +33,58 @@ namespace TwitterCloneAPI.Controllers
             return posts;
         }
 
-        //[HttpPost("CreateFollow")]
-        //public int CreateFollow([FromBody] Follow follow)
-        //{
-        //    return 0;
-        //}
+        
+        //Get followers
 
-        //[HttpDelete("DeleteFollow/{Username}/{FollowUsername}")]
-        //public int DeleteFollow(string Username, string FollowUsername)
-        //{
-            
-        //}
+
+        [HttpGet("GetUserFollowerCount/{Username}")] //https://localhost:44312/api/User/GetUserFollowCount/TestUser
+        public int GetUsersFollowerCount(string Username)
+        {
+            Exception ex = null;
+            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+            filter.Add(DBObjCreator.CreateFilter("Username", $"{Username}", typeof(string)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUserFollowers", ref ex, filter);
+            return records.Count;   
+        }
+
+
+        [HttpGet("GetUserFollowers/{Username}")] //https://localhost:44312/api/User/GetUserFollowers/TestUser
+        public List<Follow> GetUsersFollowers(string Username)
+        {
+            Exception ex = null;
+            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+            filter.Add(DBObjCreator.CreateFilter("Username", $"{Username}", typeof(string)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUserFollowers", ref ex, filter);
+            List<Follow> follows = new List<Follow>();
+            records.ForEach(o => follows.Add(DBObjCreator.CreateObj<Follow>(o, typeof(Follow))));
+            return follows;
+        }
+
+        //Get Follows
+
+        [HttpGet("GetUserFollowCount/{Username}")] //https://localhost:44312/api/User/GetUserFollowCount/TestUser
+        public int GetUsersFollowCount(string Username)
+        {
+            Exception ex = null;
+            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+            filter.Add(DBObjCreator.CreateFilter("Username", $"{Username}", typeof(string)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUserFollows", ref ex, filter);
+            return records.Count;
+        }
+
+
+        [HttpGet("GetUserFollows/{Username}")] //https://localhost:44312/api/User/GetUserFollows/TestUser
+        public List<Follow> GetUsersFollows(string Username)
+        {
+            Exception ex = null;
+            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+            filter.Add(DBObjCreator.CreateFilter("Username", $"{Username}", typeof(string)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUserFollows", ref ex, filter);
+            List<Follow> follows = new List<Follow>();
+            records.ForEach(o => follows.Add(DBObjCreator.CreateObj<Follow>(o, typeof(Follow))));
+            return follows;
+        }
+
     }
 
 }

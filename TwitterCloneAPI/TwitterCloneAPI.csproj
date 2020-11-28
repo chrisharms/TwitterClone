@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TwitterClassLibrary\TwitterClassLibrary.csproj" />
+    <ProjectReference Include="..\TwitterCloneSOAP\TwitterCloneSOAP.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using TwitterClassLibrary;
 
 namespace TwitterClone
@@ -351,7 +347,7 @@ namespace TwitterClone
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.Credentials = new NetworkCredential(fromAddress.Address, "christopher625");
+            client.Credentials = new NetworkCredential(fromAddress.Address, "ajcqwouuvihbodbc");
             client.Send(verificationMail);
 
             Response.Redirect("Verification.aspx?mail=false");
