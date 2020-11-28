@@ -309,7 +309,29 @@ namespace TwitterClone
                 smlRegEmailHelp.InnerText = "";
             }
 
-            
+            try
+            {
+                MailAddress fromAddress = new MailAddress("charms1843@gmail.com", "Not Twitter");
+                MailAddress toAddress = new MailAddress(emailAddress, "New User");
+                MailMessage verificationMail = new MailMessage(fromAddress.Address, toAddress.Address);
+                verificationMail.Subject = "Not Twitter: New Account Verification";
+                verificationMail.Body = "Click this link to verify your new account. http://localhost:62631/Verification.aspx?uname=" + username + "&mail=true";
+                SmtpClient client = new SmtpClient();
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Credentials = new NetworkCredential(fromAddress.Address, "ajcqwouuvihbodbc");
+                client.Send(verificationMail);
+            }
+            catch
+            {
+                smlRegEmailHelp.InnerText = "Invalid email address, try again";
+                return;
+            }
+            smlRegEmailHelp.InnerText = "";
+
             UserService.User user1 = new UserService.User();
             user1.Username = username;
             user1.FirstName = firstName;
@@ -341,20 +363,6 @@ namespace TwitterClone
             {
                 Response.Cookies["Username"].Value = txtRegUsername.Text;
             }
-
-            MailAddress fromAddress = new MailAddress("charms1843@gmail.com", "Not Twitter");
-            MailAddress toAddress = new MailAddress(emailAddress, "New User");
-            MailMessage verificationMail = new MailMessage(fromAddress.Address, toAddress.Address);
-            verificationMail.Subject = "Not Twitter: New Account Verification";
-            verificationMail.Body = "Click this link to verify your new account. http://localhost:62631/Verification.aspx?uname=" + username + "&mail=true";
-            SmtpClient client = new SmtpClient();
-            client.Host = "smtp.gmail.com";
-            client.Port = 587;
-            client.EnableSsl = true;
-            client.UseDefaultCredentials = false;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.Credentials = new NetworkCredential(fromAddress.Address, "ajcqwouuvihbodbc");
-            client.Send(verificationMail);
 
             Response.Redirect("Verification.aspx?mail=false");
         }
