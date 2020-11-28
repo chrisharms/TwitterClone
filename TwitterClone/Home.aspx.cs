@@ -7,25 +7,14 @@ using System.Web.UI.WebControls;
 
 namespace TwitterClone
 {
-    public partial class Home : System.Web.UI.Page
+    public partial class Homepage : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-            if (Session["Username"] == null && Session["Guest"] == null)
-            {
-                Response.Redirect("Login.aspx");
-            }
-            if (Session["Username"] != null)
-            {
-                string username = Session["Username"].ToString();
-                UserService.UserService proxy = new UserService.UserService();
-                bool verified = proxy.IsUserVerified(username);
-                if (!verified)
-                {
-                    Response.Redirect("Verification.aspx?mail=false");
-                }
-            }
-            
+        { 
+
+            pcPost.PostText = "This is some text";
+            pcPost.PostImage = "https://help.twitter.com/content/dam/help-twitter/brand/logo.png";
+            pcPost.PostTitle = "This is a customer user control";
         }
     }
 }

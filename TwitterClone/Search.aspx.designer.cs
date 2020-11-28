@@ -11,7 +11,7 @@ namespace TwitterClone
 {
 
 
-    public partial class Homepage
+    public partial class Search
     {
     }
 }

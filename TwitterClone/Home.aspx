@@ -1,15 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="TwitterClone.Home" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="TwitterClone.Homepage" %>
+<%@ Register src="PostCard.ascx" tagname="PC" tagprefix="uc1" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="container text-center" style="width: 80%; background-color: white" >
+    <h1>Welcome to not twitter.</h1>
+    <uc1:PC ID="pcPost" runat="server" />
         </div>
-    </form>
-</body>
-</html>
+</asp:Content>

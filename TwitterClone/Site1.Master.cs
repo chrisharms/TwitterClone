@@ -11,20 +11,26 @@ namespace TwitterClone
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Check if object exists
-            if (Session["LoginStatus"] != null)
+            if (Session["Username"] == null && Session["Guest"] == null)
             {
-                //Set Session to true on login page after succesful login. 
-                if ((bool)Session["LoginStatus"])
+                Response.Redirect("Login.aspx");
+            }
+            if (Session["Username"] != null)
+            {
+                string username = Session["Username"].ToString();
+                UserService.UserService proxy = new UserService.UserService();
+                bool verified = proxy.IsUserVerified(username);
+                if (!verified)
                 {
-                    //Enable/Disable navbar links depending on result
+                    Response.Redirect("Verification.aspx?mail=false");
                 }
             }
-            else
-            {
-                //Send back to homepage because they're not logged in
-                Server.Transfer("Login.aspx"); 
-            }
+        }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("Home.aspx");
         }
     }
 }
