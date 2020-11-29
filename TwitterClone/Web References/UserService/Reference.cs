@@ -47,6 +47,8 @@ namespace TwitterClone.UserService {
         
         private System.Threading.SendOrPostCallback UpdatePasswordOperationCompleted;
         
+        private System.Threading.SendOrPostCallback DeleteUserOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -111,6 +113,9 @@ namespace TwitterClone.UserService {
         
         /// <remarks/>
         public event UpdatePasswordCompletedEventHandler UpdatePasswordCompleted;
+        
+        /// <remarks/>
+        public event DeleteUserCompletedEventHandler DeleteUserCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ValidateUser", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -374,6 +379,35 @@ namespace TwitterClone.UserService {
             if ((this.UpdatePasswordCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.UpdatePasswordCompleted(this, new UpdatePasswordCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/DeleteUser", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool DeleteUser(string username) {
+            object[] results = this.Invoke("DeleteUser", new object[] {
+                        username});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DeleteUserAsync(string username) {
+            this.DeleteUserAsync(username, null);
+        }
+        
+        /// <remarks/>
+        public void DeleteUserAsync(string username, object userState) {
+            if ((this.DeleteUserOperationCompleted == null)) {
+                this.DeleteUserOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteUserOperationCompleted);
+            }
+            this.InvokeAsync("DeleteUser", new object[] {
+                        username}, this.DeleteUserOperationCompleted, userState);
+        }
+        
+        private void OnDeleteUserOperationCompleted(object arg) {
+            if ((this.DeleteUserCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DeleteUserCompleted(this, new DeleteUserCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -770,6 +804,32 @@ namespace TwitterClone.UserService {
         private object[] results;
         
         internal UpdatePasswordCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DeleteUserCompletedEventHandler(object sender, DeleteUserCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DeleteUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DeleteUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

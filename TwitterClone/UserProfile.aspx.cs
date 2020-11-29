@@ -38,5 +38,30 @@ namespace TwitterClone
             lblSecurityQuestion2.InnerText = securityQuestions[Int32.Parse(questionindexes[1])];
             lblSecurityQuestion3.InnerText = securityQuestions[Int32.Parse(questionindexes[2])];
         }
+
+        protected void btnEditProfile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void lnkDeleteProfile_Click(object sender, EventArgs e)
+        {
+            string username = Session["Username"].ToString();
+            UserService.UserService proxy = new UserService.UserService();
+            bool delete = proxy.DeleteUser(username);
+            if (!delete)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Profile delete failed, please contact a developer.')", true);
+            }
+            else
+            {
+                if (Request.Cookies["Username"] != null)
+                {
+                    Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
+                }
+                Session.Abandon();
+                Response.Redirect("Login.aspx");
+            }
+        }
     }
 }

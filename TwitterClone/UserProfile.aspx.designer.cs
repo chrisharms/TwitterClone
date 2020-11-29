@@ -49,13 +49,22 @@ namespace TwitterClone {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUsername;
         
         /// <summary>
-        /// Button1 control.
+        /// btnEditProfile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnEditProfile;
+        
+        /// <summary>
+        /// lnkDeleteProfile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkDeleteProfile;
         
         /// <summary>
         /// lblName control.

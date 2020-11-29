@@ -190,5 +190,22 @@ namespace TwitterCloneSOAP
             return false;
 
         }
+
+        [WebMethod]
+        public bool DeleteUser(string username)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_DeleteUser";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Username", username);
+
+            int count = db.DoUpdateUsingCmdObj(cmd);
+            if (count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
