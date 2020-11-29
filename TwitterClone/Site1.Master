@@ -46,7 +46,7 @@
             </asp:ContentPlaceHolder>
         </div>
     </form>
-    <footer style="background-color: #F7F7F7" class="p-4 mt-4 shadow-sm">
+    <footer style="background-color: #F7F7F7" class="p-4 mt-5 shadow-sm">
         <div class="container" >
             <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Home.aspx" CssClass="h3">Not Twitter</asp:HyperLink>
             <p class="footer-notice pt-2">Chris Harms & Kevin Lynch Server Side Project</p>
