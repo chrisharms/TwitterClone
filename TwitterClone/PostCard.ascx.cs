@@ -14,7 +14,6 @@ namespace TwitterClone
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
         }
 
         public string PostImage
@@ -41,5 +40,15 @@ namespace TwitterClone
             set { tagList.InnerHtml = value; }
         }
 
+        public string Likes
+        {
+            get { return lblLikes.Text; }
+            set { lblLikes.Text = $"Likes: {value}";}
+        }
+        
+        public PlaceHolder ph
+        {
+            get { return phTagList; }
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace TwitterCloneAPI.Models
     public class Comment
     {
         public int Id;
-        public int CommentUsername;
+        public string CommentUsername;
         public int CommentPostId;
         public string CommentText;
 
@@ -18,7 +18,7 @@ namespace TwitterCloneAPI.Models
 
         }
 
-        public Comment(int id, int commentUsername, int commentPostId, string commentText)
+        public Comment(int id, string commentUsername, int commentPostId, string commentText)
         {
             Id = id;
             CommentUsername = commentUsername;

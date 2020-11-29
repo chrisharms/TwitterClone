@@ -17,7 +17,7 @@ namespace TwitterClassLibrary
 
         }
 
-        public Tag(int id, int postid, string tagtext)
+        public Tag(int id, string tagtext, int postid)
         {
             Id = id;
             PostId = postid;

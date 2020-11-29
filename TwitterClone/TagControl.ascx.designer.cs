@@ -10,15 +10,15 @@
 namespace TwitterClone {
     
     
-    public partial class Homepage {
+    public partial class TagControl {
         
         /// <summary>
-        /// repeaterTrending control.
+        /// Tag control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeaterTrending;
+        protected global::System.Web.UI.WebControls.LinkButton Tag;
     }
 }

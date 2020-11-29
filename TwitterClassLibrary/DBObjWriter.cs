@@ -81,5 +81,42 @@ public class DBObjWriter
                 return false;
             }
         }
+
+
+        public static bool DeleteWithWhere(string commandName, ref Exception ex, List<(string field, dynamic value, Type type)> filters)
+        {
+            List<object[]> records = new List<object[]>();
+            try
+            {
+                DBConnect dbc = new DBConnect();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = commandName;
+
+                foreach ((string field, dynamic value, Type type) filter in filters)
+                {
+                    if (string.IsNullOrEmpty(filter.field) || filter.value.GetType() != filter.type)
+                    {
+                        ex = new FormatException($"{filter.field} value {filter.value} did not match the specified type ({filter.type})");
+                        return false;
+                    }
+
+                    SqlParameter inputParam = new SqlParameter($@"{filter.field}", filter.value)
+                    {
+                        Direction = ParameterDirection.Input
+                    };
+                    cmd.Parameters.Add(inputParam);
+                }
+
+                dbc.DoUpdateUsingCmdObj(cmd);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                ex = e;
+                return false;
+            }
+        }
     }
 }

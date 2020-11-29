@@ -73,18 +73,39 @@ namespace TwitterCloneAPI.Controllers
         }
 
 
+        //[HttpPost("CreatePost")] //https://localhost:44312/api/Post/CreatePost
+        //public string CreatePost(string text, string image, string username, string password)
+        //{
+        //    Exception ex = null;
+        //    List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+        //    filter.Add(DBObjCreator.CreateFilter("Username", $"{username}", typeof(string)));
+        //    filter.Add(DBObjCreator.CreateFilter("Password", $"{password}", typeof(string)));
+        //    List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_VerifyUser", ref ex, filter);
+
+        //    if (records.Count != 1)//Username/password combo not valid
+        //    {
+        //        return "Invalid credentials.";
+        //    }
+        //    int likes = 0;
+        //    string time = DateTime.Today.ToString("d");
+        //    Post newPost = new Post(-1, time, text, image, username, likes);
+        //    List<(bool, int, Exception)> errors = new List<(bool, int, Exception)>();
+        //    bool result = DBObjWriter.GenericWriteToDB<Post>(newPost, "TP_CreatePost", ref errors, new List<string>() { "Id" });
+        //    return "Post succesfully created";
+        //}
+
+
         [HttpPost("CreatePost")] //https://localhost:44312/api/Post/CreatePost
-        public string CreatePost(string text, string image, string username, string password)
+        public string CreatePost(string text, string image, string username)
         {
             Exception ex = null;
             List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
             filter.Add(DBObjCreator.CreateFilter("Username", $"{username}", typeof(string)));
-            filter.Add(DBObjCreator.CreateFilter("Password", $"{password}", typeof(string)));
-            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_VerifyUser", ref ex, filter);
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUser", ref ex, filter);
 
             if (records.Count != 1)//Username/password combo not valid
             {
-                return "Invalid credentials.";
+                return "Invalid username.";
             }
             int likes = 0;
             string time = DateTime.Today.ToString("d");
@@ -94,10 +115,29 @@ namespace TwitterCloneAPI.Controllers
             return "Post succesfully created";
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost("DeletePost")] //https://localhost:44312/api/Post/CreateComment
+        public string DeletePost(int postId)
         {
+            Exception ex = null;
+            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+            filter.Add(DBObjCreator.CreateFilter("Id", postId, typeof(int)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_FindCommentById", ref ex, filter);
+
+            if (records.Count != 1)
+            {
+                return "Invalid comment ID.";
+            }
+
+            List<(bool, int, Exception)> errors = new List<(bool, int, Exception)>();
+            bool result = DBObjWriter.DeleteWithWhere("TP_DeleteCommentById", ref ex, filter);
+            if (result)
+            {
+                return "Post succesfully deleted";
+            }
+            else
+            {
+                return "Failed to delete post, please try again later";
+            }
         }
     }
 }
