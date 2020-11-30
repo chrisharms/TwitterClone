@@ -10,15 +10,13 @@
         <h2 id="Greeting">What are people talking about right now?</h2>
         <div id="trendingContainer"  class="justify-content-center text-center border border-secondary">
             <div class="row justify-content-center">
-                <div class="col-2"></div>
-                <div class="col-8 ">
+                <div class="col-10 ">
                     <asp:Repeater ID="repeaterTrending" runat="server" OnItemDataBound="repeaterTrending_ItemDataBound">
                         <ItemTemplate>
                             <uc1:PC runat="server" ID="postCard" />
                         </ItemTemplate>
                     </asp:Repeater>
                 </div>
-                <div class="col-2"></div>
             </div>
         </div>
     </div>

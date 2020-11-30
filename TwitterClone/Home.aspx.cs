@@ -28,11 +28,12 @@ namespace TwitterClone
                 records.ForEach(r => newUser.Add(DBObjCreator.CreateObj<User>(r, typeof(User))));
                 currentUser = newUser[0];
                 Session["CurrentUserObj"] = currentUser;
-                if (!IsPostBack)
-                {
-                    InitializeTrendingList();
-                }
             }
+            if (!IsPostBack)
+            {
+                InitializeTrendingList();
+            }
+
         }
 
         private void InitializeTrendingList()
