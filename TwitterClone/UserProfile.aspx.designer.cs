@@ -31,13 +31,13 @@ namespace TwitterClone {
         protected global::System.Web.UI.ScriptManager ScriptManager;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// UpdatePanelProfile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel UpdatePanelProfile;
         
         /// <summary>
         /// imgProfileImage control.
@@ -155,6 +155,24 @@ namespace TwitterClone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkDeleteProfile;
+        
+        /// <summary>
+        /// btnFollowers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFollowers;
+        
+        /// <summary>
+        /// btnFollowing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFollowing;
         
         /// <summary>
         /// divUpdateProfile control.
@@ -398,5 +416,14 @@ namespace TwitterClone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPostContainer;
+        
+        /// <summary>
+        /// RepeaterPosts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater RepeaterPosts;
     }
 }

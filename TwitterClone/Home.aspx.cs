@@ -66,7 +66,7 @@ namespace TwitterClone
                 pc.PostImage = post.PostPhoto;
             }
 
-
+            pc.HiddenField = post.Id.ToString();
             pc.PostText = post.PostText;
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();

@@ -34,14 +34,15 @@
     border-color: #485159;
 }
 
-.card-body {
-    background-color: #15202B !important;
-}
+
 
 .card-header {
     background-color: #202E3A !important;
     border-style: solid;
     border-color: #485159;
+}
+.card {
+    background-color: #202E3A !important;
 }
 
 #cardText {
@@ -61,6 +62,7 @@
 
 body {
     background-color: #15202B !important;
+    color: white !important;
 }
 
 .btnViewComments {
@@ -77,4 +79,10 @@ body {
     border-color: #485159;
     padding-top: .5em;
     padding-bottom: .5em;
+}
+.footer-notice {
+    color: white;
+}
+.jumbotron {
+    background-color: #202E3A !important;
 }

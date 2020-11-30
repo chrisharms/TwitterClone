@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TwitterClassLibrary;
+using TwitterClassLibrary.DBObjCreator;
 
 namespace TwitterClone
 {
@@ -22,36 +23,69 @@ namespace TwitterClone
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            string username = Session["Username"].ToString();
-            UserService.UserService proxy = new UserService.UserService();
-            UserService.User proxyUser = proxy.GetUser(username);
-            User user = new User(proxyUser.Username, proxyUser.FirstName, proxyUser.LastName, proxyUser.Password,
-                proxyUser.ProfileImage, proxyUser.HomeAddress, proxyUser.BillingAddress, proxyUser.EmailAddress,
-                proxyUser.Phone, proxyUser.SecretQuestions, proxyUser.SecretAnswers, proxyUser.Verified);
+            if (!IsPostBack)
+            {
+                string username = Session["Username"].ToString();
+                UserService.UserService proxy = new UserService.UserService();
+                UserService.User proxyUser = proxy.GetUser(username);
+                User user = new User(proxyUser.Username, proxyUser.FirstName, proxyUser.LastName, proxyUser.Password,
+                    proxyUser.ProfileImage, proxyUser.HomeAddress, proxyUser.BillingAddress, proxyUser.EmailAddress,
+                    proxyUser.Phone, proxyUser.SecretQuestions, proxyUser.SecretAnswers, proxyUser.Verified);
 
-            imgProfileImage.ImageUrl = user.ProfileImage;
-            lblUsername.InnerText = user.Username;
-            lblFirstName.InnerText = user.FirstName;
-            lblLastName.InnerText = user.LastName;
-            lblEmail.InnerText = user.EmailAddress;
-            lblPhone.InnerText = user.Phone;
-            lblHomeAddress.InnerText = user.HomeAddress;
-            lblBillingAddress.InnerText = user.BillingAddress;
-            string[] questions = user.SecretQuestions.Split(',');
-            lblSecurityQuestion1.InnerText = securityQuestions[Int32.Parse(questions[0])];
-            lblSecurityQuestion2.InnerText = securityQuestions[Int32.Parse(questions[1])];
-            lblSecurityQuestion3.InnerText = securityQuestions[Int32.Parse(questions[2])];
+                imgProfileImage.ImageUrl = user.ProfileImage;
+                lblUsername.InnerText = user.Username;
+                lblFirstName.InnerText = user.FirstName;
+                lblLastName.InnerText = user.LastName;
+                lblEmail.InnerText = user.EmailAddress;
+                lblPhone.InnerText = user.Phone;
+                lblHomeAddress.InnerText = user.HomeAddress;
+                lblBillingAddress.InnerText = user.BillingAddress;
+                string[] questions = user.SecretQuestions.Split(',');
+                lblSecurityQuestion1.InnerText = securityQuestions[Int32.Parse(questions[0])];
+                lblSecurityQuestion2.InnerText = securityQuestions[Int32.Parse(questions[1])];
+                lblSecurityQuestion3.InnerText = securityQuestions[Int32.Parse(questions[2])];
 
-            // Getting Posts
-            string url = "https://localhost:44312/api/User/GetUserPosts/" + username;
-            WebRequest request = WebRequest.Create(url);
-            WebResponse response = request.GetResponse();
-            Stream stream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(stream);
-            String data = reader.ReadToEnd();
-            JavaScriptSerializer js = new JavaScriptSerializer();
+                // Getting Posts
+                string url = "https://localhost:44312/api/User/GetUserPosts/" + username;
+                WebRequest request = WebRequest.Create(url);
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(stream);
+                String data = reader.ReadToEnd();
+                JavaScriptSerializer js = new JavaScriptSerializer();
 
-            List<Post> posts = js.Deserialize<List<Post>>(data);
+                List<Post> posts = js.Deserialize<List<Post>>(data);
+
+                RepeaterPosts.DataSource = posts;
+                RepeaterPosts.DataBind();
+                stream.Close();
+                reader.Close();
+
+                // Getting Follow count
+                string url2 = "https://localhost:44312/api/Follow/GetFollowCount/" + username;
+                WebRequest request2 = WebRequest.Create(url2);
+                WebResponse response2 = request2.GetResponse();
+                Stream stream2 = response2.GetResponseStream();
+                StreamReader reader2 = new StreamReader(stream2);
+                String data2 = reader2.ReadToEnd();
+
+                btnFollowing.Text = "Following " + data2;
+                stream2.Close();
+                reader2.Close();
+
+                // Getting Follower count
+                string url3 = "https://localhost:44312/api/Follow/GetFollowerCount/" + username;
+                WebRequest request3 = WebRequest.Create(url3);
+                WebResponse response3 = request3.GetResponse();
+                Stream stream3 = response3.GetResponseStream();
+                StreamReader reader3 = new StreamReader(stream3);
+                String data3 = reader3.ReadToEnd();
+
+                btnFollowers.Text = data3 + " Followers";
+                stream3.Close();
+                reader3.Close();
+            }
+            
         }
 
         protected void btnEditProfile_Click(object sender, EventArgs e)
@@ -256,6 +290,8 @@ namespace TwitterClone
             divMyProfile.Visible = true;
             divUpdateProfile.Visible = false;
             divPostContainer.Visible = true;
+
+            UpdatePanelProfile.Update();
         }
 
         protected void btnCancelUpdate_Click(object sender, EventArgs e)
@@ -263,6 +299,55 @@ namespace TwitterClone
             divMyProfile.Visible = true;
             divUpdateProfile.Visible = false;
             divPostContainer.Visible = true;
+        }
+
+        protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            PostCard pc = e.Item.FindControl("postCard") as PostCard;
+            Post post = e.Item.DataItem as Post;
+
+            if (post.PostPhoto.Equals("fake.png"))
+            {
+                pc.ChangeImageVisibility(); //True by default, change to false
+            }
+            else
+            {
+                pc.PostImage = post.PostPhoto;
+            }
+
+            pc.HiddenField = post.Id.ToString();
+            pc.PostText = post.PostText;
+            pc.PostUsername = post.Username;
+            pc.Likes = post.Likes.ToString();
+            Exception ex = null;
+            List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
+            filter.Add(DBObjCreator.CreateFilter("PostId", post.Id, typeof(int)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetTagsByPost", ref ex, filter);
+            List<Tag> tags = new List<Tag>();
+            records.ForEach(r => tags.Add(DBObjCreator.CreateObj<Tag>(r, typeof(Tag))));
+
+            foreach (Tag t in tags)
+            {
+                var tc = (TagControl)Page.LoadControl("TagControl.ascx");
+                tc.Text = t.TagText;
+                tc.ButtonClick += new EventHandler(Tag_ButtonClick);
+                pc.ph.Controls.Add(tc);
+            }
+        }
+
+        private void Tag_ButtonClick(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnFollowers_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnFollowing_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -8,7 +8,7 @@
     <div id="HomeContainer" class="container text-center justify-content-center">
         <h1 class="m-5">Welcome to Not Twitter!</h1>
         <h2 id="Greeting">What are people talking about right now?</h2>
-        <div id="trendingContainer"  class="justify-content-center text-center border border-secondary">
+        <div id="trendingContainer"  class="justify-content-center text-center">
             <div class="row justify-content-center">
                 <div class="col-2"></div>
                 <div class="col-8 ">
