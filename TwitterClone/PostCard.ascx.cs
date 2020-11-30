@@ -14,6 +14,7 @@ namespace TwitterClone
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
         }
 
         public string PostImage
@@ -28,10 +29,10 @@ namespace TwitterClone
             set { txtPost.InnerText = value; }
         }
 
-        public string PostTitle
+        public string PostUsername
         {
-            get { return postTitle.InnerText; }
-            set { postTitle.InnerText = value; }
+            get { return postUsername.InnerText; }
+            set { postUsername.InnerText = value; }
         }
 
         public string TagList
@@ -49,6 +50,11 @@ namespace TwitterClone
         public PlaceHolder ph
         {
             get { return phTagList; }
+        }
+
+        public void ChangeImageVisibility()
+        {
+            imgPost.Visible = !imgPost.Visible;
         }
     }
 }

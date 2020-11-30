@@ -1,2 +1,2 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TagControl.ascx.cs" Inherits="TwitterClone.TagControl" %>
-<asp:LinkButton ID="Tag" runat="server" OnClick="Tag_Click"></asp:LinkButton>
+<asp:LinkButton ID="Tag" CssClass="postTag" runat="server" OnClick="Tag_Click"></asp:LinkButton>

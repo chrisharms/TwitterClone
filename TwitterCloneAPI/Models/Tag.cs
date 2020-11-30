@@ -11,17 +11,19 @@ namespace TwitterCloneAPI.Models
         public int Id { get; set; }
         public int PostId { get; set; }
         public string TagText { get; set; }
+        public bool Trending { get; set; }
 
         public Tag()
         {
 
         }
 
-        public Tag(int id, int postid, string tagtext)
+        public Tag(int id, int postid, string tagtext, bool trending)
         {
             Id = id;
             PostId = postid;
             TagText = tagtext;
+            Trending = trending;
         }
 
     }

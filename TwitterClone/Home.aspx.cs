@@ -13,6 +13,7 @@ namespace TwitterClone
     {
         string currentUsername;
         User currentUser;
+        private const bool TRENDING = true;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,27 +28,47 @@ namespace TwitterClone
                 records.ForEach(r => newUser.Add(DBObjCreator.CreateObj<User>(r, typeof(User))));
                 currentUser = newUser[0];
                 Session["CurrentUserObj"] = currentUser;
-
-                filter.Clear();
-                records.Clear();
-                
-                filter.Add(DBObjCreator.CreateFilter("Username", currentUsername, typeof(string)));
-                records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUsersPosts", ref ex, filter);
-                List<Post> usersPosts = new List<Post>();
-                records.ForEach(r => usersPosts.Add(DBObjCreator.CreateObj<Post>(r, typeof(Post))));
-                //Needs to be changed to be trending or something
-                repeaterTrending.DataSource = usersPosts;
-                repeaterTrending.DataBind();
+                if (!IsPostBack)
+                {
+                    InitializeTrendingList();
+                }
             }
         }
 
+        private void InitializeTrendingList()
+        {
+            Exception ex = null;
+            List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
+            filter.Add(DBObjCreator.CreateFilter("Trending", TRENDING, typeof(bool)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetPostsByTrending", ref ex, filter);
+            List<Post> usersPosts = new List<Post>();
+            records.ForEach(r => usersPosts.Add(DBObjCreator.CreateObj<Post>(r, typeof(Post))));
+            //Needs to be changed to be trending or something
+            List<Post> uniquePosts = usersPosts.GroupBy(p => p.Id).Select(id => id.First()).ToList(); //Select only the first occurence of a post ID
+            repeaterTrending.DataSource = uniquePosts;
+            repeaterTrending.DataBind();
+        }
+
+
+
+        //Bind post objects to Custom User Controls
         protected void repeaterTrending_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             PostCard pc = e.Item.FindControl("postCard") as PostCard;
             Post post = e.Item.DataItem as Post;
-            pc.PostImage = post.PostPhoto;
+
+            if (post.PostPhoto.Equals("fake.png"))
+            {
+                pc.ChangeImageVisibility(); //True by default, change to false
+            }
+            else
+            {
+                pc.PostImage = post.PostPhoto;
+            }
+
+
             pc.PostText = post.PostText;
-            pc.PostTitle = post.Username;
+            pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
             Exception ex = null;
             List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
@@ -63,8 +84,6 @@ namespace TwitterClone
                 tc.ButtonClick += new EventHandler(Tag_ButtonClick);
                 pc.ph.Controls.Add(tc);
             }
-
-
         }
 
         protected void Tag_ButtonClick(object sender, EventArgs e)
