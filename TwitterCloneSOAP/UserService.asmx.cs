@@ -207,5 +207,30 @@ namespace TwitterCloneSOAP
             }
             return false;
         }
+        [WebMethod]
+        public bool UpdateUser(string oldUsername, User user)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_UpdateUser";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OldUsername", oldUsername);
+            cmd.Parameters.AddWithValue("@Username", user.Username);
+            cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", user.LastName);
+            cmd.Parameters.AddWithValue("@ProfileImage", user.ProfileImage);
+            cmd.Parameters.AddWithValue("@HomeAddress", user.HomeAddress);
+            cmd.Parameters.AddWithValue("@Phone", user.Phone);
+            cmd.Parameters.AddWithValue("@BillingAddress", user.BillingAddress);
+            cmd.Parameters.AddWithValue("@SecretQuestions", user.SecretQuestions);
+            cmd.Parameters.AddWithValue("@SecretAnswers", user.SecretAnswers);
+
+            int count = db.DoUpdateUsingCmdObj(cmd);
+            if (count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

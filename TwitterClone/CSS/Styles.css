@@ -2,7 +2,7 @@
     font-weight: bold;
 }
 @media screen and (min-width: 600px) {
-    #divLogin, #divRegister, #divForgotUsername, #divForgotPassword {
+    #divLogin, #divRegister, #divForgotUsername, #divForgotPassword, #MainContent_divUpdateProfile {
         width: 500px;
     }
 
