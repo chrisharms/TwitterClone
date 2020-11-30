@@ -1,10 +1,80 @@
 ﻿#lblPasswordSecretQuestion, #lblUsernameSecretQuestion {
     font-weight: bold;
+    color: white;
 }
 @media screen and (min-width: 600px) {
     #divLogin, #divRegister, #divForgotUsername, #divForgotPassword {
         width: 500px;
+        color: white;
     }
 
 }
+/*Lighter Dark Blue*/
+#trendingContainer {
+    background-color: #15202B;
+}
+/*Dark Blue*/
+#HomeContainer {
+    background-color: #15202B;
+    width: 70% !important;
+    color: white;
+}
 
+#tcNavBar, #tcFooter {
+    background-color: #202E3A;
+    color: #485159;
+}
+
+#tcNavBar {
+    border-bottom: solid;
+    border-color: #485159;
+}
+#tcFooter {
+    border-top: solid;
+    border-color: #485159;
+}
+
+.card-body {
+    background-color: #15202B !important;
+}
+
+.card-header {
+    background-color: #202E3A !important;
+    border-style: solid;
+    border-color: #485159;
+}
+
+#cardText {
+    margin-top: 1em;
+    margin-left: .1em;
+    border-style: solid;
+    border-color: #485159;
+}
+
+#tagRow {
+    margin-top: 1em;
+}
+
+#tagList {
+    color: #865DCA;
+}
+
+body {
+    background-color: #15202B !important;
+}
+
+.btnViewComments {
+    background-color: #865DCA !important;
+    color: white !important;
+}
+
+.postTag {
+    color: #865DCA !important;
+}
+
+#Greeting {
+    border-style: solid;
+    border-color: #485159;
+    padding-top: .5em;
+    padding-bottom: .5em;
+}

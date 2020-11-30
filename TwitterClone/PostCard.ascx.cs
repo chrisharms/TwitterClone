@@ -14,6 +14,7 @@ namespace TwitterClone
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
         }
 
         public string PostImage
