@@ -1,10 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PostCard.ascx.cs" Inherits="TwitterClone.PostCard" %>
 
-<div class="card border-primary">
-    <asp:Image ID="imgPost" CssClass="card-img-top" style="width: 100%; height: 300px" runat="server" />
+<div class="card border-primary" style="margin-top: 1em">
+    <asp:Image ID="imgPost" CssClass="card-img-top" Style="width: 100%; height: 300px" runat="server" />
     <div class="card-body">
-        <h5 id="postTitle" class="card-title" runat="server">Card title</h5>
-        <p class="card-text" id="txtPost" runat="server"></p>
+        <h5 id="postUsername" class="card-header" style="background-color:" runat="server">Card title</h5>
+        <div class="row" style="height: 128px; width: 100%">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <p class="card-text" id="txtPost" runat="server"></p>
+            </div>
+            <div class="col-2"></div>
+        </div>
         <div class="row">
             <div id="tagList" runat="server">
                 <asp:PlaceHolder ID="phTagList" runat="server"></asp:PlaceHolder>

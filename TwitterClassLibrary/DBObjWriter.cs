@@ -12,7 +12,8 @@ public class DBObjWriter
 {
 
         private static Dictionary<Type, SqlDbType> typeMap = new Dictionary<Type, SqlDbType>() { {typeof(int), SqlDbType.Int }, { typeof(double), SqlDbType.Float },
-                                                                                                { typeof(decimal), SqlDbType.Float }, {typeof(string), SqlDbType.VarChar }
+                                                                                                { typeof(decimal), SqlDbType.Float }, {typeof(string), SqlDbType.VarChar},
+                                                                                                { typeof(bool), SqlDbType.Bit}
                                                                                                 };
         /// <summary>
         /// Generic type method to write an object to the Microsoft SQL DB. Requires the property names of the object
