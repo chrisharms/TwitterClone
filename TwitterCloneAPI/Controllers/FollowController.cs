@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace TwitterCloneAPI.Controllers
 {
-    [Route("api/FollowController")]
+    [Route("api/Follow")]
 
     public class FollowController : Controller
     {
@@ -62,6 +62,32 @@ namespace TwitterCloneAPI.Controllers
             }
 
             return followerList;
+        }
+
+        [HttpGet("GetFollowerCount/{username}")]
+        public int GetFollowerCount(string username)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "TP_GetUserFollowers";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Username", username);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            return ds.Tables[0].Rows.Count;
+        }
+
+        [HttpGet("GetFollowCount/{username}")]
+        public int GetFollowCount(string username)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_GetFollowsByUser";
+            cmd.Parameters.AddWithValue("@Username", username);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            return ds.Tables[0].Rows.Count;
         }
 
         [HttpPost("CreateFollow")]

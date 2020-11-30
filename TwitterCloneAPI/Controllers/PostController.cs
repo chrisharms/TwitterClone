@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TwitterClassLibrary.Connection;
 using TwitterClassLibrary.DBObjCreator;
 using TwitterClassLibrary.DBObjWriter;
 using TwitterCloneAPI.Models;
@@ -13,7 +16,7 @@ namespace TwitterCloneAPI.Controllers
 {
     
 
-    [Route("api/[controller]")] //api/Post
+    [Route("api/Post")] //api/Post
     public class PostController : Controller
     {
 
@@ -115,21 +118,22 @@ namespace TwitterCloneAPI.Controllers
             return "Post succesfully created";
         }
 
-        [HttpPost("DeletePost")] //https://localhost:44312/api/Post/CreateComment
-        public string DeletePost(int postId)
+        [HttpPost("DeletePost")] //https://localhost:44312/api/Post/DeletePost/10
+        public string DeletePost([FromBody] int postId)
         {
+
             Exception ex = null;
             List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
             filter.Add(DBObjCreator.CreateFilter("Id", postId, typeof(int)));
-            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_FindCommentById", ref ex, filter);
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetPostsById", ref ex, filter);
 
             if (records.Count != 1)
             {
-                return "Invalid comment ID.";
+                return "Post ID does not exist.";
             }
 
             List<(bool, int, Exception)> errors = new List<(bool, int, Exception)>();
-            bool result = DBObjWriter.DeleteWithWhere("TP_DeleteCommentById", ref ex, filter);
+            bool result = DBObjWriter.DeleteWithWhere("TP_DeletePostById", ref ex, filter);
             if (result)
             {
                 return "Post succesfully deleted";

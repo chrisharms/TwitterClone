@@ -72,6 +72,7 @@
   <ItemGroup>
     <Content Include="CSS\Styles.css" />
     <Content Include="Home.aspx" />
+    <Content Include="Images\1024px-Heart_corazón.svg.png" />
     <Content Include="Images\HeartIcon-removebg-preview.png" />
     <Content Include="Login.aspx" />
     <None Include="Properties\Settings.settings">

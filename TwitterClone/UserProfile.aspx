@@ -1,12 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="UserProfile.aspx.cs" Inherits="TwitterClone.UserProfile" %>
-<%@ Register src="PostCard.ascx" tagname="PC" tagprefix="uc1" %>
+<%@ Register Src="PostCard.ascx" TagName="PC" TagPrefix="uc1" %>
+<%@ Register Src="TagControl.ascx" TagName="Tag" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container" runat="server" id="divMyProfile">
         <h3 class="mt-3 mb-3 mr-3">My Profile</h3>
         <asp:ScriptManager runat="server" ID="ScriptManager">
              
         </asp:ScriptManager>
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="False" UpdateMode="Conditional">
+        <asp:UpdatePanel ID="UpdatePanelProfile" runat="server" ChildrenAsTriggers="False" UpdateMode="Conditional">
             <ContentTemplate>
                         <div class="d-flex justify-content-center">
                     <div class="card mt-4" style="width: 90%;">
@@ -50,8 +51,14 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <asp:Button runat="server" CssClass="btn-sm btn-primary mb-3" Text="Edit Profile" ID="btnEditProfile" OnClick="btnEditProfile_Click"></asp:Button>
-                                    <asp:LinkButton runat="server" CssClass="text-danger small ml-2 mb-3" Text="Delete Profile" ID="lnkDeleteProfile" OnClick="lnkDeleteProfile_Click"></asp:LinkButton>
+                                    <div class="form-group">
+                                        <asp:Button runat="server" CssClass="btn-sm btn-primary mb-3" Text="Edit Profile" ID="btnEditProfile" OnClick="btnEditProfile_Click"></asp:Button>
+                                        <asp:LinkButton runat="server" CssClass="text-danger small ml-2 mb-3" Text="Delete Profile" ID="lnkDeleteProfile" OnClick="lnkDeleteProfile_Click"></asp:LinkButton>
+                                    </div>
+                                    <div class="form-group">
+                                        <asp:Button runat="server" CssClass="btn-sm btn-success" ID="btnFollowers" OnClick="btnFollowers_Click"/>
+                                        <asp:Button runat="server" CssClass="btn-sm btn-success" ID="btnFollowing" OnClick="btnFollowing_Click"/>
+                                    </div>
                                 </div>
                             </div>
                 
@@ -61,7 +68,9 @@
             </ContentTemplate>
             <Triggers>
                 <asp:PostBackTrigger ControlID="btnEditProfile"/> 
-                <asp:AsyncPostBackTrigger ControlID="btnUpdateProfile" EventName="Click" />
+                <asp:PostBackTrigger ControlID="btnFollowers" />
+                <asp:PostBackTrigger ControlID="btnFollowing" />
+                <asp:AsyncPostBackTrigger ControlID="btnUpdateProfile" EventName="Click"/>
             </Triggers>
         </asp:UpdatePanel>
 
@@ -139,5 +148,17 @@
     </div>
     <div runat="server" class="container" id="divPostContainer" >
         <h3 class="mt-5 mb-3 mr-3">My Posts</h3>
+        <div class="row justify-content-center">
+                <div class="col-2"></div>
+                <div class="col-8 ">
+                    <asp:Repeater runat="server" ID="RepeaterPosts" OnItemDataBound="RepeaterPosts_ItemDataBound">
+            <ItemTemplate>
+                <uc1:PC runat="server" ID="postCard" />
+            </ItemTemplate>
+        </asp:Repeater>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        
     </div>
 </asp:Content>
