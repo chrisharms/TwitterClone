@@ -106,7 +106,7 @@ namespace TwitterCloneAPI.Controllers
         }
 
         [HttpDelete("DeleteFollow/{Username}/{FollowUsername}")]
-        public int DeleteFollow(string Username, string FollowUsername)
+        public bool DeleteFollow(string Username, string FollowUsername)
         {
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();
@@ -116,7 +116,11 @@ namespace TwitterCloneAPI.Controllers
             cmd.Parameters.AddWithValue("@FollowUsername", FollowUsername);
 
             int count = db.DoUpdateUsingCmdObj(cmd);
-            return count;
+            if (count > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

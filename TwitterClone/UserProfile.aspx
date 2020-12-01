@@ -146,8 +146,79 @@
             <asp:Button runat="server" ID="btnCancelUpdate" Text="Cancel" CssClass="btn btn-danger" OnClick="btnCancelUpdate_Click"/>
         </div>
     </div>
-    <div runat="server" class="container" id="divPostContainer" >
-        <h3 class="mt-5 mb-3 mr-3">My Posts</h3>
+    <div class="container " id="divFollowsContainer" runat="server" visible="false">
+        <div class="d-flex justify-content-center">
+            <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <asp:ListView ID="lvFollows" runat="server" OnItemCommand="lvFollows_ItemCommand">
+                    <LayoutTemplate>
+                        <h3 class="mt-5 mb-5 mr-3">My Follows</h3>
+                        <table runat="server" class="table" id="tblFollows">
+                            <tr runat="server" id="itemPlaceholder"></tr>
+                        </table>
+                        
+                    </LayoutTemplate>
+                    <ItemTemplate>
+                        <tr runat="server">
+                            <td>
+                                <asp:Label runat="server" ID="lblFollowUsername" Text='<%#Eval("FollowUsername") %>'></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label runat="server" ID="lblFollowDate" Text='<%#Eval("FollowDate") %>'></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Button runat="server" CssClass="btn-sm btn-danger" ID="btnDeleteFollow" Text="Remove Follow" CommandName="Remove"/>
+                            </td>
+                        </tr>
+                    </ItemTemplate>
+                </asp:ListView>
+            </ContentTemplate>
+            <Triggers>
+
+            </Triggers>
+        </asp:UpdatePanel>
+            
+        </div>
+        <div class="d-flex justify-content-center mt-5 mb-4">
+            <asp:Button runat="server" CssClass="btn btn-danger" ID="btnCancelFollows" Text="Back" OnClick="btnCancelFollows_Click"/>
+        </div>
+        
+        
+        
+    </div>
+    <div class="container" id="divFollowersContainer" runat="server" visible="false">
+        <div class="d-flex justify-content-center">
+            <div>
+                <asp:ListView ID="lvFollowers" runat="server" OnItemCommand="lvFollowers_ItemCommand">
+                    <LayoutTemplate>
+                        <h3 class="mt-5 mb-5 mr-3">My Followers</h3>
+                        <table runat="server" class="table" id="tblFollowers">
+                            <tr runat="server" id="itemPlaceholder"></tr>
+                        </table>
+                        
+                    </LayoutTemplate>
+                    <ItemTemplate>
+                        <tr runat="server">
+                            <td>
+                                <asp:Label runat="server" ID="lblFollowerUsername" Text='<%#Eval("Username") %>'></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label runat="server" ID="lblFollowerDate" Text='<%#Eval("FollowDate") %>'></asp:Label>
+                            </td>
+                            
+                        </tr>
+                    </ItemTemplate>
+                </asp:ListView>
+            </div>
+            
+        </div>
+        <div class="d-flex justify-content-center mt-5 mb-4">
+            <asp:Button runat="server" CssClass="btn btn-danger" ID="btnCancelFollowers" Text="Back" OnClick="btnCancelFollows_Click"/>
+        </div>
+    </div>
+    
+    <div runat="server" class="container text-center" id="divPostContainer" >
+        <h3 class="mt-5 mb-3 mr-3 text-left">My Posts</h3>
         <div class="row justify-content-center">
                 <div class="col-2"></div>
                 <div class="col-8 ">

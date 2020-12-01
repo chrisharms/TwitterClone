@@ -67,6 +67,15 @@ namespace TwitterClone {
         protected global::System.Web.UI.WebControls.PlaceHolder phTagList;
         
         /// <summary>
+        /// lnkLike control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkLike;
+        
+        /// <summary>
         /// heartIcon control.
         /// </summary>
         /// <remarks>

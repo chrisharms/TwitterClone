@@ -409,6 +409,60 @@ namespace TwitterClone {
         protected global::System.Web.UI.WebControls.Button btnCancelUpdate;
         
         /// <summary>
+        /// divFollowsContainer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFollowsContainer;
+        
+        /// <summary>
+        /// lvFollows control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView lvFollows;
+        
+        /// <summary>
+        /// btnCancelFollows control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelFollows;
+        
+        /// <summary>
+        /// divFollowersContainer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFollowersContainer;
+        
+        /// <summary>
+        /// lvFollowers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView lvFollowers;
+        
+        /// <summary>
+        /// btnCancelFollowers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelFollowers;
+        
+        /// <summary>
         /// divPostContainer control.
         /// </summary>
         /// <remarks>

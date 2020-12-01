@@ -342,10 +342,109 @@ namespace TwitterClone
 
         protected void btnFollowers_Click(object sender, EventArgs e)
         {
+            string username = Session["Username"].ToString();
+            string url = "https://localhost:44312/api/Follow/GetUserFollowers/" + username;
+            WebRequest request = WebRequest.Create(url);
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(stream);
+            String data = reader.ReadToEnd();
 
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            List<Follow> followerList = js.Deserialize<List<Follow>>(data);
+            stream.Close();
+            reader.Close();
+
+            lvFollowers.DataSource = followerList;
+            lvFollowers.DataBind();
+
+            divFollowersContainer.Visible = true;
+            divMyProfile.Visible = false;
+            divPostContainer.Visible = false;
         }
 
         protected void btnFollowing_Click(object sender, EventArgs e)
+        {
+            string username = Session["Username"].ToString();
+            string url = "https://localhost:44312/api/Follow/GetFollowsByUser/" + username;
+            WebRequest request = WebRequest.Create(url);
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(stream);
+            String data = reader.ReadToEnd();
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            List <Follow> followList = js.Deserialize<List<Follow>>(data);
+            stream.Close();
+            reader.Close();
+
+            lvFollows.DataSource = followList;
+            lvFollows.DataBind();
+
+            divFollowsContainer.Visible = true;
+            divMyProfile.Visible = false;
+            divPostContainer.Visible = false;
+        }
+
+
+        protected void btnCancelFollows_Click(object sender, EventArgs e)
+        {
+            divFollowsContainer.Visible = false;
+            divFollowersContainer.Visible = false;
+            divMyProfile.Visible = true;
+            divPostContainer.Visible = true;
+            Response.Redirect("UserProfile.aspx");
+        }
+
+        protected void lvFollows_ItemCommand(object sender, ListViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Remove")
+            {
+                Label lblFollowUsername = (Label)e.Item.FindControl("lblFollowUsername");
+                string followUsername = lblFollowUsername.Text;
+                string username = Session["Username"].ToString();
+
+                // Deleting Follow
+                string url = "https://localhost:44312/api/Follow/DeleteFollow/" + username + "/" + followUsername;
+                WebRequest request = WebRequest.Create(url);
+                request.Method = "DELETE";
+
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(stream);
+                String data = reader.ReadToEnd();
+                bool good = bool.Parse(data);
+                reader.Close();
+                response.Close();
+
+                if (!good)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error removing follow, please try again later.')", true);
+                    return;
+                }
+                else
+                {
+                    
+                    string url2 = "https://localhost:44312/api/Follow/GetFollowsByUser/" + username;
+                    WebRequest request2 = WebRequest.Create(url2);
+                    WebResponse response2 = request2.GetResponse();
+                    Stream stream2 = response2.GetResponseStream();
+                    StreamReader reader2 = new StreamReader(stream2);
+                    String data2 = reader2.ReadToEnd();
+
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    List<Follow> followList = js.Deserialize<List<Follow>>(data2);
+                    stream.Close();
+                    reader.Close();
+
+                    lvFollows.DataSource = followList;
+                    lvFollows.DataBind();
+                }
+
+            }
+        }
+
+        protected void lvFollowers_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
 
         }

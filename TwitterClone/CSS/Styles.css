@@ -2,10 +2,22 @@
     font-weight: bold;
     color: white;
 }
+#MainContent_lvFollows_tblFollows, #MainContent_lvFollowers_tblFollowers {
+    color: white;
+}
+img {
+    object-fit: cover;
+}
 @media screen and (min-width: 600px) {
     #divLogin, #divRegister, #divForgotUsername, #divForgotPassword, #MainContent_divUpdateProfile {
         width: 500px;
         color: white;
+    }
+    #MainContent_lvFollows_tblFollows, #MainContent_lvFollowers_tblFollowers {
+        width: 700px;
+    }
+    .card {
+        width: 500px;
     }
 
 }
@@ -40,8 +52,8 @@
 
 .card-header {
     background-color: #202E3A !important;
-    border-style: solid;
-    border-color: #485159;
+
+    border-bottom: 1px solid white;
 }
 .card {
     background-color: #202E3A !important;
@@ -50,7 +62,7 @@
 #cardText {
     margin-top: 1em;
     margin-left: .1em;
-    border-style: solid;
+
     border-color: #485159;
 }
 
@@ -77,7 +89,7 @@ body {
 }
 
 #Greeting {
-    border-style: solid;
+
     border-color: #485159;
     padding-top: .5em;
     padding-bottom: .5em;

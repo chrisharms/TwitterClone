@@ -40,7 +40,7 @@ namespace TwitterClone
         public string PostUsername
         {
             get { return postUsername.InnerText; }
-            set { postUsername.InnerText = value; }
+            set { postUsername.InnerText = "@" + value; }
         }
 
         public string TagList
@@ -101,6 +101,11 @@ namespace TwitterClone
             }
             
             Response.Redirect("UserProfile.aspx");
+        }
+
+        protected void lnkLike_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
