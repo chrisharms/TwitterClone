@@ -75,6 +75,14 @@ namespace TwitterClone
             get { return fldPostId.Value; }
             set { fldPostId.Value = value; }
         }
+        public void DisableFollowButton(string username)
+        {
+            if (username == postUsername.InnerText.Substring(1))
+            {
+                btnFollowUser.Visible = false;
+            }
+            
+        }
 
         protected void btnDeletePost_Click(object sender, EventArgs e)
         {
@@ -139,6 +147,73 @@ namespace TwitterClone
 
         protected void lnkLike_Click(object sender, EventArgs e)
         {
+
+        }
+
+        protected void btnComments_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnFollowUser_Click(object sender, EventArgs e)
+        {
+            string username = Session["Username"].ToString();
+            string FollowUsername = postUsername.InnerText.Substring(1);
+            bool same = FollowUsername == username;
+            if (same)
+            {
+                return;
+            }
+
+            string url = "https://localhost:44312/api/Follow/VerifyFollow/" + username + "/" + FollowUsername;
+            WebRequest request = WebRequest.Create(url);
+
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(stream);
+            bool data = bool.Parse(reader.ReadToEnd());
+            reader.Close();
+            response.Close();
+
+            if (data)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('User is already being followed.')", true);
+            }
+            else
+            {
+                DateTime today = DateTime.Today;
+                Follow follow = new Follow(username, FollowUsername, today.ToShortDateString());
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                string obj = js.Serialize(follow);
+
+                string url2 = "https://localhost:44312/api/Follow/CreateFollow";
+                WebRequest request2 = WebRequest.Create(url2);
+                request2.Method = "POST";
+                request2.ContentType = "application/json";
+                request2.ContentLength = obj.Length;
+
+                StreamWriter writer2 = new StreamWriter(request2.GetRequestStream());
+                writer2.Write(obj);
+                writer2.Flush();
+                writer2.Close();
+
+
+                WebResponse response2 = request2.GetResponse();
+                Stream stream2 = response2.GetResponseStream();
+                StreamReader reader2 = new StreamReader(stream2);
+                bool data2 = bool.Parse(reader2.ReadToEnd());
+                reader2.Close();
+                response2.Close();
+                if (data2)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('You are now following " + FollowUsername + "')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error following user, try again later')", true);
+                }
+
+            }
 
         }
     }
