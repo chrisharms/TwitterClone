@@ -12,11 +12,13 @@
 /*Lighter Dark Blue*/
 #trendingContainer {
     background-color: #15202B;
+    border-style: solid;
+    border-color: #485159;
 }
 /*Dark Blue*/
 #HomeContainer {
     background-color: #15202B;
-    width: 70% !important;
+    width: 100% !important;
     color: white;
 }
 
@@ -85,4 +87,38 @@ body {
 }
 .jumbotron {
     background-color: #202E3A !important;
+}
+
+.searchPanel {
+    border-style: solid;
+    border-color: #485159;
+    width: 95%;
+    height: 100%;
+}
+
+.searchInput {
+    border-style: solid;
+    border-color: #865DCA;
+    width: 90%;
+    height: 10%;
+    margin-left: 2em;
+    margin-top: 1em;   
+}
+
+.searchTextBox {
+    margin-top: 5% !important;
+    margin-left: 5%;
+    width: 90% !important;
+    background-color: #202E3A !important;
+    border-color: #485159 !important;
+}
+
+#MainContent_lnkAdvancedSearch {
+    margin-left: 35%;
+    color: #865DCA;
+}
+
+#searchTitle{
+    margin-left: 40%;
+    margin-top: 1em;
 }
