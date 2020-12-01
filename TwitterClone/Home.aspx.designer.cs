@@ -13,13 +13,13 @@ namespace TwitterClone {
     public partial class Homepage {
         
         /// <summary>
-        /// repeaterTrending control.
+        /// repeaterFollow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeaterTrending;
+        protected global::System.Web.UI.WebControls.Repeater repeaterFollow;
         
         /// <summary>
         /// searchPanel control.
@@ -47,5 +47,14 @@ namespace TwitterClone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkAdvancedSearch;
+        
+        /// <summary>
+        /// repeaterTrending control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeaterTrending;
     }
 }

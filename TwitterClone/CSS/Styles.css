@@ -22,11 +22,20 @@ img {
 
 }
 /*Lighter Dark Blue*/
-#trendingContainer {
+#trendingContainer, #followContainer {
     background-color: #15202B;
     border-style: solid;
     border-color: #485159;
 }
+#trendingContainer{
+    margin-left: .5em;
+    margin-right: .5em;
+}
+
+#followContainer{
+
+}
+
 /*Dark Blue*/
 #HomeContainer {
     background-color: #15202B;
@@ -89,7 +98,6 @@ body {
 }
 
 #Greeting {
-
     border-color: #485159;
     padding-top: .5em;
     padding-bottom: .5em;
@@ -133,4 +141,13 @@ body {
 #searchTitle{
     margin-left: 40%;
     margin-top: 1em;
+}
+
+#followsTitle{
+    margin-left: 6%;
+}
+
+#Greeting {
+    border-style: solid;
+    border-color: #485159 !important;
 }

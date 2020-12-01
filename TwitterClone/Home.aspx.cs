@@ -32,7 +32,9 @@ namespace TwitterClone
             if (!IsPostBack)
             {
                 InitializeTrendingList();
+                InitializeFollowList();
             }
+
 
         }
 
@@ -48,6 +50,20 @@ namespace TwitterClone
             List<Post> uniquePosts = usersPosts.GroupBy(p => p.Id).Select(id => id.First()).ToList(); //Select only the first occurence of a post ID
             repeaterTrending.DataSource = uniquePosts;
             repeaterTrending.DataBind();
+        }
+
+        private void InitializeFollowList()
+        {
+            Exception ex = null;
+            List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
+            filter.Add(DBObjCreator.CreateFilter("Username", currentUsername, typeof(string)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetPostsByFollow", ref ex, filter);
+            List<Post> usersPosts = new List<Post>();
+            records.ForEach(r => usersPosts.Add(DBObjCreator.CreateObj<Post>(r, typeof(Post))));
+            //Needs to be changed to be trending or something
+            List<Post> uniquePosts = usersPosts.GroupBy(p => p.Id).Select(id => id.First()).ToList(); //Select only the first occurence of a post ID
+            repeaterFollow.DataSource = uniquePosts;
+            repeaterFollow.DataBind();
         }
 
 
@@ -71,25 +87,29 @@ namespace TwitterClone
             pc.PostText = post.PostText;
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
-            Exception ex = null;
-            List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
-            filter.Add(DBObjCreator.CreateFilter("PostId", post.Id, typeof(int)));
-            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetTagsByPost", ref ex, filter);
-            List<Tag> tags = new List<Tag>();
-            records.ForEach(r => tags.Add(DBObjCreator.CreateObj<Tag>(r, typeof(Tag))));
-            
-            foreach(Tag t in tags)
-            {
-                var tc = (TagControl)Page.LoadControl("TagControl.ascx");
-                tc.Text = t.TagText;
-                tc.ButtonClick += new EventHandler(Tag_ButtonClick);
-                pc.ph.Controls.Add(tc);
-            }
+            pc.PostId = post.Id;
+
         }
 
-        protected void Tag_ButtonClick(object sender, EventArgs e)
+        protected void repeaterFollow_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            
+            PostCard pc = e.Item.FindControl("postCard") as PostCard;
+            Post post = e.Item.DataItem as Post;
+
+            if (post.PostPhoto.Equals("fake.png"))
+            {
+                pc.ChangeImageVisibility(); //True by default, change to false
+            }
+            else
+            {
+                pc.PostImage = post.PostPhoto;
+            }
+
+            pc.HiddenField = post.Id.ToString();
+            pc.PostText = post.PostText;
+            pc.PostUsername = post.Username;
+            pc.Likes = post.Likes.ToString();
+            pc.PostId = post.Id;
         }
     }
 }

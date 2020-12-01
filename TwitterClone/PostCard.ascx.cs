@@ -8,6 +8,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Web.Script.Serialization;
+using TwitterClassLibrary.DBObjCreator;
+using TwitterClassLibrary;
 
 namespace TwitterClone
 {
@@ -23,7 +25,11 @@ namespace TwitterClone
             {
                 btnDeletePost.Visible = true;
             }
+
+            populateTags();
         }
+
+        public int PostId { get; set; }
 
         public string PostImage
         {
@@ -101,6 +107,34 @@ namespace TwitterClone
             }
             
             Response.Redirect("UserProfile.aspx");
+        }
+
+        protected void populateTags()
+        {
+            if (ViewState["TagList"] == null)
+            {
+                Exception ex = null;
+                List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
+                filter.Add(DBObjCreator.CreateFilter("PostId", PostId, typeof(int)));
+                List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetTagsByPost", ref ex, filter);
+                List<Tag> tags = new List<Tag>();
+                records.ForEach(r => tags.Add(DBObjCreator.CreateObj<Tag>(r, typeof(Tag))));
+                ViewState["TagList"] = tags;
+            }
+
+
+            foreach (Tag t in (List<Tag>)ViewState["TagList"])
+            {
+                var tc = (TagControl)Page.LoadControl("TagControl.ascx");
+                tc.Text = t.TagText;
+                tc.ButtonClick += new EventHandler(Tag_ButtonClick);
+                ph.Controls.Add(tc);
+            }
+        }
+
+        protected void Tag_ButtonClick(object sender, EventArgs e)
+        {
+
         }
 
         protected void lnkLike_Click(object sender, EventArgs e)

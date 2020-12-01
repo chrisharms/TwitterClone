@@ -12,11 +12,11 @@
             <div class="col-6">
                 <div id="HomeContainer" class="container text-center justify-content-center">
                     <h1 class="m-5">Welcome to Not Twitter!</h1>
-                    <h2 id="Greeting">What are people talking about right now?</h2>
-                    <div id="trendingContainer" class="justify-content-center text-center">
+                    <h2 id="Greeting">Who You're Paying Attention To</h2>
+                    <div id="followContainer" class="justify-content-center text-center">
                         <div class="row justify-content-center">
                             <div class="col-10 ">
-                                <asp:Repeater ID="repeaterTrending" runat="server" OnItemDataBound="repeaterTrending_ItemDataBound">
+                                <asp:Repeater ID="repeaterFollow" runat="server" OnItemDataBound="repeaterFollow_ItemDataBound">
                                     <ItemTemplate>
                                         <uc1:PC runat="server" ID="postCard" />
                                     </ItemTemplate>
@@ -34,13 +34,22 @@
                         <asp:TextBox ID="txtSearch" Placeholder="Enter a tag to search for..." CssClass="form-control searchTextBox" runat="server"></asp:TextBox>
                         <asp:LinkButton ID="lnkAdvancedSearch" runat="server">Advanced Search...</asp:LinkButton>
                     </div>
-                </div>
-                <div id="FollowsPanel" class="followsPanel">
-                    <h3 id="followsPannel">Who You're Paying Attention Too</h3>
-                    <div>
-
+                    <div id="FollowsPanel" class="followsPanel">
+                        <h3 id="followsTitle">What are people talking about right now?</h3>
+                        <div id="trendingContainer" class="justify-content-center text-center">
+                            <div class="row justify-content-center">
+                                <div class="col-10">
+                                    <asp:Repeater ID="repeaterTrending" runat="server" OnItemDataBound="repeaterTrending_ItemDataBound">
+                                        <ItemTemplate>
+                                            <uc1:PC runat="server" ID="postCard" />
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
