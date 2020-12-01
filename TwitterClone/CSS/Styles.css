@@ -2,10 +2,16 @@
     font-weight: bold;
     color: white;
 }
+#MainContent_lvFollows_tblFollows, #MainContent_lvFollowers_tblFollowers {
+    color: white;
+}
 @media screen and (min-width: 600px) {
     #divLogin, #divRegister, #divForgotUsername, #divForgotPassword, #MainContent_divUpdateProfile {
         width: 500px;
         color: white;
+    }
+    #MainContent_lvFollows_tblFollows, #MainContent_lvFollowers_tblFollowers {
+        width: 700px;
     }
 
 }
