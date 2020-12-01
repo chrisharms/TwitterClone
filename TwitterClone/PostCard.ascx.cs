@@ -8,6 +8,11 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Web.Script.Serialization;
+<<<<<<< HEAD
+=======
+using TwitterClassLibrary.DBObjCreator;
+>>>>>>> 11bdef2b79feeef98449e974863a64843b747b23
+using TwitterClassLibrary;
 
 namespace TwitterClone
 {
@@ -22,8 +27,14 @@ namespace TwitterClone
             if (pageName == "UserProfile")
             {
                 btnDeletePost.Visible = true;
+                btnComments.Visible = false;
+                btnFollowUser.Visible = false;
             }
+
+            populateTags();
         }
+
+        public int PostId { get; set; }
 
         public string PostImage
         {
@@ -103,7 +114,105 @@ namespace TwitterClone
             Response.Redirect("UserProfile.aspx");
         }
 
+        protected void populateTags()
+        {
+            if (ViewState["TagList"] == null)
+            {
+                Exception ex = null;
+                List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
+                filter.Add(DBObjCreator.CreateFilter("PostId", PostId, typeof(int)));
+                List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetTagsByPost", ref ex, filter);
+                List<Tag> tags = new List<Tag>();
+                records.ForEach(r => tags.Add(DBObjCreator.CreateObj<Tag>(r, typeof(Tag))));
+                ViewState["TagList"] = tags;
+            }
+
+
+            foreach (Tag t in (List<Tag>)ViewState["TagList"])
+            {
+                var tc = (TagControl)Page.LoadControl("TagControl.ascx");
+                tc.Text = t.TagText;
+                tc.ButtonClick += new EventHandler(Tag_ButtonClick);
+                ph.Controls.Add(tc);
+            }
+        }
+
+        protected void Tag_ButtonClick(object sender, EventArgs e)
+        {
+
+        }
+
         protected void lnkLike_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnFollowUser_Click(object sender, EventArgs e)
+        {
+            string username = Session["Username"].ToString();
+            string FollowUsername = postUsername.InnerText.Substring(1);
+            bool same = FollowUsername == username;
+            if (same)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('You can't follow yourself silly')", true);
+                
+            }
+            else
+            {
+                string url = "https://localhost:44312/api/Follow/VerifyFollow/" + username + "/" + FollowUsername;
+                WebRequest request = WebRequest.Create(url);
+
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(stream);
+                bool data = bool.Parse(reader.ReadToEnd());
+                reader.Close();
+                response.Close();
+
+                if (data)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('User is already being followed.')", true);
+                }
+                else
+                {
+                    DateTime today = DateTime.Today;
+                    Follow follow = new Follow(username, FollowUsername, today.ToShortDateString());
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    string obj = js.Serialize(follow);
+
+                    string url2 = "https://localhost:44312/api/Follow/CreateFollow";
+                    WebRequest request2 = WebRequest.Create(url2);
+                    request2.Method = "POST";
+                    request2.ContentType = "application/json";
+                    request2.ContentLength = obj.Length;
+
+                    StreamWriter writer2 = new StreamWriter(request2.GetRequestStream());
+                    writer2.Write(obj);
+                    writer2.Flush();
+                    writer2.Close();
+
+
+                    WebResponse response2 = request2.GetResponse();
+                    Stream stream2 = response2.GetResponseStream();
+                    StreamReader reader2 = new StreamReader(stream2);
+                    bool data2 = bool.Parse(reader2.ReadToEnd());
+                    reader2.Close();
+                    response2.Close();
+                    if (data2)
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('You are now following " + FollowUsername + "')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error following user, try again later')", true);
+                    }
+
+                }
+            }
+
+        }
+
+        protected void btnComments_Click(object sender, EventArgs e)
         {
 
         }

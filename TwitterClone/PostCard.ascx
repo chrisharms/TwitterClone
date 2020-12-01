@@ -25,7 +25,8 @@
             <asp:Label ID="lblLikes" runat="server" Text="Likes: 0" CssClass="my-4"></asp:Label>
         </div>
         <div class="row justify-content-center">
-            <asp:Button ID="btnViewComments" runat="server" Text="View Comments" CssClass="btn btn-sm btnViewComments" />
+            <asp:Button ID="btnComments" runat="server" Text="Comments" CssClass="btn btn-sm btnViewComments" OnClick="btnComments_Click" />
+            <asp:Button ID="btnFollowUser" runat="server" Text="Follow User" CssClass="btn btn-sm btn-primary ml-2" OnClick="btnFollowUser_Click" />
             <asp:Button ID="btnDeletePost" runat="server" Text="Delete Post" CssClass="btn btn-sm btn-danger ml-2" visible="false" OnClick="btnDeletePost_Click"/>
         </div>
     </div>

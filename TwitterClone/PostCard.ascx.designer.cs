@@ -94,13 +94,22 @@ namespace TwitterClone {
         protected global::System.Web.UI.WebControls.Label lblLikes;
         
         /// <summary>
-        /// btnViewComments control.
+        /// btnComments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnViewComments;
+        protected global::System.Web.UI.WebControls.Button btnComments;
+        
+        /// <summary>
+        /// btnFollowUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFollowUser;
         
         /// <summary>
         /// btnDeletePost control.

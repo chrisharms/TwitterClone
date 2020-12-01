@@ -91,7 +91,7 @@ namespace TwitterCloneAPI.Controllers
         }
 
         [HttpPost("CreateFollow")]
-        public int CreateFollow([FromBody] Follow follow)
+        public bool CreateFollow([FromBody] Follow follow)
         {
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();
@@ -102,7 +102,11 @@ namespace TwitterCloneAPI.Controllers
             cmd.Parameters.AddWithValue("@FollowDate", follow.FollowDate);
 
             int count = db.DoUpdateUsingCmdObj(cmd);
-            return count;
+            if (count > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         [HttpDelete("DeleteFollow/{Username}/{FollowUsername}")]
@@ -117,6 +121,24 @@ namespace TwitterCloneAPI.Controllers
 
             int count = db.DoUpdateUsingCmdObj(cmd);
             if (count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        [HttpGet("VerifyFollow/{Username}/{FollowUsername}")]
+        public bool VerifyFollow(string Username, string FollowUsername)
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_VerifyFollow";
+            cmd.Parameters.AddWithValue("@Username", Username);
+            cmd.Parameters.AddWithValue("@FollowUsername", FollowUsername);
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 return true;
             }
