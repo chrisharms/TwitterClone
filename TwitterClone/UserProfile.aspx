@@ -216,8 +216,9 @@
             <asp:Button runat="server" CssClass="btn btn-danger" ID="btnCancelFollowers" Text="Back" OnClick="btnCancelFollows_Click"/>
         </div>
     </div>
-    <div runat="server" class="container" id="divPostContainer" >
-        <h3 class="mt-5 mb-3 mr-3">My Posts</h3>
+    
+    <div runat="server" class="container text-center" id="divPostContainer" >
+        <h3 class="mt-5 mb-3 mr-3 text-left">My Posts</h3>
         <div class="row justify-content-center">
                 <div class="col-2"></div>
                 <div class="col-8 ">
