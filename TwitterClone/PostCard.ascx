@@ -4,7 +4,8 @@
     <asp:Image ID="imgPost" CssClass="card-img-top mx-auto rounded mt-2" Width="70%" Height="200px" runat="server" />
     <div class="card-body">
         <asp:HiddenField runat="server" ID="fldPostId"/>
-        <h5 id="postUsername" class="card-header" runat="server">Card title</h5>
+        <h4 id="postUsername" class="card-header" runat="server">Card title</h4>
+        <h5 id="postDate" runat="server"></h5>
         <div id="cardText" class="row mt-4 mb-4" style=" width: 100%">
             <div class="col-2"></div>
             <div class="col-8">

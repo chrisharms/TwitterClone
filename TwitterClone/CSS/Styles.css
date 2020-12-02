@@ -32,10 +32,6 @@ img {
     margin-right: .5em;
 }
 
-#followContainer{
-
-}
-
 /*Dark Blue*/
 #HomeContainer {
     background-color: #15202B;
@@ -112,8 +108,9 @@ body {
 .searchPanel {
     border-style: solid;
     border-color: #485159;
-    width: 95%;
+    width: 98%;
     height: 100%;
+    margin-left: 1%;
 }
 
 .searchInput {
@@ -122,7 +119,8 @@ body {
     width: 90%;
     height: 10%;
     margin-left: 2em;
-    margin-top: 1em;   
+    margin-top: 1em;
+    margin-bottom: 2em;
 }
 
 .searchTextBox {
@@ -131,10 +129,11 @@ body {
     width: 90% !important;
     background-color: #202E3A !important;
     border-color: #485159 !important;
+    color: white;
 }
 
 #MainContent_lnkAdvancedSearch {
-    margin-left: 35%;
+    margin-left: 40%;
     color: #865DCA;
 }
 
@@ -144,10 +143,26 @@ body {
 }
 
 #followsTitle{
-    margin-left: 6%;
+    margin-top: 1em;
+    margin-bottom: .5em;    
+    margin-left: 21%;
 }
 
 #Greeting {
     border-style: solid;
     border-color: #485159 !important;
+}
+
+.btnSearch{
+    margin-left: 45%;
+    background-color: #865DCA !important;
+    color: white;
+    border-style: none !important;
+    margin-bottom: 1em;
+    margin-top: .5em;
+}
+
+#MainContent_lblStartDate, #MainContent_lblEndDate{
+    margin-top: .5rem;
+    margin-left: 1rem;
 }

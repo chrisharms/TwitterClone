@@ -52,6 +52,12 @@ namespace TwitterClone
             set { postUsername.InnerText = "@" + value; }
         }
 
+        public string PostDate
+        {
+            get { return postDate.InnerText; }
+            set { postDate.InnerText = $"Posted: {value}"; }
+        }
+
         public string TagList
         {
             get { return tagList.InnerHtml; }

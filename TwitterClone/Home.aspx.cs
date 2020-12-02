@@ -14,9 +14,12 @@ namespace TwitterClone
 {
     public partial class Homepage : System.Web.UI.Page
     {
+        bool advSearch;
         string currentUsername;
         User currentUser;
         private const bool TRENDING = true;
+        private const int ALL = 0;
+        private const int FOLLOW = 1;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -34,20 +37,23 @@ namespace TwitterClone
             }
             if (!IsPostBack)
             {
+                Session["AdvSearch"] = false;
                 if (Session["Username"] != null)
                 {
                     InitializeTrendingList();
                     InitializeFollowList();
                     InitializeAllPostsList();
                     repeaterAll.Visible = false;
+                    Session["CurrentView"] = FOLLOW;
                 }
                 if (Session["Guest"] != null)
                 {
                     Greeting.InnerText = "All Posts";
                     InitializeAllPostsList();
                     InitializeTrendingList();
-                    InitializeFollowList();
                     btnFollowPosts.Visible = false;
+                    Session["CurrentView"] = ALL;
+
                 }
             }
 
@@ -83,25 +89,12 @@ namespace TwitterClone
 
         private void InitializeAllPostsList()
         {
-            //string url = "https://localhost:44312/api/Post/GetAllPosts";
-            //WebRequest request = WebRequest.Create(url);
-            //WebResponse response = request.GetResponse();
-            //Stream stream = response.GetResponseStream();
-            //StreamReader reader = new StreamReader(stream);
-            //String data = reader.ReadToEnd();
-            //JavaScriptSerializer js = new JavaScriptSerializer();
-
-            //List<Post> posts = js.Deserialize<List<Post>>(data);
-
-            //stream.Close();
-            //reader.Close();
-            //repeaterFollow.DataSource = posts;
-            //repeaterFollow.DataBind();
 
             Exception ex = null;
             List<object[]> records = DBObjCreator.ReadDBObjs("TP_GetAllPosts", ref ex);
             List<Post> posts = new List<Post>();
             records.ForEach(r => posts.Add(DBObjCreator.CreateObj<Post>(r, typeof(Post))));
+            Session["AllPosts"] = posts;
             repeaterAll.DataSource = posts;
             repeaterAll.DataBind();
         }
@@ -128,6 +121,7 @@ namespace TwitterClone
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
             pc.PostId = post.Id;
+            pc.PostDate = post.PostDate;
             if (Session["Username"] != null)
             {
                 pc.DisableFollowButton(Session["Username"].ToString());
@@ -156,6 +150,7 @@ namespace TwitterClone
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
             pc.PostId = post.Id;
+            pc.PostDate = post.PostDate;
             if (Session["Username"] != null)
             {
                 pc.DisableFollowButton(Session["Username"].ToString());
@@ -200,15 +195,108 @@ namespace TwitterClone
         protected void btnAllPosts_Click(object sender, EventArgs e)
         {
             Greeting.InnerText = "All Posts";
+            Session["CurrentView"] = ALL; 
             repeaterAll.Visible = true;
+            repeaterAll.Items.OfType<RepeaterItem>().ToList().ForEach(i => i.Visible = true);
             repeaterFollow.Visible = false;
+            upAllRepeater.Update();
         }
 
         protected void btnFollowPosts_Click(object sender, EventArgs e)
         {
             Greeting.InnerText = "Who You're Following";
+            Session["CurrentView"] = FOLLOW;
             repeaterAll.Visible = false;
             repeaterFollow.Visible = true;
+        }
+
+        protected void lnkAdvancedSearch_Click(object sender, EventArgs e)
+        {
+            divAdvSearch.Visible = !divAdvSearch.Visible;
+            advSearch = !advSearch;
+            Session["AdvSearch"] = advSearch;
+            upSearch.Update();
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+ 
+            string tagValue = txtSearch.Text;
+            if(string.IsNullOrEmpty(tagValue) && (bool)Session["AdvSearch"] == false)
+            {
+                lblSearchError.Visible = true;
+                lblSearchError.Text = "Must have at least one search critera";
+                return;
+            }
+            else if(!string.IsNullOrEmpty(tagValue))
+            {
+                foreach (RepeaterItem i in repeaterAll.Items)
+                {
+                    PostCard pc = i.FindControl("postCard") as PostCard;
+                    if (string.IsNullOrEmpty(pc.TagList) || !pc.TagList.Contains($"{tagValue}"))
+                    {
+                        i.Visible = false;
+                    }
+                }
+            }
+
+            if ((bool)Session["AdvSearch"])
+            {
+
+                if (!string.IsNullOrEmpty(txtUsername.Text))
+                {
+
+                    string usernameFilter = txtUsername.Text;
+                    foreach(RepeaterItem i in repeaterAll.Items)
+                    {
+                        PostCard pc = i.FindControl("postCard") as PostCard;
+                        if (!pc.PostUsername.Equals($"@{usernameFilter}"))
+                        {
+                            i.Visible = false;
+                        }
+                    }
+                    //(repeaterAll.Items.OfType<RepeaterItem>().ToList()
+                    //    .Where(i => !(i.DataItem as Post).Username.Equals(usernameFilter)) as List<RepeaterItem>)
+                    //    .ForEach(i => i.Visible = false);
+                }
+                if(!string.IsNullOrEmpty(txtLikes.Text) && int.Parse(txtLikes.Text) > 0)
+                {
+                    int likes = int.Parse(txtLikes.Text);
+
+                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
+                        .Where(i => (i.DataItem as Post).Likes < likes) as List<RepeaterItem>)
+                        .ForEach(i => i.Visible = false);
+                }
+                if(ddlImage.SelectedIndex == 1)
+                {
+                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
+                        .Where(i => (i.DataItem as Post).PostPhoto.Equals("fake.png")) as List<RepeaterItem>)
+                        .ForEach(i => i.Visible = false);
+                }
+                if (ddlImage.SelectedIndex == 2)
+                {
+                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
+                        .Where(i => !(i.DataItem as Post).PostPhoto.Equals("fake.png")) as List<RepeaterItem>)
+                        .ForEach(i => i.Visible = false);
+                }
+                if (!string.IsNullOrEmpty(txtFilterStartDate.Text))
+                {
+                    DateTime startDate = DateTime.Parse(txtFilterStartDate.Text);
+                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
+                        .Where(i => DateTime.Parse((i.DataItem as Post).PostDate) > startDate) as List<RepeaterItem>)
+                        .ForEach(i => i.Visible = false);
+                }
+                if (!string.IsNullOrEmpty(txtFilterEndDate.Text))
+                {
+                    DateTime endDate = DateTime.Parse(txtFilterEndDate.Text);
+                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
+                        .Where(i => DateTime.Parse((i.DataItem as Post).PostDate) < endDate) as List<RepeaterItem>)
+                        .ForEach(i => i.Visible = false);
+                }
+
+            }
+            upAllRepeater.Update();
+
         }
     }
 }
