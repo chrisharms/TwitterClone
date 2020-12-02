@@ -9,7 +9,7 @@ img {
     object-fit: cover;
 }
 @media screen and (min-width: 600px) {
-    #divLogin, #divRegister, #divForgotUsername, #divForgotPassword, #MainContent_divUpdateProfile {
+    #divLogin, #divRegister, #divForgotUsername, #divForgotPassword, #MainContent_divUpdateProfile, #MainContent_containerNewPost {
         width: 500px;
         color: white;
     }

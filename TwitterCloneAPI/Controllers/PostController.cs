@@ -99,23 +99,41 @@ namespace TwitterCloneAPI.Controllers
 
 
         [HttpPost("CreatePost")] //https://localhost:44312/api/Post/CreatePost
-        public string CreatePost(string text, string image, string username)
+        public int CreatePost([FromBody] Post post)
         {
-            Exception ex = null;
-            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
-            filter.Add(DBObjCreator.CreateFilter("Username", $"{username}", typeof(string)));
-            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUser", ref ex, filter);
+            //Exception ex = null;
+            //List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
+            //filter.Add(DBObjCreator.CreateFilter("Username", $"{post.Username}", typeof(string)));
+            //List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetUser", ref ex, filter);
 
-            if (records.Count != 1)//Username/password combo not valid
-            {
-                return "Invalid username.";
-            }
-            int likes = 0;
-            string time = DateTime.Today.ToString("d");
-            Post newPost = new Post(-1, time, text, image, username, likes);
-            List<(bool, int, Exception)> errors = new List<(bool, int, Exception)>();
-            bool result = DBObjWriter.GenericWriteToDB<Post>(newPost, "TP_CreatePost", ref errors, new List<string>() { "Id" });
-            return "Post succesfully created";
+            //if (records.Count != 1)//Username/password combo not valid
+            //{
+            //    return false;
+            //}
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_CreatePost";
+            cmd.Parameters.AddWithValue("@PostText", post.PostText);
+            cmd.Parameters.AddWithValue("@PostPhoto", post.PostPhoto);
+            cmd.Parameters.AddWithValue("@Username", post.Username);
+            cmd.Parameters.AddWithValue("@PostDate", post.PostDate);
+            cmd.Parameters.AddWithValue("@Likes", post.Likes);
+            SqlParameter param = new SqlParameter("@ID", DbType.Int32);
+            param.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(param);
+
+            db.DoUpdateUsingCmdObj(cmd);
+
+            return int.Parse(cmd.Parameters["@ID"].Value.ToString());
+
+
+            //int likes = 0;
+            //string time = DateTime.Today.ToShortDateString();
+            //Post newPost = new Post(-1, time, post.PostText, post.PostPhoto, post.Username, likes);
+            //List<(bool, int, Exception)> errors = new List<(bool, int, Exception)>();
+            //bool result = DBObjWriter.GenericWriteToDB<Post>(newPost, "TP_CreatePost", ref errors, new List<string>() { "Id" });
+            //return result;
         }
 
         [HttpPost("DeletePost")] //https://localhost:44312/api/Post/DeletePost/10
