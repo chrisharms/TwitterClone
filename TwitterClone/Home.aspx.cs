@@ -46,8 +46,8 @@ namespace TwitterClone
                     Greeting.InnerText = "All Posts";
                     InitializeAllPostsList();
                     InitializeTrendingList();
-                    InitializeFollowList();
                     btnFollowPosts.Visible = false;
+                    btnNewPost.Visible = false;
                 }
             }
 
@@ -209,6 +209,11 @@ namespace TwitterClone
             Greeting.InnerText = "Who You're Following";
             repeaterAll.Visible = false;
             repeaterFollow.Visible = true;
+        }
+
+        protected void btnNewPost_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

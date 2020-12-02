@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <asp:TextBox runat="server" ID="txtLogPassword" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtLogPassword" CssClass="form-control" TextMode="Password"></asp:TextBox>
                     <small id="smlLogPasswordHelp" runat="server" class="form-text text-danger"></small>
                 </div>
                 <div class="form-check">
@@ -84,7 +84,7 @@
                 </div>
                 <div class="form-group" runat="server" id="divUpdatePassword" visible="false">
                     <label>Enter your new password</label><br />
-                    <asp:TextBox runat="server" CssClass="form-control" ID="txtNewPassword"></asp:TextBox>
+                    <asp:TextBox runat="server" CssClass="form-control" ID="txtNewPassword" TextMode="Password"></asp:TextBox>
                     <small id="smlNewPasswordHelp" runat="server" class="form-text text-danger"></small>
                     <div class="form-group text-center">
                         <asp:Button runat="server" CssClass="btn btn-danger m-3" Text="Update Password" ID="btnUpdatePassword" OnClick="btnUpdatePassword_Click" />
@@ -100,7 +100,7 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <asp:TextBox runat="server" ID="txtRegPassword" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtRegPassword" CssClass="form-control" TextMode="Password"></asp:TextBox>
                     <small id="smlRegPasswordHelp" runat="server" class="form-text text-danger"></small>
                 </div>
                 <div class="form-group">
