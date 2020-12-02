@@ -9,10 +9,14 @@
         <div id="contentRow" class="row">
             <div class="col-3">
             </div>
-            <div class="col-6">
+            <div class="col-5">
                 <div id="HomeContainer" class="container text-center justify-content-center">
                     <h1 class="m-5">Welcome to Not Twitter!</h1>
-                    <h2 id="Greeting">Who You're Paying Attention To</h2>
+                    <div class="d-flex justify-content-center">
+                        <asp:button runat="server" CssClass="btn btn-primary" Text="All Posts" ID="btnAllPosts" OnClick="btnAllPosts_Click"/>
+                        <asp:button runat="server" CssClass="btn btn-primary ml-2" Text="My Followers Posts" ID="btnFollowPosts" OnClick="btnFollowPosts_Click"/>
+                    </div>
+                    <h2 runat="server" id="Greeting">Who You're Following</h2>
                     <div id="followContainer" class="justify-content-center text-center">
                         <div class="row justify-content-center">
                             <div class="col-10 ">
@@ -27,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-4">
                 <div id="searchPanel" class="searchPanel" runat="server">
                     <h3 id="searchTitle">Search</h3>
                     <div id="searchInput" class="searchInput">

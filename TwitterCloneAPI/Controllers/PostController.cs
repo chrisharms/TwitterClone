@@ -143,5 +143,27 @@ namespace TwitterCloneAPI.Controllers
                 return "Failed to delete post, please try again later";
             }
         }
+
+        [HttpGet("GetAllPosts")]
+        public List<Post> GetAllPosts()
+        {
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TP_GetAllPosts";
+
+            DataSet ds = db.GetDataSetUsingCmdObj(cmd);
+            List<Post> posts = new List<Post>();
+            DataTable postTable = ds.Tables[0];
+            for (int i=0; i < postTable.Rows.Count; i++)
+            {
+                DataRow row = postTable.Rows[i];
+                string id = row["Id"].ToString();
+                Post post = new Post(Int32.Parse(row["Id"].ToString()), row["PostDate"].ToString(), row["PostText"].ToString(), row["PostPhoto"].ToString(), row["Username"].ToString(), Int32.Parse(row["Likes"].ToString()));
+                posts.Add(post);
+            }
+
+            return posts;
+        }
     }
 }

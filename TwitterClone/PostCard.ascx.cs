@@ -83,6 +83,11 @@ namespace TwitterClone
             }
             
         }
+        public void EnableGuestRestrictions()
+        {
+            btnFollowUser.Visible = false;
+            lnkLike.Enabled = false;
+        }
 
         protected void btnDeletePost_Click(object sender, EventArgs e)
         {

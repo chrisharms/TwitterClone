@@ -13,6 +13,33 @@ namespace TwitterClone {
     public partial class Homepage {
         
         /// <summary>
+        /// btnAllPosts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAllPosts;
+        
+        /// <summary>
+        /// btnFollowPosts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFollowPosts;
+        
+        /// <summary>
+        /// Greeting control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Greeting;
+        
+        /// <summary>
         /// repeaterFollow control.
         /// </summary>
         /// <remarks>

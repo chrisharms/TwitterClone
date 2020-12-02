@@ -33,7 +33,7 @@
                             <div class="navbar-text mr-3" style="font-weight: bold;">
                                 <asp:Label ID="lblUserInfo" runat="server" CssClass="user-info-label">Test</asp:Label>
                             </div>
-                            <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="nav-item nav-link">Login</asp:HyperLink>
+                            <asp:LinkButton ID="lnkBtnLogin" runat="server" CssClass="nav-item nav-link" OnClick="lnkBtnLogin_Click">Login</asp:LinkButton>
                             <asp:LinkButton ID="lnkBtnLogout" runat="server" CssClass="nav-item nav-link" OnClick="btnLogout_Click">Logout</asp:LinkButton>
 
                         </div>

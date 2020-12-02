@@ -154,7 +154,11 @@
                     <LayoutTemplate>
                         <h3 class="mt-5 mb-5 mr-3">My Follows</h3>
                         <table runat="server" class="table" id="tblFollows">
-                            <tr runat="server" id="itemPlaceholder"></tr>
+                            <tr runat="server" id="itemPlaceholder">
+                                <th>Username</th>
+                                <th>Follow Date</th>
+                            </tr>
+                            
                         </table>
                         
                     </LayoutTemplate>
@@ -193,7 +197,10 @@
                     <LayoutTemplate>
                         <h3 class="mt-5 mb-5 mr-3">My Followers</h3>
                         <table runat="server" class="table" id="tblFollowers">
-                            <tr runat="server" id="itemPlaceholder"></tr>
+                            <tr runat="server" id="itemPlaceholder">
+                                <td>Username</td>
+                                <td>Follow Date</td>
+                            </tr>
                         </table>
                         
                     </LayoutTemplate>

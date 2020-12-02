@@ -18,7 +18,7 @@ namespace TwitterClone
             if (Session["Username"] != null)
             {
                 lblUserInfo.Text = Session["Username"].ToString();
-                lnkLogin.Visible = false;
+                lnkBtnLogin.Visible = false;
                 string username = Session["Username"].ToString();
                 UserService.UserService proxy = new UserService.UserService();
                 bool verified = proxy.IsUserVerified(username);
@@ -42,6 +42,12 @@ namespace TwitterClone
             {
                 Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
             }
+            Response.Redirect("Login.aspx");
+        }
+
+        protected void lnkBtnLogin_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
             Response.Redirect("Login.aspx");
         }
     }
