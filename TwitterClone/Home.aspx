@@ -12,10 +12,10 @@
             </div>
             <div class="col-5">
                 <div id="HomeContainer" class="container text-center justify-content-center">
-                    <h1 class="m-5">Welcome to Not Twitter!</h1>
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center m-5">
                         <asp:Button runat="server" CssClass="btn btn-primary" Text="All Posts" ID="btnAllPosts" OnClick="btnAllPosts_Click" />
-                        <asp:Button runat="server" CssClass="btn btn-primary ml-2" Text="My Followers Posts" ID="btnFollowPosts" OnClick="btnFollowPosts_Click" />
+                        <asp:Button runat="server" CssClass="btn btn-primary ml-2" Text="My Follower's Posts" ID="btnFollowPosts" OnClick="btnFollowPosts_Click" />
+                        <asp:Button runat="server" CssClass="btn btn-danger ml-2" Text="New Post" ID="btnNewPost" OnClick="btnNewPost_Click" />
                     </div>
                     <h2 runat="server" id="Greeting">Who You're Following</h2>
                     <div id="followContainer" class="justify-content-center text-center">

@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace TwitterCloneAPI.Controllers
 {
-    [Route("api/TagController")]
+    [Route("api/Tag")]
 
     public class TagController : Controller
     {
@@ -40,7 +40,7 @@ namespace TwitterCloneAPI.Controllers
         }
 
         [HttpPost("CreateTag")]
-        public int CreateTag([FromBody] Tag tag)
+        public bool CreateTag([FromBody] Tag tag)
         {
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();
@@ -48,9 +48,14 @@ namespace TwitterCloneAPI.Controllers
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@PostId", tag.PostId);
             cmd.Parameters.AddWithValue("@TagText", tag.TagText);
+            cmd.Parameters.AddWithValue("@Trending", tag.Trending);
 
             int count = db.DoUpdateUsingCmdObj(cmd);
-            return count;
+            if (count < 1)
+            {
+                return false;
+            }
+            return true;
         }
 
         [HttpDelete("DeleteTagsByPost/{PostId}")]

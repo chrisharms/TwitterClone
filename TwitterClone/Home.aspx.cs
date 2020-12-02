@@ -54,6 +54,7 @@ namespace TwitterClone
                     btnFollowPosts.Visible = false;
                     Session["CurrentView"] = ALL;
 
+                    btnNewPost.Visible = false;
                 }
             }
 
@@ -297,6 +298,182 @@ namespace TwitterClone
             }
             upAllRepeater.Update();
 
+        protected void btnNewPost_Click(object sender, EventArgs e)
+        {
+            containerNewPost.Visible = true;
+            containerPosts.Visible = false;
+        }
+
+        protected void btnCreatePost_Click(object sender, EventArgs e)
+        {
+            string postText = txtPostText.Text;
+            string postPhoto = txtPostPhoto.Text;
+            string tag1 = txtTag1.Text;
+            string tag2 = txtTag2.Text;
+            string tag3 = txtTag3.Text;
+            string username = Session["Username"].ToString();
+            string postDate = DateTime.Today.ToShortDateString();
+
+            if (postText == "")
+            {
+                smlPostTextHelp.InnerText = "Please add text to the post";
+                return;
+            }
+            if (postPhoto == "")
+            {
+                postPhoto = "fake.png";
+            }
+
+            Post post = new Post(0, postDate, postText, postPhoto, username, 0);
+            string url = "https://localhost:44312/api/Post/CreatePost";
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            string obj = js.Serialize(post);
+
+            WebRequest request = WebRequest.Create(url);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.ContentLength = obj.Length;
+
+            StreamWriter writer = new StreamWriter(request.GetRequestStream());
+            writer.Write(obj);
+            writer.Flush();
+            writer.Close();
+
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(stream);
+            int postId = int.Parse(reader.ReadToEnd());
+            reader.Close();
+            response.Close();
+
+            if (postId == 0)
+            {
+                smlPostTag3Help.InnerText = "Error creating new post, try again later.";
+                return;
+            }
+
+            bool good = true;
+
+            if (tag1 != "")
+            {
+                if (tag1.Substring(0, 1) != "#")
+                {
+                    tag1 = "#" + tag1;
+                }
+
+                Tag tag = new Tag(0, tag1, postId, false);
+                string url2 = "https://localhost:44312/api/Tag/CreateTag";
+                string obj2 = js.Serialize(tag);
+
+                WebRequest request2 = WebRequest.Create(url2);
+                request2.Method = "POST";
+                request2.ContentType = "application/json";
+                request2.ContentLength = obj2.Length;
+
+                StreamWriter writer2 = new StreamWriter(request2.GetRequestStream());
+                writer2.Write(obj2);
+                writer2.Flush();
+                writer2.Close();
+
+                WebResponse response2 = request2.GetResponse();
+                Stream stream2 = response2.GetResponseStream();
+                StreamReader reader2 = new StreamReader(stream2);
+                bool tagCreated = bool.Parse(reader2.ReadToEnd());
+                reader2.Close();
+                response2.Close();
+
+                if (!tagCreated)
+                {
+                    smlPostTag1Help.InnerText = "Error creating tag, please try again later";
+                    good = false;
+                }
+            }
+
+            if (tag2 != "")
+            {
+                if (tag2.Substring(0, 1) != "#")
+                {
+                    tag2 = "#" + tag2;
+                }
+
+                Tag tag = new Tag(0, tag2, postId, false);
+                string url3 = "https://localhost:44312/api/Tag/CreateTag";
+                string obj3 = js.Serialize(tag);
+
+                WebRequest request3 = WebRequest.Create(url3);
+                request3.Method = "POST";
+                request3.ContentType = "application/json";
+                request3.ContentLength = obj3.Length;
+
+                StreamWriter writer3 = new StreamWriter(request3.GetRequestStream());
+                writer3.Write(obj3);
+                writer3.Flush();
+                writer3.Close();
+
+                WebResponse response3 = request3.GetResponse();
+                Stream stream3 = response3.GetResponseStream();
+                StreamReader reader3 = new StreamReader(stream3);
+                bool tagCreated = bool.Parse(reader3.ReadToEnd());
+                reader3.Close();
+                response3.Close();
+
+                if (!tagCreated)
+                {
+                    smlPostTag2Help.InnerText = "Error creating tag, please try again later";
+                    good = false;
+                }
+            }
+
+            if (tag3 != "")
+            {
+                if (tag3.Substring(0, 1) != "#")
+                {
+                    tag3 = "#" + tag3;
+                }
+
+                Tag tag = new Tag(0, tag3, postId, false);
+                string url4 = "https://localhost:44312/api/Tag/CreateTag";
+                string obj4 = js.Serialize(tag);
+
+                WebRequest request4 = WebRequest.Create(url4);
+                request4.Method = "POST";
+                request4.ContentType = "application/json";
+                request4.ContentLength = obj4.Length;
+
+                StreamWriter writer4 = new StreamWriter(request4.GetRequestStream());
+                writer4.Write(obj4);
+                writer4.Flush();
+                writer4.Close();
+
+                WebResponse response4 = request4.GetResponse();
+                Stream stream4 = response4.GetResponseStream();
+                StreamReader reader4 = new StreamReader(stream4);
+                bool tagCreated = bool.Parse(reader4.ReadToEnd());
+                reader4.Close();
+                response4.Close();
+
+                if (!tagCreated)
+                {
+                    smlPostTag3Help.InnerText = "Error creating tag, please try again later";
+                    good = false;
+                }
+
+
+            }
+            if (!good)
+            {
+                return;
+            }
+            else
+            {
+                Response.Redirect("Home.aspx");
+            }
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            containerPosts.Visible = true;
+            containerNewPost.Visible = false;
         }
     }
 }
