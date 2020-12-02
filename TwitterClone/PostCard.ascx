@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PostCard.ascx.cs" Inherits="TwitterClone.PostCard" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PostCard.ascx.cs" Inherits="TwitterClone.PostCard" EnableViewState="True" %>
 
 <div class="card border-secondary mx-auto" style="margin-top: 3em">
     <asp:Image ID="imgPost" CssClass="card-img-top mx-auto rounded mt-2" Width="70%" Height="200px" runat="server" />

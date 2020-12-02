@@ -15,7 +15,8 @@ namespace TwitterClone
 {
     public partial class PostCard : System.Web.UI.UserControl
     {
-        
+        protected void Page_Init(object sender, EventArgs e) {
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,7 +26,6 @@ namespace TwitterClone
             {
                 btnDeletePost.Visible = true;
             }
-
             populateTags();
         }
 
@@ -124,19 +124,20 @@ namespace TwitterClone
 
         protected void populateTags()
         {
+            List<Tag> tags = new List<Tag>();
+            
             if (ViewState["TagList"] == null)
             {
                 Exception ex = null;
                 List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
                 filter.Add(DBObjCreator.CreateFilter("PostId", PostId, typeof(int)));
                 List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetTagsByPost", ref ex, filter);
-                List<Tag> tags = new List<Tag>();
                 records.ForEach(r => tags.Add(DBObjCreator.CreateObj<Tag>(r, typeof(Tag))));
                 ViewState["TagList"] = tags;
             }
+            tags = (List<Tag>)ViewState["TagList"];
 
-
-            foreach (Tag t in (List<Tag>)ViewState["TagList"])
+            foreach (Tag t in tags)
             {
                 var tc = (TagControl)Page.LoadControl("TagControl.ascx");
                 tc.Text = t.TagText;
