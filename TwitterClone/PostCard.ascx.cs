@@ -26,10 +26,13 @@ namespace TwitterClone
             {
                 btnDeletePost.Visible = true;
             }
+
             populateTags();
+
         }
 
         public int PostId { get; set; }
+
 
         public string PostImage
         {
@@ -125,7 +128,7 @@ namespace TwitterClone
         protected void populateTags()
         {
             List<Tag> tags = new List<Tag>();
-            
+
             if (ViewState["TagList"] == null)
             {
                 Exception ex = null;
@@ -135,6 +138,9 @@ namespace TwitterClone
                 records.ForEach(r => tags.Add(DBObjCreator.CreateObj<Tag>(r, typeof(Tag))));
                 ViewState["TagList"] = tags;
             }
+
+
+
             tags = (List<Tag>)ViewState["TagList"];
 
             foreach (Tag t in tags)

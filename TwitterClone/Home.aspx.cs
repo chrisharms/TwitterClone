@@ -38,12 +38,15 @@ namespace TwitterClone
                 {
                     InitializeTrendingList();
                     InitializeFollowList();
+                    InitializeAllPostsList();
+                    repeaterAll.Visible = false;
                 }
                 if (Session["Guest"] != null)
                 {
                     Greeting.InnerText = "All Posts";
                     InitializeAllPostsList();
                     InitializeTrendingList();
+                    InitializeFollowList();
                     btnFollowPosts.Visible = false;
                 }
             }
@@ -73,7 +76,6 @@ namespace TwitterClone
             List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetPostsByFollow", ref ex, filter);
             List<Post> usersPosts = new List<Post>();
             records.ForEach(r => usersPosts.Add(DBObjCreator.CreateObj<Post>(r, typeof(Post))));
-            //Needs to be changed to be trending or something
             List<Post> uniquePosts = usersPosts.GroupBy(p => p.Id).Select(id => id.First()).ToList(); //Select only the first occurence of a post ID
             repeaterFollow.DataSource = uniquePosts;
             repeaterFollow.DataBind();
@@ -97,15 +99,11 @@ namespace TwitterClone
             //repeaterFollow.DataBind();
 
             Exception ex = null;
-            // List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
-            // filter.Add(DBObjCreator.CreateFilter("Trending", TRENDING, typeof(bool)));
             List<object[]> records = DBObjCreator.ReadDBObjs("TP_GetAllPosts", ref ex);
             List<Post> posts = new List<Post>();
             records.ForEach(r => posts.Add(DBObjCreator.CreateObj<Post>(r, typeof(Post))));
-            //Needs to be changed to be trending or something
-            // List<Post> uniquePosts = usersPosts.GroupBy(p => p.Id).Select(id => id.First()).ToList(); //Select only the first occurence of a post ID
-            repeaterFollow.DataSource = posts;
-            repeaterFollow.DataBind();
+            repeaterAll.DataSource = posts;
+            repeaterAll.DataBind();
         }
 
 
@@ -126,7 +124,6 @@ namespace TwitterClone
             }
 
             
-            pc.HiddenField = post.Id.ToString();
             pc.PostText = post.PostText;
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
@@ -155,7 +152,6 @@ namespace TwitterClone
                 pc.PostImage = post.PostPhoto;
             }
 
-            pc.HiddenField = post.Id.ToString();
             pc.PostText = post.PostText;
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
@@ -171,16 +167,48 @@ namespace TwitterClone
 
         }
 
+        protected void repeaterAll_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            PostCard pc = e.Item.FindControl("postCard") as PostCard;
+            Post post = e.Item.DataItem as Post;
+
+            if (post.PostPhoto.Equals("fake.png"))
+            {
+                pc.ChangeImageVisibility(); //True by default, change to false
+            }
+            else
+            {
+                pc.PostImage = post.PostPhoto;
+            }
+
+            pc.PostText = post.PostText;
+            pc.PostUsername = post.Username;
+            pc.Likes = post.Likes.ToString();
+            pc.PostId = post.Id;
+            if (Session["Username"] != null)
+            {
+                pc.DisableFollowButton(Session["Username"].ToString());
+            }
+            if (Session["Guest"] != null)
+            {
+                pc.EnableGuestRestrictions();
+            }
+
+        }
+
+
         protected void btnAllPosts_Click(object sender, EventArgs e)
         {
             Greeting.InnerText = "All Posts";
-            InitializeAllPostsList();
+            repeaterAll.Visible = true;
+            repeaterFollow.Visible = false;
         }
 
         protected void btnFollowPosts_Click(object sender, EventArgs e)
         {
             Greeting.InnerText = "Who You're Following";
-            InitializeFollowList();
+            repeaterAll.Visible = false;
+            repeaterFollow.Visible = true;
         }
     }
 }
