@@ -17,7 +17,7 @@ namespace TwitterClone
             }
             if (Session["Username"] != null)
             {
-                lblUserInfo.Text = Session["Username"].ToString();
+                lblUserInfo.Text = "@" + Session["Username"].ToString();
                 lnkBtnLogin.Visible = false;
                 string username = Session["Username"].ToString();
                 UserService.UserService proxy = new UserService.UserService();
