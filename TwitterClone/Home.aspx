@@ -45,10 +45,10 @@
                     <ContentTemplate>
                         <div id="searchPanel" class="searchPanel" runat="server">
                             <asp:Label ID="lblSearchError" runat="server" Text="" Visible="false"></asp:Label>
-                            <h3 id="searchTitle">Search</h3>
-                            <div id="searchInput" class="searchInput">
+                            <h3 id="searchTitle" class="text-center">Search</h3>
+                            <div id="searchInput" class="searchInput mx-auto">
                                 <asp:TextBox ID="txtSearch" Placeholder="Enter a tag to search for..." CssClass="form-control searchTextBox" runat="server"></asp:TextBox>
-                                <asp:LinkButton ID="lnkAdvancedSearch" runat="server" OnClick="lnkAdvancedSearch_Click">Advanced Search...</asp:LinkButton>
+                                <asp:LinkButton ID="lnkAdvancedSearch" CssClass="ml-4 mt-5" runat="server" OnClick="lnkAdvancedSearch_Click">Advanced Search</asp:LinkButton>
                                 <div id="divAdvSearch" class="form-group advSearch" visible="false" runat="server">
                                     <asp:TextBox ID="txtUsername" runat="server" placeholder="Username" CssClass="form-control searchTextBox"></asp:TextBox>
                                     <asp:TextBox ID="txtLikes" runat="server" placeholder="Number of likes" TextMode="Number" CssClass="form-control searchTextBox"></asp:TextBox>
@@ -75,13 +75,16 @@
                                     </div>
                                 </div>
                                 <br />
-                                <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btnSearch btn-sm" OnClick="btnSearch_Click" />
+                                <div class=" d-flex form-group justify-content-center">
+                                    <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btnSearch btn-sm" OnClick="btnSearch_Click" />
+                                </div>
+                                
                             </div>
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
                 <div id="FollowsPanel" class="followsPanel">
-                    <h3 id="followsTitle">What are people talking about right now?</h3>
+                    <h3 id="followsTitle" class="text-center mt-4">What's Trending?</h3>
                     <div id="trendingContainer" class="justify-content-center text-center">
                         <div class="row justify-content-center">
                             <div class="col-10">

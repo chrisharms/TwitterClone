@@ -315,23 +315,12 @@ namespace TwitterClone
                 pc.PostImage = post.PostPhoto;
             }
 
+            pc.PostDate = post.PostDate;
+            pc.PostId = post.Id;
             pc.PostText = post.PostText;
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
-            Exception ex = null;
-            List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
-            filter.Add(DBObjCreator.CreateFilter("PostId", post.Id, typeof(int)));
-            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_GetTagsByPost", ref ex, filter);
-            List<Tag> tags = new List<Tag>();
-            records.ForEach(r => tags.Add(DBObjCreator.CreateObj<Tag>(r, typeof(Tag))));
-
-            foreach (Tag t in tags)
-            {
-                var tc = (TagControl)Page.LoadControl("TagControl.ascx");
-                tc.Text = t.TagText;
-                tc.ButtonClick += new EventHandler(Tag_ButtonClick);
-                pc.ph.Controls.Add(tc);
-            }
+            
         }
 
         private void Tag_ButtonClick(object sender, EventArgs e)
