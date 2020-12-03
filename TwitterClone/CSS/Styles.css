@@ -17,14 +17,14 @@ img {
         width: 700px;
     }
     .card {
-        width: 500px;
+        width: 100%;
     }
 
 }
 /*Lighter Dark Blue*/
 #trendingContainer, #followContainer {
     background-color: #15202B;
-    border-style: solid;
+
     border-color: #485159;
 }
 #trendingContainer{
@@ -106,16 +106,17 @@ body {
 }
 
 .searchPanel {
-    border-style: solid;
+
     border-color: #485159;
-    width: 98%;
+
     height: 100%;
-    margin-left: 1%;
 }
 
 .searchInput {
     border-style: solid;
+    border-radius: .25rem;
     border-color: #865DCA;
+    border-width: thin;
     width: 90%;
     height: auto;
     margin-left: 2.6em;
@@ -124,7 +125,7 @@ body {
 }
 
 .searchTextBox {
-    margin-top: 5% !important;
+    margin-top: 8% !important;
     margin-left: 5%;
     width: 90% !important;
     background-color: #202E3A !important;
@@ -133,7 +134,7 @@ body {
 }
 
 #MainContent_lnkAdvancedSearch {
-    margin-left: 40%;
+
     color: #865DCA;
 }
 
@@ -142,11 +143,7 @@ body {
     margin-top: 1em;
 }
 
-#followsTitle{
-    margin-top: 1em;
-    margin-bottom: .5em;    
-    margin-left: 21%;
-}
+
 
 #Greeting {
     border-style: solid;
@@ -154,7 +151,7 @@ body {
 }
 
 .btnSearch{
-    margin-left: 45%;
+
     background-color: #865DCA !important;
     color: white;
     border-style: none !important;
