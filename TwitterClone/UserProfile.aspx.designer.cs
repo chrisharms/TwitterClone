@@ -418,6 +418,15 @@ namespace TwitterClone {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFollowsContainer;
         
         /// <summary>
+        /// upFollows control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upFollows;
+        
+        /// <summary>
         /// lvFollows control.
         /// </summary>
         /// <remarks>

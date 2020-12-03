@@ -148,17 +148,20 @@
     </div>
     <div class="container " id="divFollowsContainer" runat="server" visible="false">
         <div class="d-flex justify-content-center">
-            <asp:UpdatePanel runat="server">
+            <asp:UpdatePanel runat="server" ID="upFollows" UpdateMode="Conditional">
             <ContentTemplate>
+                <h3 class="mt-5 mb-5 mr-3">My Follows</h3>
                 <asp:ListView ID="lvFollows" runat="server" OnItemCommand="lvFollows_ItemCommand">
                     <LayoutTemplate>
-                        <h3 class="mt-5 mb-5 mr-3">My Follows</h3>
+                        
                         <table runat="server" class="table" id="tblFollows">
-                            <tr runat="server" id="itemPlaceholder">
-                                <th>Username</th>
-                                <th>Follow Date</th>
+                            <tr runat="server">
+                                <th runat="server">Username</th>
+                                <th runat="server">Follow Date</th>
+                                <th></th>
                             </tr>
-                            
+                            <tr runat="server" id="itemPlaceholder">
+                            </tr>
                         </table>
                         
                     </LayoutTemplate>
@@ -171,14 +174,14 @@
                                 <asp:Label runat="server" ID="lblFollowDate" Text='<%#Eval("FollowDate") %>'></asp:Label>
                             </td>
                             <td>
-                                <asp:Button runat="server" CssClass="btn-sm btn-danger" ID="btnDeleteFollow" Text="Remove Follow" CommandName="Remove"/>
+                                <asp:Button runat="server" CssClass="btn-sm btn-danger" ID="btnDeleteFollow" Text="Remove Follow" CommandName="Remove Follow"/>
                             </td>
                         </tr>
                     </ItemTemplate>
                 </asp:ListView>
             </ContentTemplate>
             <Triggers>
-
+                <asp:AsyncPostBackTrigger ControlID="lvFollows" EventName="ItemCommand"/>
             </Triggers>
         </asp:UpdatePanel>
             
@@ -193,13 +196,18 @@
     <div class="container" id="divFollowersContainer" runat="server" visible="false">
         <div class="d-flex justify-content-center">
             <div>
+                <h3 class="mt-5 mb-5 mr-3">My Followers</h3>
                 <asp:ListView ID="lvFollowers" runat="server" OnItemCommand="lvFollowers_ItemCommand">
                     <LayoutTemplate>
-                        <h3 class="mt-5 mb-5 mr-3">My Followers</h3>
+                        
                         <table runat="server" class="table" id="tblFollowers">
+                            <tr runat="server">
+                                <th runat="server">Username</th>
+                                <th runat="server">Follow Date</th>
+                                <th></th>
+                            </tr>
                             <tr runat="server" id="itemPlaceholder">
-                                <td>Username</td>
-                                <td>Follow Date</td>
+                                
                             </tr>
                         </table>
                         
