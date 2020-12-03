@@ -32,7 +32,7 @@ namespace TwitterClone
         }
 
         public int PostId {
-            get { return int.Parse(fldPostId.Value); }
+            get {return string.IsNullOrEmpty(fldPostId.Value) ? -1 : int.Parse(fldPostId.Value); }
             set { fldPostId.Value = value.ToString(); }
         }
 
@@ -104,7 +104,19 @@ namespace TwitterClone
         public void EnableGuestRestrictions()
         {
             btnFollowUser.Visible = false;
+            lnkLike.Enabled = false;  
+        }
+
+        public void EnableCommentRestrictions()
+        {
+            btnFollowUser.Visible = false;
             lnkLike.Enabled = false;
+            btnComments.Visible = false;
+            btnComments.Enabled = false;
+            btnFollowUser.Enabled = false;
+            imgPost.Visible = false;
+            heartIcon.Visible = false;
+            likesRow.Visible = false;
         }
 
         protected void btnDeletePost_Click(object sender, EventArgs e)
@@ -172,6 +184,8 @@ namespace TwitterClone
         [Category("Action")]
         [Description("Invoked when user clicks tag button")]
         public event EventHandler TagSearch;
+
+
 
         protected void Tag_ButtonClick(object sender, EventArgs e)
         {
@@ -249,9 +263,14 @@ namespace TwitterClone
             }
         }
 
+        [Browsable(true)]
+        [Category("Action")]
+        [Description("Invoked when user clicksComment button")]
+        public event EventHandler ViewComments;
+
         protected void btnComments_Click(object sender, EventArgs e)
         {
-
+            ViewComments?.Invoke(this, e);
         }
 
         protected void btnFollowUser_Click(object sender, EventArgs e)

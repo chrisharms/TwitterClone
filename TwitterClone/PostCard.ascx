@@ -18,11 +18,10 @@
                 <asp:PlaceHolder ID="phTagList" runat="server"></asp:PlaceHolder>
             </div>
         </div>
-        <div class="row ml-1">
+        <div class="row ml-1" id="likesRow" runat="server">
             <asp:LinkButton runat="server" ID="lnkLike" OnClick="lnkLike_Click">
                 <asp:Image ID="heartIcon" CssClass="my-4 mr-2" runat="server" ImageUrl="~/Images/1024px-Heart_corazón.svg.png" Width="30px" Height="30px"/>
             </asp:LinkButton>
-            
             <asp:Label ID="lblLikes" runat="server" Text="Likes: 0" CssClass="my-4"></asp:Label>
         </div>
         <div class="row justify-content-center">

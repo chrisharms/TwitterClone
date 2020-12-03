@@ -134,12 +134,11 @@ body {
 }
 
 #MainContent_lnkAdvancedSearch {
-
     color: #865DCA;
+    margin-left: 42%;
 }
 
 #searchTitle{
-    margin-left: 43%;
     margin-top: 1em;
 }
 

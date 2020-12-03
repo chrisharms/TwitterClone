@@ -8,22 +8,22 @@ namespace TwitterClassLibrary
     [Serializable]
     public class Comment
     {
-        public int Id;
-        public int CommentUsername;
-        public int CommentPostId;
-        public string CommentText;
+        public int Id { get; set; }
+        public string CommentUsername { get; set; }
+        public int CommentPostId { get; set; }
+        public string CommentText { get; set; }
 
         public Comment()
         {
 
         }
 
-        public Comment(int id, int commentUsername, int commentPostId, string commenTText)
+        public Comment(int id, string commentUsername, int commentPostId, string commentText)
         {
             Id = id;
             CommentUsername = commentUsername;
             CommentPostId = commentPostId;
-            CommentText = commenTText;
+            CommentText = commentText;
         }
 
     }

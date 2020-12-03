@@ -33,6 +33,22 @@
                                                 <uc1:PC runat="server" ID="postCard" />
                                             </ItemTemplate>
                                         </asp:Repeater>
+                                        <!-- Comments Start -->
+                                        <div id="divComments" runat="server" visible="false">
+                                            <asp:Repeater ID="repeaterComments" runat="server" OnItemDataBound="repeaterComments_ItemDataBound">
+                                                <ItemTemplate>
+                                                    <uc1:PC runat="server" ID="postCard" />
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                            <asp:Button ID="btnCreateNewComment" runat="server" Text="Add Comment" CssClass="btn btn-sm btnViewComments" OnClick="btnCreateNewComment_Click" />
+
+                                            <div id="divCreateComment" runat="server" visible="false" style="margin-top: 1rem;">
+                                                <textarea id="taComment" cols="50" rows="5" class="form-control" runat="server"></textarea>
+                                                <asp:Button ID="btnAddNewComment" runat="server" Text="Submit" OnClick="btnAddNewComment_Click" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Comments End -->
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                             </div>
@@ -48,7 +64,7 @@
                             <h3 id="searchTitle" class="text-center">Search</h3>
                             <div id="searchInput" class="searchInput mx-auto">
                                 <asp:TextBox ID="txtSearch" Placeholder="Enter a tag to search for..." CssClass="form-control searchTextBox" runat="server"></asp:TextBox>
-                                <asp:LinkButton ID="lnkAdvancedSearch" CssClass="ml-4 mt-5" runat="server" OnClick="lnkAdvancedSearch_Click">Advanced Search</asp:LinkButton>
+                                <asp:LinkButton ID="lnkAdvancedSearch" CssClass="mt-5" runat="server" OnClick="lnkAdvancedSearch_Click">Advanced Search</asp:LinkButton>
                                 <div id="divAdvSearch" class="form-group advSearch" visible="false" runat="server">
                                     <asp:TextBox ID="txtUsername" runat="server" placeholder="Username" CssClass="form-control searchTextBox"></asp:TextBox>
                                     <asp:TextBox ID="txtLikes" runat="server" placeholder="Number of likes" TextMode="Number" CssClass="form-control searchTextBox"></asp:TextBox>
@@ -78,7 +94,7 @@
                                 <div class=" d-flex form-group justify-content-center">
                                     <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btnSearch btn-sm" OnClick="btnSearch_Click" />
                                 </div>
-                                
+
                             </div>
                         </div>
                     </ContentTemplate>
@@ -133,4 +149,6 @@
             <asp:Button runat="server" Text="Cancel" ID="btnCancel" CssClass="btn btn-danger ml-2" OnClick="btnCancel_Click" />
         </div>
     </div>
+
+
 </asp:Content>

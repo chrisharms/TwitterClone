@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TwitterClassLibrary;
 using TwitterClassLibrary.DBObjCreator;
+using TwitterClassLibrary.DBObjWriter;
 
 namespace TwitterClone
 {
@@ -57,7 +58,7 @@ namespace TwitterClone
                     btnNewPost.Visible = false;
                 }
             }
-            SetupTagSearch();
+            SetupPostCardEvents();
         }
 
         private void InitializeTrendingList()
@@ -99,12 +100,13 @@ namespace TwitterClone
             repeaterAll.DataBind();
         }
 
-        protected void SetupTagSearch()
+        protected void SetupPostCardEvents()
         {
             foreach (RepeaterItem i in repeaterAll.Items)
             {
                 PostCard pc = i.FindControl("postCard") as PostCard;
                 pc.TagSearch += new EventHandler(TagSearchEvent);
+                pc.ViewComments += new EventHandler(ViewCommentsEvent);
             }
         }
 
@@ -113,6 +115,31 @@ namespace TwitterClone
             TagControl tag = sender as TagControl;
             TagSearch(tag.Text);
             upAllRepeater.Update();
+        }
+
+        protected void ViewCommentsEvent(object sender, EventArgs e)
+        {
+            PostCard parentPost = sender as PostCard;
+            int postId = parentPost.PostId;
+            Session["CurrentParentPost"] = postId;
+            Exception ex = null;
+            foreach (RepeaterItem i in repeaterAll.Items)
+            {
+                PostCard pc = i.FindControl("postCard") as PostCard;
+                if (pc.PostId != postId)
+                {
+                    i.Visible = false;
+                }
+            }
+            divComments.Visible = true;
+            List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
+            filter.Add(DBObjCreator.CreateFilter("CommentPostId", postId, typeof(int)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_FindCommentsForPost", ref ex, filter);
+            List<Comment> comments = new List<Comment>();
+            records.ForEach(r => comments.Add(DBObjCreator.CreateObj<Comment>(r, typeof(Comment))));
+            repeaterComments.DataSource = comments;
+            repeaterComments.DataBind();
+
         }
 
         //Bind post objects to Custom User Controls
@@ -537,6 +564,65 @@ namespace TwitterClone
         {
             containerPosts.Visible = true;
             containerNewPost.Visible = false;
+        }
+
+
+
+        protected void repeaterComments_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            PostCard pc = e.Item.FindControl("postCard") as PostCard;
+            Comment comment = e.Item.DataItem as Comment;
+
+            pc.PostText = comment.CommentText;
+            pc.PostUsername = comment.CommentUsername;
+            pc.EnableCommentRestrictions();
+            pc.PostId = comment.Id;
+            if (Session["Username"] != null)
+            {
+                pc.DisableFollowButton(Session["Username"].ToString());
+            }
+            if (Session["Guest"] != null)
+            {
+                pc.EnableGuestRestrictions();
+            }
+        }
+
+        protected void btnAddNewComment_Click(object sender, EventArgs e)
+        {
+            List<(bool, int, Exception)> ex = new List<(bool, int, Exception)>();
+            int postId = (int)Session["CurrentParentPost"];
+            string commentText = taComment.InnerText;
+
+            if (string.IsNullOrEmpty(commentText))
+            {
+                taComment.InnerText = "Must add text to your comment";
+                return;
+            }
+            else if (commentText.Length > 500)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Comment is too long(Max 500 characters)')", true);
+            }
+
+            Comment newComment = new Comment(-1, currentUser.Username, postId, commentText);
+            bool result = DBObjWriter.GenericWriteToDB<Comment>(newComment, "TP_CreateComment", ref ex, new List<string> { "Id" });
+
+
+            if (result)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Comment created succesfully')", true);
+                Response.Redirect("Home.aspx");
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('There was an error creating your comment, please try again')", true);
+                return;
+            }
+        }
+
+        protected void btnCreateNewComment_Click(object sender, EventArgs e)
+        {
+            divCreateComment.Visible = !divCreateComment.Visible;
+            upAllRepeater.Update();
         }
     }
 }
