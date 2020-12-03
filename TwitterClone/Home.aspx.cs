@@ -57,8 +57,7 @@ namespace TwitterClone
                     btnNewPost.Visible = false;
                 }
             }
-
-
+            SetupTagSearch();
         }
 
         private void InitializeTrendingList()
@@ -100,10 +99,20 @@ namespace TwitterClone
             repeaterAll.DataBind();
         }
 
-        protected void TagButtonClick(object sender, EventArgs e)
+        protected void SetupTagSearch()
         {
-            LinkButton tag = sender as LinkButton;
+            foreach (RepeaterItem i in repeaterAll.Items)
+            {
+                PostCard pc = i.FindControl("postCard") as PostCard;
+                pc.TagSearch += new EventHandler(TagSearchEvent);
+            }
+        }
+
+        protected void TagSearchEvent(object sender, EventArgs e)
+        {
+            TagControl tag = sender as TagControl;
             TagSearch(tag.Text);
+            upAllRepeater.Update();
         }
 
         //Bind post objects to Custom User Controls
@@ -128,7 +137,7 @@ namespace TwitterClone
             pc.PostId = post.Id;
             pc.PostDate = post.PostDate;
             pc.PostTagList = new List<string>();
-            pc.TagSearch += new EventHandler(TagButtonClick);
+            pc.TagSearch += new EventHandler(TagSearchEvent);
             if (Session["Username"] != null)
             {
                 pc.DisableFollowButton(Session["Username"].ToString());
@@ -159,7 +168,7 @@ namespace TwitterClone
             pc.PostId = post.Id;
             pc.PostDate = post.PostDate;
             pc.PostTagList = new List<string>();
-            pc.TagSearch += new EventHandler(TagButtonClick);
+            pc.TagSearch += new EventHandler(TagSearchEvent);
             if (Session["Username"] != null)
             {
                 pc.PostImage = post.PostPhoto;
@@ -193,7 +202,7 @@ namespace TwitterClone
             pc.PostId = post.Id;
             pc.PostDate = post.PostDate;
             pc.PostTagList = new List<string>();
-            pc.TagSearch += new EventHandler(TagButtonClick);
+            pc.TagSearch += new EventHandler(TagSearchEvent);
             if (Session["Username"] != null)
             {
                 pc.DisableFollowButton(Session["Username"].ToString());
@@ -237,7 +246,8 @@ namespace TwitterClone
             foreach (RepeaterItem i in repeaterAll.Items)
             {
                 PostCard pc = i.FindControl("postCard") as PostCard;
-                if (pc.PostTagList.Count == 0 || !pc.PostTagList.Contains($"{tag}"))
+                int index = pc.PostTagList.IndexOf(tag.Trim());
+                if (pc.PostTagList.Count == 0 || index == -1)
                 {
                     i.Visible = false;
                 }

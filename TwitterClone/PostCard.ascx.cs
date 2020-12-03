@@ -171,12 +171,12 @@ namespace TwitterClone
 
         [Browsable(true)]
         [Category("Action")]
-        [Description("Invoked when user clicks button")]
+        [Description("Invoked when user clicks tag button")]
         public event EventHandler TagSearch;
 
         protected void Tag_ButtonClick(object sender, EventArgs e)
         {
-            TagSearch?.Invoke(this, e);
+            TagSearch?.Invoke(sender, e);
         }
 
         protected void lnkLike_Click(object sender, EventArgs e)
