@@ -50,6 +50,7 @@
     <Compile Include="DBObjCreator.cs" />
     <Compile Include="DBObjWriter.cs" />
     <Compile Include="Models\Follow.cs" />
+    <Compile Include="Models\Like.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="PasswordEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

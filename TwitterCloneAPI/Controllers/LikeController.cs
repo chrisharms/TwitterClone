@@ -33,23 +33,23 @@ namespace TwitterCloneAPI.Controllers
             return false;
         }
 
-        [HttpPost("AddLike/{username}/{postId}")]
-        public bool AddLike(string username, int postId)
+        [HttpPost("AddLike")]
+        public bool AddLike([FromBody] Like like)
         {
             DBConnect db = new DBConnect();
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "TP_CreateLike";
-            cmd.Parameters.AddWithValue("@Username", username);
-            cmd.Parameters.AddWithValue("@PostId", postId);
+            cmd.Parameters.AddWithValue("@Username", like.Username);
+            cmd.Parameters.AddWithValue("@PostId", like.PostId);
 
             int count = db.DoUpdateUsingCmdObj(cmd);
             if (count > 0)
             {
                 SqlCommand cmd2 = new SqlCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "TP_IncrementLikeCount";
-                cmd.Parameters.AddWithValue("@PostId", postId);
+                cmd2.CommandType = CommandType.StoredProcedure;
+                cmd2.CommandText = "TP_IncrementLikeCount";
+                cmd2.Parameters.AddWithValue("@PostId", like.PostId);
 
                 int count2 = db.DoUpdateUsingCmdObj(cmd2);
                 if (count > 0) {
@@ -77,9 +77,9 @@ namespace TwitterCloneAPI.Controllers
             if (count > 0)
             {
                 SqlCommand cmd2 = new SqlCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "TP_DecrementLikeCount";
-                cmd.Parameters.AddWithValue("@PostId", postId);
+                cmd2.CommandType = CommandType.StoredProcedure;
+                cmd2.CommandText = "TP_DecrementLikeCount";
+                cmd2.Parameters.AddWithValue("@PostId", postId);
 
                 int count2 = db.DoUpdateUsingCmdObj(cmd2);
                 if (count > 0)

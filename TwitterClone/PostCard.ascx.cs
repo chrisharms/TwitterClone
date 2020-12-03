@@ -31,7 +31,10 @@ namespace TwitterClone
 
         }
 
-        public int PostId { get; set; }
+        public int PostId {
+            get { return int.Parse(fldPostId.Value); }
+            set { fldPostId.Value = value.ToString(); }
+        }
 
 
         public string PostImage
@@ -89,11 +92,6 @@ namespace TwitterClone
         public void ChangeImageVisibility()
         {
             imgPost.Visible = !imgPost.Visible;
-        }
-        public string HiddenField
-        {
-            get { return fldPostId.Value; }
-            set { fldPostId.Value = value; }
         }
         public void DisableFollowButton(string username)
         {
@@ -182,7 +180,73 @@ namespace TwitterClone
 
         protected void lnkLike_Click(object sender, EventArgs e)
         {
+            int postId = PostId;
+            string text = PostText;
+            string username = Session["Username"].ToString();
+            string[] likeStuff = Likes.Split(':');
+            int likes = int.Parse(likeStuff[1]);
 
+            string url = "https://localhost:44312/api/Like/CheckLike/" + username + "/" + postId;
+            WebRequest request = WebRequest.Create(url);
+
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(stream);
+            bool data = bool.Parse(reader.ReadToEnd());
+            reader.Close();
+            response.Close();
+
+            if (data)
+            {
+                // User has liked
+                string url2 = "https://localhost:44312/api/Like/DeleteLike/" + username + "/" + postId;
+                WebRequest request2 = WebRequest.Create(url2);
+                request2.Method = "DELETE";
+                request2.ContentType = "application/json";
+
+                WebResponse response2 = request2.GetResponse();
+                Stream stream2 = response2.GetResponseStream();
+                StreamReader reader2 = new StreamReader(stream2);
+                bool data2 = bool.Parse(reader2.ReadToEnd());
+                reader2.Close();
+                response2.Close();
+
+                if (data2)
+                {
+                    Likes = (likes - 1).ToString();
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Post has been unliked')", true);
+                }
+            }
+            else
+            {
+                // User hasnt liked
+                Like like = new Like(0, postId, username);
+                JavaScriptSerializer js = new JavaScriptSerializer();
+
+                string url2 = "https://localhost:44312/api/Like/AddLike";
+                WebRequest request2 = WebRequest.Create(url2);
+                request2.Method = "POST";
+                request2.ContentType = "application/json";
+                request2.ContentLength = js.Serialize(like).Length;
+
+                StreamWriter writer2 = new StreamWriter(request2.GetRequestStream());
+                writer2.Write(js.Serialize(like));
+                writer2.Flush();
+                writer2.Close();
+
+                WebResponse response2 = request2.GetResponse();
+                Stream stream2 = response2.GetResponseStream();
+                StreamReader reader2 = new StreamReader(stream2);
+                bool data2 = bool.Parse(reader2.ReadToEnd());
+                reader2.Close();
+                response2.Close();
+                if (data2)
+                {
+                    Likes = (likes + 1).ToString();
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Post has been liked')", true);
+                }
+
+            }
         }
 
         protected void btnComments_Click(object sender, EventArgs e)
