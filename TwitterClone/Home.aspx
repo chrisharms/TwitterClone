@@ -97,7 +97,7 @@
             </div>
         </div>
     </div>
-    <div class="container-flex" id="containerNewPost" runat="server" visible="false">
+    <div class="container" id="containerNewPost" runat="server" visible="false">
         <h3 class="mb-5">Create a New Post!</h3>
         <div class="form-group">
             <label>Post Text</label>

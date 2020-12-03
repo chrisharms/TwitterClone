@@ -100,7 +100,11 @@ namespace TwitterClone
             repeaterAll.DataBind();
         }
 
-
+        protected void TagButtonClick(object sender, EventArgs e)
+        {
+            LinkButton tag = sender as LinkButton;
+            TagSearch(tag.Text);
+        }
 
         //Bind post objects to Custom User Controls
         protected void repeaterTrending_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -123,6 +127,8 @@ namespace TwitterClone
             pc.Likes = post.Likes.ToString();
             pc.PostId = post.Id;
             pc.PostDate = post.PostDate;
+            pc.PostTagList = new List<string>();
+            pc.TagSearch += new EventHandler(TagButtonClick);
             if (Session["Username"] != null)
             {
                 pc.DisableFollowButton(Session["Username"].ToString());
@@ -152,6 +158,8 @@ namespace TwitterClone
             pc.Likes = post.Likes.ToString();
             pc.PostId = post.Id;
             pc.PostDate = post.PostDate;
+            pc.PostTagList = new List<string>();
+            pc.TagSearch += new EventHandler(TagButtonClick);
             if (Session["Username"] != null)
             {
                 pc.PostImage = post.PostPhoto;
@@ -184,6 +192,8 @@ namespace TwitterClone
             pc.Likes = post.Likes.ToString();
             pc.PostId = post.Id;
             pc.PostDate = post.PostDate;
+            pc.PostTagList = new List<string>();
+            pc.TagSearch += new EventHandler(TagButtonClick);
             if (Session["Username"] != null)
             {
                 pc.DisableFollowButton(Session["Username"].ToString());
@@ -222,6 +232,19 @@ namespace TwitterClone
             upSearch.Update();
         }
 
+        private void TagSearch(string tag)
+        {
+            foreach (RepeaterItem i in repeaterAll.Items)
+            {
+                PostCard pc = i.FindControl("postCard") as PostCard;
+                if (pc.PostTagList.Count == 0 || !pc.PostTagList.Contains($"{tag}"))
+                {
+                    i.Visible = false;
+                }
+            }
+        }
+
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             repeaterAll.Items.OfType<RepeaterItem>().ToList().ForEach(i => i.Visible = true);
@@ -239,14 +262,8 @@ namespace TwitterClone
                     tagValue = $"#{tagValue}";
                 }
 
-                foreach (RepeaterItem i in repeaterAll.Items)
-                {
-                    PostCard pc = i.FindControl("postCard") as PostCard;
-                    if (string.IsNullOrEmpty(pc.TagList) || !pc.TagList.Contains($"{tagValue}") )
-                    {
-                        i.Visible = false;
-                    }
-                }
+                TagSearch(tagValue);
+
             }
 
             if (divAdvSearch.Visible)

@@ -15,8 +15,7 @@ namespace TwitterClone
 {
     public partial class PostCard : System.Web.UI.UserControl
     {
-        protected void Page_Init(object sender, EventArgs e) {
-        }
+        private List<string> tags = new List<string>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,6 +37,17 @@ namespace TwitterClone
         {
             get { return imgPost.ImageUrl; }
             set { imgPost.ImageUrl = value; }
+        }
+
+        public List<string> PostTagList
+        {
+            get { return tags; }
+            set { tags = value; }
+        }
+
+        public void AddTag(string tag)
+        {
+            PostTagList.Add(tag);
         }
 
         public string PostText
@@ -153,14 +163,20 @@ namespace TwitterClone
             {
                 var tc = (TagControl)Page.LoadControl("TagControl.ascx");
                 tc.Text = t.TagText;
+                AddTag(t.TagText);
                 tc.ButtonClick += new EventHandler(Tag_ButtonClick);
                 ph.Controls.Add(tc);
             }
         }
 
+        [Browsable(true)]
+        [Category("Action")]
+        [Description("Invoked when user clicks button")]
+        public event EventHandler TagSearch;
+
         protected void Tag_ButtonClick(object sender, EventArgs e)
         {
-
+            TagSearch?.Invoke(this, e);
         }
 
         protected void lnkLike_Click(object sender, EventArgs e)
@@ -225,6 +241,7 @@ namespace TwitterClone
                 if (data2)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('You are now following " + FollowUsername + "')", true);
+                    Response.Redirect("Home.aspx");
                 }
                 else
                 {
