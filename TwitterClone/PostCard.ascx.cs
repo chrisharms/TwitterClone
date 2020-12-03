@@ -24,6 +24,7 @@ namespace TwitterClone
             if (pageName == "UserProfile")
             {
                 btnDeletePost.Visible = true;
+                btnFollowUser.Visible = false;
             }
 
             populateTags();
