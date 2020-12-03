@@ -200,6 +200,10 @@ namespace TwitterClone
             string[] likeStuff = Likes.Split(':');
             int likes = int.Parse(likeStuff[1]);
 
+            List<PostCard> allControls = new List<PostCard>();
+            GetControlList<PostCard>(Page.Controls, allControls);
+
+
             string url = "https://localhost:44312/api/Like/CheckLike/" + username + "/" + postId;
             WebRequest request = WebRequest.Create(url);
 
@@ -227,7 +231,17 @@ namespace TwitterClone
 
                 if (data2)
                 {
-                    Likes = (likes - 1).ToString();
+                    foreach (PostCard childControl in allControls)
+                    {
+                        if (childControl.PostId == postId)
+                        {
+                            string[] likeStuff2 = childControl.Likes.Split(':');
+                            int likes2 = int.Parse(likeStuff[1]);
+                            childControl.Likes = (likes2 - 1).ToString();
+                        }
+                        
+                    }
+                    // Likes = (likes - 1).ToString();
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Post has been unliked')", true);
                 }
             }
@@ -256,7 +270,17 @@ namespace TwitterClone
                 response2.Close();
                 if (data2)
                 {
-                    Likes = (likes + 1).ToString();
+                    foreach (PostCard childControl in allControls)
+                    {
+                        if (childControl.PostId == postId)
+                        {
+                            string[] likeStuff3 = childControl.Likes.Split(':');
+                            int likes3 = int.Parse(likeStuff[1]);
+                            childControl.Likes = (likes3 + 1).ToString();
+                        }
+                        
+                    }
+                    // Likes = (likes + 1).ToString();
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Post has been liked')", true);
                 }
 
@@ -334,6 +358,20 @@ namespace TwitterClone
 
             }
 
+        }
+
+        private void GetControlList<T>(ControlCollection controlCollection, List<T> resultCollection)
+        where T : Control
+        {
+            foreach (Control control in controlCollection)
+            {
+                //if (control.GetType() == typeof(T))
+                if (control is T) // This is cleaner
+                    resultCollection.Add((T)control);
+
+                if (control.HasControls())
+                    GetControlList(control.Controls, resultCollection);
+            }
         }
     }
 }

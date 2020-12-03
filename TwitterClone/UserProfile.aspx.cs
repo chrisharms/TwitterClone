@@ -386,7 +386,7 @@ namespace TwitterClone
 
         protected void lvFollows_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
-            if (e.CommandName == "Remove")
+            if (e.CommandName == "Remove Follow")
             {
                 Label lblFollowUsername = (Label)e.Item.FindControl("lblFollowUsername");
                 string followUsername = lblFollowUsername.Text;
@@ -413,20 +413,26 @@ namespace TwitterClone
                 else
                 {
                     
-                    string url2 = "https://localhost:44312/api/Follow/GetFollowsByUser/" + username;
-                    WebRequest request2 = WebRequest.Create(url2);
-                    WebResponse response2 = request2.GetResponse();
-                    Stream stream2 = response2.GetResponseStream();
-                    StreamReader reader2 = new StreamReader(stream2);
-                    String data2 = reader2.ReadToEnd();
+                    Button sendControl = (Button)e.Item.FindControl("btnDeleteFollow");
+                    sendControl.Parent.Parent.Visible = false;
 
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    List<Follow> followList = js.Deserialize<List<Follow>>(data2);
-                    stream.Close();
-                    reader.Close();
 
-                    lvFollows.DataSource = followList;
-                    lvFollows.DataBind();
+                    //string url2 = "https://localhost:44312/api/Follow/GetFollowsByUser/" + username;
+                    //WebRequest request2 = WebRequest.Create(url2);
+                    //WebResponse response2 = request2.GetResponse();
+                    //Stream stream2 = response2.GetResponseStream();
+                    //StreamReader reader2 = new StreamReader(stream2);
+                    //String data2 = reader2.ReadToEnd();
+
+                    //JavaScriptSerializer js = new JavaScriptSerializer();
+                    //List<Follow> followList = js.Deserialize<List<Follow>>(data2);
+                    //stream.Close();
+                    //reader.Close();
+
+                    //lvFollows.DataSource = followList;
+                    //lvFollows.DataBind();
+
+                    upFollows.Update();
                 }
 
             }
