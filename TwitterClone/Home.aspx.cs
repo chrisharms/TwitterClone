@@ -117,7 +117,7 @@ namespace TwitterClone
                 pc.PostImage = post.PostPhoto;
             }
 
-            
+
             pc.PostText = post.PostText;
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
@@ -154,6 +154,7 @@ namespace TwitterClone
             pc.PostDate = post.PostDate;
             if (Session["Username"] != null)
             {
+                pc.PostImage = post.PostPhoto;
                 pc.DisableFollowButton(Session["Username"].ToString());
             }
             if (Session["Guest"] != null)
@@ -170,6 +171,7 @@ namespace TwitterClone
 
             if (post.PostPhoto.Equals("fake.png"))
             {
+                pc.PostImage = post.PostPhoto;
                 pc.ChangeImageVisibility(); //True by default, change to false
             }
             else
@@ -181,6 +183,7 @@ namespace TwitterClone
             pc.PostUsername = post.Username;
             pc.Likes = post.Likes.ToString();
             pc.PostId = post.Id;
+            pc.PostDate = post.PostDate;
             if (Session["Username"] != null)
             {
                 pc.DisableFollowButton(Session["Username"].ToString());
@@ -196,7 +199,7 @@ namespace TwitterClone
         protected void btnAllPosts_Click(object sender, EventArgs e)
         {
             Greeting.InnerText = "All Posts";
-            Session["CurrentView"] = ALL; 
+            Session["CurrentView"] = ALL;
             repeaterAll.Visible = true;
             repeaterAll.Items.OfType<RepeaterItem>().ToList().ForEach(i => i.Visible = true);
             repeaterFollow.Visible = false;
@@ -221,34 +224,39 @@ namespace TwitterClone
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
- 
+            repeaterAll.Items.OfType<RepeaterItem>().ToList().ForEach(i => i.Visible = true);
             string tagValue = txtSearch.Text;
-            if(string.IsNullOrEmpty(tagValue) && (bool)Session["AdvSearch"] == false)
+            if (string.IsNullOrEmpty(tagValue) && divAdvSearch.Visible == false)
             {
                 lblSearchError.Visible = true;
                 lblSearchError.Text = "Must have at least one search critera";
                 return;
             }
-            else if(!string.IsNullOrEmpty(tagValue))
+            else if (!string.IsNullOrEmpty(tagValue))
             {
+                if(!(tagValue.ToCharArray()[0] == '#'))
+                {
+                    tagValue = $"#{tagValue}";
+                }
+
                 foreach (RepeaterItem i in repeaterAll.Items)
                 {
                     PostCard pc = i.FindControl("postCard") as PostCard;
-                    if (string.IsNullOrEmpty(pc.TagList) || !pc.TagList.Contains($"{tagValue}"))
+                    if (string.IsNullOrEmpty(pc.TagList) || !pc.TagList.Contains($"{tagValue}") )
                     {
                         i.Visible = false;
                     }
                 }
             }
 
-            if ((bool)Session["AdvSearch"])
+            if (divAdvSearch.Visible)
             {
 
                 if (!string.IsNullOrEmpty(txtUsername.Text))
                 {
 
                     string usernameFilter = txtUsername.Text;
-                    foreach(RepeaterItem i in repeaterAll.Items)
+                    foreach (RepeaterItem i in repeaterAll.Items)
                     {
                         PostCard pc = i.FindControl("postCard") as PostCard;
                         if (!pc.PostUsername.Equals($"@{usernameFilter}"))
@@ -256,47 +264,75 @@ namespace TwitterClone
                             i.Visible = false;
                         }
                     }
-                    //(repeaterAll.Items.OfType<RepeaterItem>().ToList()
-                    //    .Where(i => !(i.DataItem as Post).Username.Equals(usernameFilter)) as List<RepeaterItem>)
-                    //    .ForEach(i => i.Visible = false);
+
                 }
-                if(!string.IsNullOrEmpty(txtLikes.Text) && int.Parse(txtLikes.Text) > 0)
+                if (!string.IsNullOrEmpty(txtLikes.Text) && int.Parse(txtLikes.Text) > 0)
                 {
                     int likes = int.Parse(txtLikes.Text);
 
-                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
-                        .Where(i => (i.DataItem as Post).Likes < likes) as List<RepeaterItem>)
-                        .ForEach(i => i.Visible = false);
+                    foreach (RepeaterItem i in repeaterAll.Items)
+                    {
+                        PostCard pc = i.FindControl("postCard") as PostCard;
+                        int pcLikes = int.Parse(pc.Likes.Split(':')[1].TrimStart());
+                        if (string.IsNullOrEmpty(pc.Likes) || pcLikes < likes)
+                        {
+                            i.Visible = false;
+                        }
+                    }
                 }
-                if(ddlImage.SelectedIndex == 1)
+                if (ddlImage.SelectedIndex == 1)
                 {
-                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
-                        .Where(i => (i.DataItem as Post).PostPhoto.Equals("fake.png")) as List<RepeaterItem>)
-                        .ForEach(i => i.Visible = false);
+                    foreach (RepeaterItem i in repeaterAll.Items)
+                    {
+                        PostCard pc = i.FindControl("postCard") as PostCard;
+                        if (pc.PostImage.Equals("fake.png"))
+                        {
+                            i.Visible = false;
+                        }
+                    }
                 }
                 if (ddlImage.SelectedIndex == 2)
                 {
-                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
-                        .Where(i => !(i.DataItem as Post).PostPhoto.Equals("fake.png")) as List<RepeaterItem>)
-                        .ForEach(i => i.Visible = false);
+                    foreach (RepeaterItem i in repeaterAll.Items)
+                    {
+                        PostCard pc = i.FindControl("postCard") as PostCard;
+                        if (!pc.PostImage.Equals("fake.png"))
+                        {
+                            i.Visible = false;
+                        }
+                    }
                 }
                 if (!string.IsNullOrEmpty(txtFilterStartDate.Text))
                 {
                     DateTime startDate = DateTime.Parse(txtFilterStartDate.Text);
-                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
-                        .Where(i => DateTime.Parse((i.DataItem as Post).PostDate) > startDate) as List<RepeaterItem>)
-                        .ForEach(i => i.Visible = false);
+                    
+                    foreach (RepeaterItem i in repeaterAll.Items)
+                    {
+                        PostCard pc = i.FindControl("postCard") as PostCard;
+                        DateTime pcDate = DateTime.Parse(pc.PostDate.Split(':')[1].TrimStart());
+                        if (pcDate < startDate.Date)
+                        {
+                            i.Visible = false;
+                        }
+                    }
                 }
                 if (!string.IsNullOrEmpty(txtFilterEndDate.Text))
                 {
                     DateTime endDate = DateTime.Parse(txtFilterEndDate.Text);
-                    (repeaterAll.Items.OfType<RepeaterItem>().ToList()
-                        .Where(i => DateTime.Parse((i.DataItem as Post).PostDate) < endDate) as List<RepeaterItem>)
-                        .ForEach(i => i.Visible = false);
+                    foreach (RepeaterItem i in repeaterAll.Items)
+                    {
+                        PostCard pc = i.FindControl("postCard") as PostCard;
+                        DateTime pcDate = DateTime.Parse(pc.PostDate.Split(':')[1].TrimStart());
+                        if (pcDate > endDate.Date)
+                        {
+                            i.Visible = false;
+                        }
+                    }
                 }
 
             }
             upAllRepeater.Update();
+        }
 
         protected void btnNewPost_Click(object sender, EventArgs e)
         {

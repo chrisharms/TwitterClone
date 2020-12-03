@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <div class="container-fluid">
+    <div class="container-fluid" id="containerPosts" runat="server">
         <div id="contentRow" class="row">
             <div class="col-3">
             </div>
@@ -28,19 +28,18 @@
                                 </asp:Repeater>
                                 <asp:UpdatePanel ID="upAllRepeater" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
-                                <asp:Repeater ID="repeaterAll" runat="server" OnItemDataBound="repeaterAll_ItemDataBound">
-                                    <ItemTemplate>
-                                        <uc1:PC runat="server" ID="postCard" />
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
+                                        <asp:Repeater ID="repeaterAll" runat="server" OnItemDataBound="repeaterAll_ItemDataBound">
+                                            <ItemTemplate>
+                                                <uc1:PC runat="server" ID="postCard" />
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="col-4">
                 <asp:UpdatePanel ID="upSearch" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
@@ -96,7 +95,39 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+    </div>
+    <div class="container-flex" id="containerNewPost" runat="server" visible="false">
+        <h3 class="mb-5">Create a New Post!</h3>
+        <div class="form-group">
+            <label>Post Text</label>
+            <small id="Small1" runat="server" class="form-text text-danger mb-2">Required</small>
+            <asp:TextBox runat="server" ID="txtPostText" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
+            <small id="smlPostTextHelp" runat="server" class="form-text text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label>Image URL</label>
+            <asp:TextBox runat="server" ID="txtPostPhoto" CssClass="form-control"></asp:TextBox>
+            <small id="smlPostPhotoHelp" runat="server" class="form-text text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label>Post Tag 1</label>
+            <asp:TextBox runat="server" ID="txtTag1" Placeholder="#Dope" CssClass="form-control"></asp:TextBox>
+            <small id="smlPostTag1Help" runat="server" class="form-text text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label>Post Tag 2</label>
+            <asp:TextBox runat="server" ID="txtTag2" Placeholder="#Corona" CssClass="form-control"></asp:TextBox>
+            <small id="smlPostTag2Help" runat="server" class="form-text text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label>Post Tag 3</label>
+            <asp:TextBox runat="server" ID="txtTag3" Placeholder="#Zoom" CssClass="form-control"></asp:TextBox>
+            <small id="smlPostTag3Help" runat="server" class="form-text text-danger"></small>
+        </div>
+        <div class="form-group mt-5">
+            <asp:Button runat="server" Text="Create Post" ID="btnCreatePost" CssClass="btn btn-primary" OnClick="btnCreatePost_Click" />
+            <asp:Button runat="server" Text="Cancel" ID="btnCancel" CssClass="btn btn-danger ml-2" OnClick="btnCancel_Click" />
         </div>
     </div>
 </asp:Content>
