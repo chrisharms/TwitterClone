@@ -41,14 +41,11 @@
                                                     <uc1:PC runat="server" ID="postCard" />
                                                 </ItemTemplate>
                                             </asp:Repeater>
-                                            <asp:Button ID="btnCreateNewComment" runat="server" Text="Add Comment" CssClass="btn btn-sm btnViewComments" OnClick="btnCreateNewComment_Click" />
-
-                                            <div id="divCreateComment" runat="server" visible="false" style="margin-top: 1rem;">
+                                            <div id="divCreateComment" runat="server" style="margin-top: 1rem;">
                                                 <textarea id="taComment" cols="50" rows="5" class="form-control" runat="server"></textarea>
-                                                <asp:Button ID="btnAddNewComment" runat="server" Text="Submit" OnClick="btnAddNewComment_Click" />
+                                                <asp:Button ID="btnAddNewComment" runat="server" CssClass="btn-sm btnSearch" Text="Submit" OnClick="btnAddNewComment_Click" />
                                             </div>
                                         </div>
-
                                         <!-- Comments End -->
                                     </ContentTemplate>
                                 </asp:UpdatePanel>

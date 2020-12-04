@@ -63,7 +63,6 @@ namespace TwitterClone
                 }
             }
             SetupPostCardEvents();
-            HideComments();
 
         }
 
@@ -132,6 +131,7 @@ namespace TwitterClone
         {
             TagControl tag = sender as TagControl;
             TagSearch(tag.Text);
+            //divComments.Visible = true;
             upAllRepeater.Update();
         }
 
@@ -285,12 +285,14 @@ namespace TwitterClone
 
         protected void btnAllPosts_Click(object sender, EventArgs e)
         {
+            HideComments();
             ShowAllPosts();
         }
 
 
         protected void btnFollowPosts_Click(object sender, EventArgs e)
         {
+            HideComments();
             ShowFollowPosts();
         }
 
@@ -651,12 +653,6 @@ namespace TwitterClone
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('There was an error creating your comment, please try again')", true);
                 return;
             }
-        }
-
-        protected void btnCreateNewComment_Click(object sender, EventArgs e)
-        {
-            divCreateComment.Visible = !divCreateComment.Visible;
-            upAllRepeater.Update();
         }
     }
 }
