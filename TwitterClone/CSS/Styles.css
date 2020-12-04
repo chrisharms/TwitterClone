@@ -31,7 +31,9 @@ img {
     margin-left: .5em;
     margin-right: .5em;
 }
-
+.card-img-top {
+    border-radius: calc(.25rem - 1px);
+}
 /*Dark Blue*/
 #HomeContainer {
     background-color: #15202B;
