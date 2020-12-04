@@ -163,6 +163,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="WebAssetSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

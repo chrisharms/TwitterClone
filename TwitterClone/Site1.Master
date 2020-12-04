@@ -18,7 +18,7 @@
             <nav id="tcNavBar" class="navbar navbar-expand-lg navbar-dark shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="/Home.aspx">
-                        <img src="https://miro.medium.com/max/300/1*jbXNuDJH3G09f3pUQyCmMA.png" width="60" height="60" alt="" />
+                        <asp:Image ID="imgLogo" runat="server" style="height: 60px; width: 60px"/>
                     </a>
                     <asp:HyperLink ID="lnkBrand" runat="server" NavigateUrl="~/Home.aspx" CssClass="h3">Not Twitter</asp:HyperLink>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
