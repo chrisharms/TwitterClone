@@ -60,6 +60,7 @@ namespace TwitterClone
                     Session["CurrentView"] = ALL;
 
                     btnNewPost.Visible = false;
+                    btnCreateNewComment.Visible = false;
                 }
             }
             SetupPostCardEvents();

@@ -5,7 +5,7 @@
     <div class="card-body">
         <asp:HiddenField runat="server" ID="fldPostId"/>
         <h4 id="postUsername" class="card-header" runat="server">Card title</h4>
-        <h5 id="postDate" runat="server"></h5>
+        <small id="postDate" class="mt-2" runat="server"></small>
         <div id="cardText" class="row mt-4 mb-4" style=" width: 100%">
             <div class="col-2"></div>
             <div class="col-8">
