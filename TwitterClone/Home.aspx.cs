@@ -290,7 +290,7 @@ namespace TwitterClone
 
         private void ShowFollowPosts()
         {
-            Greeting.InnerText = "All Posts";
+            Greeting.InnerText = "Who You're following";
             Session["CurrentView"] = FOLLOW;
             repeaterAll.Visible = false;
             repeaterFollow.Items.OfType<RepeaterItem>().ToList().ForEach(i => i.Visible = true);
@@ -335,6 +335,8 @@ namespace TwitterClone
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
+            Greeting.InnerText = "Search Results";
+            ShowAllPosts();
             repeaterAll.Items.OfType<RepeaterItem>().ToList().ForEach(i => i.Visible = true);
             string tagValue = txtSearch.Text;
             if (string.IsNullOrEmpty(tagValue) && divAdvSearch.Visible == false)
