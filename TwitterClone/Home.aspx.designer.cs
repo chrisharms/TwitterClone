@@ -67,15 +67,6 @@ namespace TwitterClone {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Greeting;
         
         /// <summary>
-        /// repeaterFollow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeaterFollow;
-        
-        /// <summary>
         /// upAllRepeater control.
         /// </summary>
         /// <remarks>
@@ -83,6 +74,15 @@ namespace TwitterClone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upAllRepeater;
+        
+        /// <summary>
+        /// repeaterFollow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeaterFollow;
         
         /// <summary>
         /// repeaterAll control.

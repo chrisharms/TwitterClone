@@ -21,13 +21,14 @@
                     <div id="followContainer" class="justify-content-center text-center">
                         <div class="row justify-content-center">
                             <div class="col-10 ">
-                                <asp:Repeater ID="repeaterFollow" runat="server" OnItemDataBound="repeaterFollow_ItemDataBound">
-                                    <ItemTemplate>
-                                        <uc1:PC runat="server" ID="postCard" />
-                                    </ItemTemplate>
-                                </asp:Repeater>
                                 <asp:UpdatePanel ID="upAllRepeater" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
+                                        <asp:Repeater ID="repeaterFollow" runat="server" OnItemDataBound="repeaterFollow_ItemDataBound">
+                                            <ItemTemplate>
+                                                <uc1:PC runat="server" ID="postCard" />
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+
                                         <asp:Repeater ID="repeaterAll" runat="server" OnItemDataBound="repeaterAll_ItemDataBound">
                                             <ItemTemplate>
                                                 <uc1:PC runat="server" ID="postCard" />

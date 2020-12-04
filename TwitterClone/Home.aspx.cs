@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
@@ -21,6 +22,9 @@ namespace TwitterClone
         private const bool TRENDING = true;
         private const int ALL = 0;
         private const int FOLLOW = 1;
+
+
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -59,6 +63,8 @@ namespace TwitterClone
                 }
             }
             SetupPostCardEvents();
+            HideComments();
+
         }
 
         private void InitializeTrendingList()
@@ -88,9 +94,14 @@ namespace TwitterClone
             repeaterFollow.DataBind();
         }
 
+        private void HideComments()
+        {
+            divComments.Visible = false;
+        }
+
         private void InitializeAllPostsList()
         {
-
+            
             Exception ex = null;
             List<object[]> records = DBObjCreator.ReadDBObjs("TP_GetAllPosts", ref ex);
             List<Post> posts = new List<Post>();
@@ -108,6 +119,13 @@ namespace TwitterClone
                 pc.TagSearch += new EventHandler(TagSearchEvent);
                 pc.ViewComments += new EventHandler(ViewCommentsEvent);
             }
+
+            foreach (RepeaterItem i in repeaterFollow.Items)
+            {
+                PostCard pc = i.FindControl("postCard") as PostCard;
+                pc.TagSearch += new EventHandler(TagSearchEvent);
+                pc.ViewComments += new EventHandler(ViewCommentsEvent);
+            }
         }
 
         protected void TagSearchEvent(object sender, EventArgs e)
@@ -117,13 +135,16 @@ namespace TwitterClone
             upAllRepeater.Update();
         }
 
+
+
         protected void ViewCommentsEvent(object sender, EventArgs e)
         {
             PostCard parentPost = sender as PostCard;
+            Repeater repeater = parentPost.Parent.Parent as Repeater;
             int postId = parentPost.PostId;
             Session["CurrentParentPost"] = postId;
             Exception ex = null;
-            foreach (RepeaterItem i in repeaterAll.Items)
+            foreach (RepeaterItem i in repeater.Items)
             {
                 PostCard pc = i.FindControl("postCard") as PostCard;
                 if (pc.PostId != postId)
@@ -165,6 +186,7 @@ namespace TwitterClone
             pc.PostDate = post.PostDate;
             pc.PostTagList = new List<string>();
             pc.TagSearch += new EventHandler(TagSearchEvent);
+            
             if (Session["Username"] != null)
             {
                 pc.DisableFollowButton(Session["Username"].ToString());
@@ -241,8 +263,7 @@ namespace TwitterClone
 
         }
 
-
-        protected void btnAllPosts_Click(object sender, EventArgs e)
+        private void ShowAllPosts()
         {
             Greeting.InnerText = "All Posts";
             Session["CurrentView"] = ALL;
@@ -252,12 +273,25 @@ namespace TwitterClone
             upAllRepeater.Update();
         }
 
-        protected void btnFollowPosts_Click(object sender, EventArgs e)
+        private void ShowFollowPosts()
         {
-            Greeting.InnerText = "Who You're Following";
+            Greeting.InnerText = "All Posts";
             Session["CurrentView"] = FOLLOW;
             repeaterAll.Visible = false;
+            repeaterFollow.Items.OfType<RepeaterItem>().ToList().ForEach(i => i.Visible = true);
             repeaterFollow.Visible = true;
+            upAllRepeater.Update();
+        }
+
+        protected void btnAllPosts_Click(object sender, EventArgs e)
+        {
+            ShowAllPosts();
+        }
+
+
+        protected void btnFollowPosts_Click(object sender, EventArgs e)
+        {
+            ShowFollowPosts();
         }
 
         protected void lnkAdvancedSearch_Click(object sender, EventArgs e)
