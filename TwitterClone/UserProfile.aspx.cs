@@ -84,8 +84,21 @@ namespace TwitterClone
                 btnFollowers.Text = data3 + " Followers";
                 stream3.Close();
                 reader3.Close();
+
+                
             }
-            
+
+            SetupPostCardEvents();
+
+        }
+        protected void SetupPostCardEvents()
+        {
+            foreach (RepeaterItem i in RepeaterPosts.Items)
+            {
+                PostCard pc = i.FindControl("postCard") as PostCard;
+                
+                pc.ViewComments += new EventHandler(ViewCommentsEvent);
+            }
         }
 
         protected void btnEditProfile_Click(object sender, EventArgs e)
@@ -441,6 +454,58 @@ namespace TwitterClone
         protected void lvFollowers_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
 
+        }
+
+        protected void repeaterComments_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            PostCard pc = e.Item.FindControl("postCard") as PostCard;
+            Comment comment = e.Item.DataItem as Comment;
+
+            pc.PostText = comment.CommentText;
+            pc.PostUsername = comment.CommentUsername;
+            pc.EnableCommentRestrictions();
+            pc.PostId = comment.Id;
+            if (Session["Username"] != null)
+            {
+                pc.DisableFollowButton(Session["Username"].ToString());
+            }
+            if (Session["Guest"] != null)
+            {
+                pc.EnableGuestRestrictions();
+            }
+        }
+        protected void ViewCommentsEvent(object sender, EventArgs e)
+        {
+            PostCard parentPost = sender as PostCard;
+            int postId = parentPost.PostId;
+            Session["CurrentParentPost"] = postId;
+            Exception ex = null;
+            foreach (RepeaterItem i in RepeaterPosts.Items)
+            {
+                PostCard pc = i.FindControl("postCard") as PostCard;
+                if (pc.PostId != postId)
+                {
+                    i.Visible = false;
+                }
+            }
+            divComments.Visible = true;
+            List<(string, dynamic, Type)> filter = new List<(string, dynamic, Type)>();
+            filter.Add(DBObjCreator.CreateFilter("CommentPostId", postId, typeof(int)));
+            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_FindCommentsForPost", ref ex, filter);
+            List<Comment> comments = new List<Comment>();
+            records.ForEach(r => comments.Add(DBObjCreator.CreateObj<Comment>(r, typeof(Comment))));
+            repeaterComments.DataSource = comments;
+            repeaterComments.DataBind();
+
+        }
+
+        protected void Unnamed_Click(object sender, EventArgs e)
+        {
+            divComments.Visible = false;
+            foreach (RepeaterItem i in RepeaterPosts.Items)
+            {
+                i.Visible = true;
+            }
         }
     }
 }

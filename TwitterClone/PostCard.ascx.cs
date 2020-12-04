@@ -117,6 +117,7 @@ namespace TwitterClone
             imgPost.Visible = false;
             heartIcon.Visible = false;
             likesRow.Visible = false;
+            btnDeletePost.Visible = false;
         }
 
         protected void btnDeletePost_Click(object sender, EventArgs e)

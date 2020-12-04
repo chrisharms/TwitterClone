@@ -242,9 +242,22 @@
                 <uc1:PC runat="server" ID="postCard" />
             </ItemTemplate>
         </asp:Repeater>
+                    <!-- Comments Start -->
+                                        <div id="divComments" runat="server" visible="false">
+                                            <asp:Repeater ID="repeaterComments" runat="server" OnItemDataBound="repeaterComments_ItemDataBound">
+                                                <ItemTemplate>
+                                                    <uc1:PC runat="server" ID="postCard" />
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                            <asp:Button runat="server" CssClass="btn btn-danger mt-5" Text="Back" OnClick="Unnamed_Click"/>
+                                        </div>
+
+                                        <!-- Comments End -->
                 </div>
                 <div class="col-2"></div>
             </div>
         
     </div>
+                                    
+
 </asp:Content>
