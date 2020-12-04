@@ -36,15 +36,16 @@
                                         </asp:Repeater>
                                         <!-- Comments Start -->
                                         <div id="divComments" runat="server" visible="false">
-                                            <asp:Repeater ID="repeaterComments" runat="server" OnItemDataBound="repeaterComments_ItemDataBound">
+                                            <div id="divCreateComment" class="mt-5" runat="server">
+                                                <label class="mt-4 mb-3">Add a New Comment!</label>
+                                                <textarea id="taComment" cols="50" rows="3" class="form-control" runat="server"></textarea>
+                                                <asp:Button ID="btnAddNewComment" CssClass="btn btn-success mt-3 mb-2" runat="server" Text="Create Comment" OnClick="btnAddNewComment_Click" />
+                                            </div>
+                                            <asp:Repeater ID="repeaterComments" runat="server"  OnItemDataBound="repeaterComments_ItemDataBound">
                                                 <ItemTemplate>
                                                     <uc1:PC runat="server" ID="postCard" />
                                                 </ItemTemplate>
                                             </asp:Repeater>
-                                            <div id="divCreateComment" runat="server" style="margin-top: 1rem;">
-                                                <textarea id="taComment" cols="50" rows="5" class="form-control" runat="server"></textarea>
-                                                <asp:Button ID="btnAddNewComment" runat="server" CssClass="btn-sm btnSearch" Text="Submit" OnClick="btnAddNewComment_Click" />
-                                            </div>
                                         </div>
                                         <!-- Comments End -->
                                     </ContentTemplate>
@@ -58,12 +59,18 @@
                 <asp:UpdatePanel ID="upSearch" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <div id="searchPanel" class="searchPanel" runat="server">
-                            <asp:Label ID="lblSearchError" runat="server" Text="" Visible="false"></asp:Label>
+                            <div class="text-center">
+                                <asp:Label ID="lblSearchError" CssClass="text-danger" runat="server" Text="" Visible="false"></asp:Label>
+                            </div>
+                            
                             <h3 id="searchTitle" class="text-center">Search</h3>
                             <div id="searchInput" class="searchInput mx-auto">
                                 <asp:TextBox ID="txtSearch" Placeholder="Enter a tag to search for..." CssClass="form-control searchTextBox" runat="server"></asp:TextBox>
-                                <asp:LinkButton ID="lnkAdvancedSearch" CssClass="mt-5" runat="server" OnClick="lnkAdvancedSearch_Click">Advanced Search</asp:LinkButton>
-                                <div id="divAdvSearch" class="form-group advSearch" visible="false" runat="server">
+                                <div class="containerAdvancedSearch text-center">
+                                    <asp:LinkButton ID="lnkAdvancedSearch" CssClass="mt-5" runat="server" OnClick="lnkAdvancedSearch_Click">Advanced Search</asp:LinkButton>
+                                </div>
+                                
+                                <div id="divAdvSearch" class="form-group advSearch mb-0" visible="false" runat="server">
                                     <asp:TextBox ID="txtUsername" runat="server" placeholder="Username" CssClass="form-control searchTextBox"></asp:TextBox>
                                     <asp:TextBox ID="txtLikes" runat="server" placeholder="Number of likes" TextMode="Number" CssClass="form-control searchTextBox"></asp:TextBox>
                                     <asp:DropDownList ID="ddlImage" runat="server" CssClass="form-control searchTextBox">

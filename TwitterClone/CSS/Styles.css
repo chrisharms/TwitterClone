@@ -52,12 +52,17 @@ img {
     border-top: solid;
     border-color: #485159;
 }
-
+#MainContent_divCreateComment {
+    border-color: #202E3A !important;
+}
+#MainContent_divComments {
+    width: 70%;
+    margin: auto;
+}
 
 
 .card-header {
     background-color: #202E3A !important;
-
     border-bottom: 1px solid white;
 }
 .card {
@@ -135,7 +140,6 @@ body {
 
 #MainContent_lnkAdvancedSearch {
     color: #865DCA;
-    margin-left: 42%;
 }
 
 #searchTitle{
