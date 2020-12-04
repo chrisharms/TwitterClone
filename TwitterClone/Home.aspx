@@ -36,18 +36,16 @@
                                         </asp:Repeater>
                                         <!-- Comments Start -->
                                         <div id="divComments" runat="server" visible="false">
-                                            <asp:Repeater ID="repeaterComments" runat="server" OnItemDataBound="repeaterComments_ItemDataBound">
+                                            <div id="divCreateComment" class="mt-5" runat="server">
+                                                <label class="mt-4 mb-3">Add a New Comment!</label>
+                                                <textarea id="taComment" cols="50" rows="3" class="form-control" runat="server"></textarea>
+                                                <asp:Button ID="btnAddNewComment" CssClass="btn btn-success mt-3 mb-2" runat="server" Text="Create Comment" OnClick="btnAddNewComment_Click" />
+                                            </div>
+                                            <asp:Repeater ID="repeaterComments" runat="server"  OnItemDataBound="repeaterComments_ItemDataBound">
                                                 <ItemTemplate>
                                                     <uc1:PC runat="server" ID="postCard" />
                                                 </ItemTemplate>
                                             </asp:Repeater>
-                                            <asp:Button ID="btnCreateNewComment" runat="server" Text="Add Comment" CssClass="btn btn-sm btn-danger mt-4" OnClick="btnCreateNewComment_Click" />
-
-                                            <div id="divCreateComment" class="mt-5 border-top" runat="server" visible="false">
-                                                <label class="mt-4">Add a New Comment!</label>
-                                                <textarea id="taComment" cols="50" rows="5" class="form-control" runat="server"></textarea>
-                                                <asp:Button ID="btnAddNewComment" CssClass="btn btn-success mt-3" runat="server" Text="Create Comment" OnClick="btnAddNewComment_Click" />
-                                            </div>
                                         </div>
 
                                         <!-- Comments End -->

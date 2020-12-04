@@ -654,10 +654,5 @@ namespace TwitterClone
             }
         }
 
-        protected void btnCreateNewComment_Click(object sender, EventArgs e)
-        {
-            divCreateComment.Visible = !divCreateComment.Visible;
-            upAllRepeater.Update();
-        }
     }
 }

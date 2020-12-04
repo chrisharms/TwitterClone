@@ -55,11 +55,14 @@ img {
 #MainContent_divCreateComment {
     border-color: #202E3A !important;
 }
+#MainContent_divComments {
+    width: 70%;
+    margin: auto;
+}
 
 
 .card-header {
     background-color: #202E3A !important;
-
     border-bottom: 1px solid white;
 }
 .card {
