@@ -168,3 +168,14 @@ body {
     margin-top: .5rem;
     margin-left: 1rem;
 }
+
+/*Private Messages*/
+.pmHover:hover {
+    background-color: #3f5668 !important;
+    cursor: pointer;
+}
+
+.pmCard{
+    width: 512px;
+    height: auto;
+}

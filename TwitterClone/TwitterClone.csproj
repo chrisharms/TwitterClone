@@ -80,6 +80,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="PostCard.ascx" />
+    <Content Include="PrivateMessage.ascx" />
+    <Content Include="PrivateMessages.aspx" />
     <Content Include="Search.aspx" />
     <Content Include="TagControl.ascx" />
     <Content Include="UserProfile.aspx" />
@@ -116,6 +118,20 @@
     </Compile>
     <Compile Include="PostCard.ascx.designer.cs">
       <DependentUpon>PostCard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PrivateMessage.ascx.cs">
+      <DependentUpon>PrivateMessage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrivateMessage.ascx.designer.cs">
+      <DependentUpon>PrivateMessage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PrivateMessages.aspx.cs">
+      <DependentUpon>PrivateMessages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrivateMessages.aspx.designer.cs">
+      <DependentUpon>PrivateMessages.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

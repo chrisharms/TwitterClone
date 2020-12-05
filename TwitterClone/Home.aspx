@@ -99,7 +99,6 @@
                                 <div class=" d-flex form-group justify-content-center">
                                     <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btnSearch btn-sm" OnClick="btnSearch_Click" />
                                 </div>
-
                             </div>
                         </div>
                     </ContentTemplate>
