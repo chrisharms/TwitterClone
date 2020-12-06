@@ -7,11 +7,11 @@
         <h4 id="postUsername" class="card-header" runat="server">Card title</h4>
         <small id="postDate" class="mt-2" runat="server"></small>
         <div id="cardText" class="row mt-4 mb-4" style=" width: 100%">
-            <div class="col-2"></div>
-            <div class="col-8">
+            <div class="col-1"></div>
+            <div class="col">
                 <p class="card-text" id="txtPost" runat="server"></p>
             </div>
-            <div class="col-2"></div>
+            <div class="col-1"></div>
             </div>
         <div id="tagRow" class="row ml-1">
             <div id="tagList" runat="server">

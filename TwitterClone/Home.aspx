@@ -17,12 +17,13 @@
                         <asp:Button runat="server" CssClass="btn btn-primary ml-2" Text="My Follower's Posts" ID="btnFollowPosts" OnClick="btnFollowPosts_Click" />
                         <asp:Button runat="server" CssClass="btn btn-danger ml-2" Text="New Post" ID="btnNewPost" OnClick="btnNewPost_Click" />
                     </div>
-                    <h2 runat="server" id="Greeting">Who You're Following</h2>
+                    
                     <div id="followContainer" class="justify-content-center text-center">
                         <div class="row justify-content-center">
                             <div class="col-10 ">
                                 <asp:UpdatePanel ID="upAllRepeater" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
+                                        <h2 runat="server" id="Greeting">Who You're Following</h2>
                                         <asp:Repeater ID="repeaterFollow" runat="server" OnItemDataBound="repeaterFollow_ItemDataBound">
                                             <ItemTemplate>
                                                 <uc1:PC runat="server" ID="postCard" />
@@ -39,8 +40,10 @@
                                             <div id="divCreateComment" class="mt-5" runat="server">
                                                 <label class="mt-4 mb-3">Add a New Comment!</label>
                                                 <textarea id="taComment" cols="50" rows="3" class="form-control" runat="server"></textarea>
+                                                <small id="smlCommentHelp" runat="server" class="form-text text-danger"></small>
                                                 <asp:Button ID="btnAddNewComment" CssClass="btn btn-success mt-3 mb-2" runat="server" Text="Create Comment" OnClick="btnAddNewComment_Click" />
                                             </div>
+                                            <h3 runat="server" class="mt-5" id="h5NoComments" visible="false">This post has no comments :/</h3>
                                             <asp:Repeater ID="repeaterComments" runat="server"  OnItemDataBound="repeaterComments_ItemDataBound">
                                                 <ItemTemplate>
                                                     <uc1:PC runat="server" ID="postCard" />

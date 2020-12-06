@@ -427,6 +427,15 @@ namespace TwitterClone {
         protected global::System.Web.UI.UpdatePanel upFollows;
         
         /// <summary>
+        /// h5NoFollows control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h5NoFollows;
+        
+        /// <summary>
         /// lvFollows control.
         /// </summary>
         /// <remarks>
@@ -454,6 +463,15 @@ namespace TwitterClone {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFollowersContainer;
         
         /// <summary>
+        /// h5NoFollowers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h5NoFollowers;
+        
+        /// <summary>
         /// lvFollowers control.
         /// </summary>
         /// <remarks>
@@ -479,6 +497,15 @@ namespace TwitterClone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPostContainer;
+        
+        /// <summary>
+        /// h5NoPosts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h5NoPosts;
         
         /// <summary>
         /// RepeaterPosts control.

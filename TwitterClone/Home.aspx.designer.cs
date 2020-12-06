@@ -58,15 +58,6 @@ namespace TwitterClone {
         protected global::System.Web.UI.WebControls.Button btnNewPost;
         
         /// <summary>
-        /// Greeting control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Greeting;
-        
-        /// <summary>
         /// upAllRepeater control.
         /// </summary>
         /// <remarks>
@@ -74,6 +65,15 @@ namespace TwitterClone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upAllRepeater;
+        
+        /// <summary>
+        /// Greeting control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Greeting;
         
         /// <summary>
         /// repeaterFollow control.
@@ -121,6 +121,15 @@ namespace TwitterClone {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea taComment;
         
         /// <summary>
+        /// smlCommentHelp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl smlCommentHelp;
+        
+        /// <summary>
         /// btnAddNewComment control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,15 @@ namespace TwitterClone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddNewComment;
+        
+        /// <summary>
+        /// h5NoComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h5NoComments;
         
         /// <summary>
         /// repeaterComments control.

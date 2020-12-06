@@ -60,11 +60,12 @@ namespace TwitterClone
                 Session["AdvSearch"] = false;
                 if (Session["Username"] != null)
                 {
+                    Greeting.InnerText = "All Posts";
                     InitializeTrendingList();
                     InitializeFollowList();
                     InitializeAllPostsList();
-                    repeaterAll.Visible = false;
-                    Session["CurrentView"] = FOLLOW;
+                    repeaterFollow.Visible = false;
+                    Session["CurrentView"] = ALL;
                 }
                 if (Session["Guest"] != null)
                 {
@@ -73,7 +74,7 @@ namespace TwitterClone
                     InitializeTrendingList();
                     btnFollowPosts.Visible = false;
                     Session["CurrentView"] = ALL;
-
+                    divCreateComment.Visible = false;
                     btnNewPost.Visible = false;
                 }
             }
@@ -106,6 +107,8 @@ namespace TwitterClone
             List<Post> uniquePosts = usersPosts.GroupBy(p => p.Id).Select(id => id.First()).ToList(); //Select only the first occurence of a post ID
             repeaterFollow.DataSource = uniquePosts;
             repeaterFollow.DataBind();
+
+            
         }
 
         private void HideComments()
@@ -146,8 +149,10 @@ namespace TwitterClone
         {
             TagControl tag = sender as TagControl;
             TagSearch(tag.Text);
+            Greeting.InnerText = tag.Text;
             //divComments.Visible = true;
             upAllRepeater.Update();
+            
         }
 
 
@@ -175,6 +180,15 @@ namespace TwitterClone
             records.ForEach(r => comments.Add(DBObjCreator.CreateObj<Comment>(r, typeof(Comment))));
             repeaterComments.DataSource = comments;
             repeaterComments.DataBind();
+
+            if(comments.Count == 0)
+            {
+                h5NoComments.Visible = true;
+            }
+            else
+            {
+                h5NoComments.Visible = false;
+            }
 
         }
 
@@ -648,12 +662,12 @@ namespace TwitterClone
 
             if (string.IsNullOrEmpty(commentText))
             {
-                taComment.InnerText = "Must add text to your comment";
+                smlCommentHelp.InnerText = "Please enter comment text.";
                 return;
             }
             else if (commentText.Length > 500)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Comment is too long(Max 500 characters)')", true);
+                smlCommentHelp.InnerText = "Comment is too long(Max 500 characters)";
             }
 
             Comment newComment = new Comment(-1, currentUser.Username, postId, commentText);

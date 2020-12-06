@@ -72,6 +72,11 @@ namespace TwitterClone
 
                 RepeaterPosts.DataSource = posts;
                 RepeaterPosts.DataBind();
+
+                if (posts.Count == 0) {
+                    h5NoPosts.Visible = true;
+                }
+
                 stream.Close();
                 reader.Close();
 
@@ -373,6 +378,11 @@ namespace TwitterClone
             lvFollowers.DataSource = followerList;
             lvFollowers.DataBind();
 
+            if (followerList.Count == 0)
+            {
+                h5NoFollowers.Visible = true;
+            }
+
             divFollowersContainer.Visible = true;
             divMyProfile.Visible = false;
             divPostContainer.Visible = false;
@@ -395,6 +405,11 @@ namespace TwitterClone
 
             lvFollows.DataSource = followList;
             lvFollows.DataBind();
+
+            if (followList.Count == 0)
+            {
+                h5NoFollows.Visible = true;
+            }
 
             divFollowsContainer.Visible = true;
             divMyProfile.Visible = false;

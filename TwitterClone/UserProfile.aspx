@@ -150,7 +150,8 @@
         <div class="d-flex justify-content-center">
             <asp:UpdatePanel runat="server" ID="upFollows" UpdateMode="Conditional">
             <ContentTemplate>
-                <h3 class="mt-5 mb-5 mr-3">My Follows</h3>
+                <h3 class="mt-5 mb-5 text-center">My Follows</h3>
+                <h5 runat="server" class="mt-5 mb-4" id="h5NoFollows" visible="false">You're not following anyone :/</h5>
                 <asp:ListView ID="lvFollows" runat="server" OnItemCommand="lvFollows_ItemCommand">
                     <LayoutTemplate>
                         
@@ -196,7 +197,8 @@
     <div class="container" id="divFollowersContainer" runat="server" visible="false">
         <div class="d-flex justify-content-center">
             <div>
-                <h3 class="mt-5 mb-5 mr-3">My Followers</h3>
+                <h3 class="mt-5 mb-5 text-center">My Followers</h3>
+                <h5 runat="server" class="mt-5 mb-4" id="h5NoFollowers" visible="false">You don't have any followers :/</h5>
                 <asp:ListView ID="lvFollowers" runat="server" OnItemCommand="lvFollowers_ItemCommand">
                     <LayoutTemplate>
                         
@@ -237,6 +239,7 @@
         <div class="row justify-content-center">
                 <div class="col-2"></div>
                 <div class="col-8 ">
+                    <h5 runat="server" class="mt-5 mb-5" id="h5NoPosts" visible="false">You don't have any posts :/</h5>
                     <asp:Repeater runat="server" ID="RepeaterPosts" OnItemDataBound="RepeaterPosts_ItemDataBound">
             <ItemTemplate>
                 <uc1:PC runat="server" ID="postCard" />
