@@ -28,6 +28,7 @@
                         <div class="navbar-nav">
                             <asp:HyperLink ID="lnkHome" runat="server" NavigateUrl="~/Home.aspx" CssClass="nav-item nav-link">Home</asp:HyperLink>
                             <asp:HyperLink ID="lnkMyProfile" runat="server" NavigateUrl="~/UserProfile.aspx" CssClass="nav-item nav-link">My Profile</asp:HyperLink>
+                            <asp:HyperLink ID="lnkPMs" runat="server" NavigateUrl="~/PrivateMessages.aspx" CssClass="nav-item nav-link">Private Messages</asp:HyperLink>
                         </div>
                         <div class="navbar-nav ml-auto">
                             <div class="navbar-text mr-3" style="font-weight: bold;">

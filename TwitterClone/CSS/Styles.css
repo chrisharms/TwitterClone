@@ -179,3 +179,47 @@ body {
     width: 512px;
     height: auto;
 }
+
+
+.pmControl {
+    background-color: #192734 !important;
+    color: white;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.pmFormGroup {
+
+    border-style: solid !important;
+    border-color: #3D5466 !important;
+}
+
+#MainContent_txtRecipient{
+    margin-top: 1rem;
+}
+
+#taPMText{
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+#pmContainer{
+    height: 100vh;
+}
+
+.pmLnkBtn{
+    text-decoration: none;
+}
+
+#divComposeNewPM{
+    margin-top: 1rem;
+}
+
+#lblNewPmError{
+    color: red;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

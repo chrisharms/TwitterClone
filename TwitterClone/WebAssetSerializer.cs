@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
@@ -20,5 +21,8 @@ namespace TwitterClone
         {
             img.ImageUrl = "data:image/png;base64," + base64String;
         }
+
+
+
     }
 }

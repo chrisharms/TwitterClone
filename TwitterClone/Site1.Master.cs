@@ -35,6 +35,7 @@ namespace TwitterClone
                 lnkBtnLogout.Visible = false;
                 lnkMyProfile.Visible = false;
                 lblUserInfo.Visible = false;
+                lnkPMs.Visible = false;
             }
             InitializeWebAssets();
         }

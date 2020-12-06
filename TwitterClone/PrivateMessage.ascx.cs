@@ -12,25 +12,7 @@ namespace TwitterClone
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            pmCard.Attributes.Add("onclick", Page.ClientScript.GetPostBackEventReference(pmCard, string.Empty));
-            if (IsPostBack && Request["__EVENTTARGET"] == pmCard.UniqueID)
-            {
-                pmCard_Click(pmCard, EventArgs.Empty);
-            }
-        }
 
-        private void pmCard_Click(HtmlGenericControl pmCard, EventArgs empty)
-        {
-            string pmCardClass = pmCard.Attributes["class"];
-            pmCardBody.Visible = !pmCardBody.Visible;
-            if (pmCardBody.Visible)
-            {
-                pmCard.Attributes.Add("class", pmCardClass.Replace("pmHover", ""));
-            }
-            else
-            {
-                pmCard.Attributes.Add("class", pmCardClass + " pmHover");
-            }
         }
 
         public string PMText
@@ -57,9 +39,24 @@ namespace TwitterClone
             set { lblUsername.Text = $"From: {value}"; }
         }
 
-        //protected void btnReply_Click(object sender, EventArgs e)
-        //{
-        //    replyDiv.Visible = !replyDiv.Visible;
-        //}
+        public bool PMVisibility
+        {
+            get { return pmCardBody.Visible; }
+            set { pmCardBody.Visible = value; }
+        }
+
+        public void AlterCssClass()
+        {
+            string pmCardClass = pmCard.Attributes["class"];
+            if (pmCardBody.Visible)
+            {
+                pmCard.Attributes.Add("class", pmCardClass.Replace("pmHover", ""));
+            }
+            else
+            {
+                pmCard.Attributes.Add("class", pmCardClass + " pmHover");
+            }
+        }
+
     }
 }
