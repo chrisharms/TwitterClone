@@ -49,8 +49,8 @@ namespace TwitterClone
             Label lblDate = ri.FindControl("lblDate") as Label;
             HtmlGenericControl subject = ri.FindControl("pmSubject") as HtmlGenericControl;
             HtmlGenericControl text = ri.FindControl("pmText") as HtmlGenericControl;
-            lblDate.Text = pmData.DateSent;
-            lblUsername.Text = pmData.SenderUsername;
+            lblDate.Text = $"Recieved on: {pmData.DateSent}";
+            lblUsername.Text = $"From: {pmData.SenderUsername}";
             text.InnerText = pmData.Text;
             subject.InnerText = pmData.Subject;
         }
@@ -115,7 +115,10 @@ namespace TwitterClone
                 return;
             }
 
-            TwitterClassLibrary.Models.PrivateMessage pm = new TwitterClassLibrary.Models.PrivateMessage(0, currentUsername, reciever, DateTime.Now.ToString(), subject, message);
+            TwitterClassLibrary.Models.PrivateMessage pm = new 
+                TwitterClassLibrary.Models.PrivateMessage(
+                0, currentUsername, reciever, DateTime.Now.ToString(), subject, message
+                );
             DBSerialize.WriteSerializedPM(pm);
             divComposeNewPM.Visible = false;
             lblNewPmError.Text = "Message sent.";
