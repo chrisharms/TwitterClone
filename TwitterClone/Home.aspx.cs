@@ -642,6 +642,10 @@ namespace TwitterClone
 
             pc.PostText = comment.CommentText;
             pc.PostUsername = comment.CommentUsername;
+            if (Session["Username"].ToString() == comment.CommentUsername)
+            {
+                pc.EnableDeleteComment();
+            }
             pc.EnableCommentRestrictions();
             pc.PostId = comment.Id;
             if (Session["Username"] != null)

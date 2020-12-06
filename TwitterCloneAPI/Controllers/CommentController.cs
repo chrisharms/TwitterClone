@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TwitterClassLibrary.Connection;
 using TwitterClassLibrary.DBObjCreator;
 using TwitterClassLibrary.DBObjWriter;
 using TwitterCloneAPI.Models;
@@ -33,32 +35,21 @@ namespace TwitterCloneAPI.Controllers
             return "Comment succesfully created";
         }
 
-        [HttpPost("DeleteComment")] //https://localhost:44312/api/Post/CreateComment
-        public string DeleteComment(int commentId)
+        [HttpDelete("DeleteComment/{commentId}")] //https://localhost:44312/api/Post/CreateComment
+        public bool DeleteComment(int commentId)
         {
-            Exception ex = null;
-            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
-            filter.Add(DBObjCreator.CreateFilter("Id", commentId, typeof(int)));
-            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_FindCommentById", ref ex, filter);
+            DBConnect db = new DBConnect();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = "TP_DeleteCommentById";
+            cmd.Parameters.AddWithValue("@Id", commentId);
 
-            if (records.Count != 1)
+            int count = db.DoUpdateUsingCmdObj(cmd);
+            if (count > 0)
             {
-                return "Invalid comment ID.";
+                return true;
             }
-
-            List<(bool, int, Exception)> errors = new List<(bool, int, Exception)>();
-            bool result = DBObjWriter.DeleteWithWhere("TP_DeleteCommentById", ref ex, filter);
-            if (result)
-            {
-                return "Comment succesfully deleted";
-            }
-            else
-            {
-                return "Comment could not be deleted, please try again later";
-            }
+            return false;
         }
-
-
-
     }
 }

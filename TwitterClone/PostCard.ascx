@@ -28,6 +28,7 @@
             <asp:Button ID="btnComments" runat="server" Text="Comments" CssClass="btn btn-sm btnViewComments" OnClick="btnComments_Click" />
             <asp:Button ID="btnFollowUser" runat="server" Text="Follow User" CssClass="btn btn-sm btn-primary ml-2" OnClick="btnFollowUser_Click" />
             <asp:Button ID="btnDeletePost" runat="server" Text="Delete Post" CssClass="btn btn-sm btn-danger ml-2" visible="false" OnClick="btnDeletePost_Click"/>
+            <asp:Button ID="btnDeleteComment" runat="server" Text="Delete Comment" CssClass="btn btn-sm btn-danger" Visible="false" OnClick="btnDeleteComment_Click" />
         </div>
     </div>
 </div>

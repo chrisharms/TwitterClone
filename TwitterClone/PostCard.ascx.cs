@@ -119,6 +119,10 @@ namespace TwitterClone
             likesRow.Visible = false;
             btnDeletePost.Visible = false;
         }
+        public void EnableDeleteComment()
+        {
+            btnDeleteComment.Visible = true;
+        }
 
         protected void btnDeletePost_Click(object sender, EventArgs e)
         {
@@ -349,7 +353,6 @@ namespace TwitterClone
                 response2.Close();
                 if (data2)
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('You are now following " + FollowUsername + "')", true);
                     Response.Redirect("Home.aspx");
                 }
                 else
@@ -372,6 +375,32 @@ namespace TwitterClone
 
                 if (control.HasControls())
                     GetControlList(control.Controls, resultCollection);
+            }
+        }
+
+        protected void btnDeleteComment_Click(object sender, EventArgs e)
+        {
+            int commentId = int.Parse(fldPostId.Value);
+            // ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + postId + "')", true);
+            // Deleting Post
+            string url = "https://localhost:44312/api/Comment/DeleteComment/" + commentId;
+            WebRequest request = WebRequest.Create(url);
+            request.Method = "DELETE";
+
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(stream);
+            bool data = bool.Parse(reader.ReadToEnd());
+            reader.Close();
+            response.Close();
+
+            if (!data)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error deleting comment, please try again later!')", true);
+            }
+            else
+            {
+                Response.Redirect("Home.aspx");
             }
         }
     }
