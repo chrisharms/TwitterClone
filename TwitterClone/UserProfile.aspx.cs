@@ -27,6 +27,10 @@ namespace TwitterClone
             {
                 Response.Redirect("Login.aspx");
             }
+            if (Session["Guest"] != null)
+            {
+                Response.Redirect("Home.aspx");
+            }
             if (Session["Username"] != null)
             {
                 string username = Session["Username"].ToString();
