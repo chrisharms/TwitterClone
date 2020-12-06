@@ -335,15 +335,31 @@ namespace TwitterClone
 
         private void TagSearch(string tag)
         {
-            foreach (RepeaterItem i in repeaterAll.Items)
+            if (int.Parse(Session["CurrentView"].ToString()) == ALL)
             {
-                PostCard pc = i.FindControl("postCard") as PostCard;
-                int index = pc.PostTagList.IndexOf(tag.Trim());
-                if (pc.PostTagList.Count == 0 || index == -1)
+                foreach (RepeaterItem i in repeaterAll.Items)
                 {
-                    i.Visible = false;
+                    PostCard pc = i.FindControl("postCard") as PostCard;
+                    int index = pc.PostTagList.IndexOf(tag.Trim());
+                    if (pc.PostTagList.Count == 0 || index == -1)
+                    {
+                        i.Visible = false;
+                    }
                 }
             }
+            if (int.Parse(Session["CurrentView"].ToString()) == FOLLOW)
+            {
+                foreach (RepeaterItem i in repeaterFollow.Items)
+                {
+                    PostCard pc = i.FindControl("postCard") as PostCard;
+                    int index = pc.PostTagList.IndexOf(tag.Trim());
+                    if (pc.PostTagList.Count == 0 || index == -1)
+                    {
+                        i.Visible = false;
+                    }
+                }
+            }
+            
         }
 
 
