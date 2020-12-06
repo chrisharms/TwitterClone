@@ -63,32 +63,55 @@ namespace TwitterClone
 
         protected void btnSendNewPm_Click(object sender, EventArgs e)
         {
+            bool good = true;
             string reciever = txtRecipient.Text;
             if(reciever.Equals(currentUsername) || string.IsNullOrEmpty(reciever))
             {
-                lblNewPmError.Text = "Invalid Recipient";
-                return;
+                smlRecipientHelp.InnerText = "Must Have Recipient";
+                good = false;
+            }
+            else
+            {
+                smlRecipientHelp.InnerText = "";
+
             }
 
             UserService.UserService proxy = new UserService.UserService();
             bool validateUsername = proxy.ValidateUsername(reciever);
             if (validateUsername)
             {
-                lblNewPmError.Text = "Recipient does not exist, check spelling or try a different user";
-                return;
+                smlRecipientHelp.InnerText = "Recipient does not exist, check spelling or try a different user";
+                good = false;
+            }
+            else
+            {
+                smlRecipientHelp.InnerText = "";
             }
 
             string subject = txtSubject.Text;
             if (string.IsNullOrEmpty(subject))
             {
-                lblNewPmError.Text = "Invalid Subject";
-                return;
+                smlSubjectHelp.InnerText = "Invalid Subject";
+                good = false;
+            }
+            else
+            {
+                smlSubjectHelp.InnerText = "";
             }
 
             string message = taPMText.InnerText;
             if (string.IsNullOrEmpty(message))
             {
-                lblNewPmError.Text = "Must have a message";
+                smlTextHelp.InnerText = "Must have a message";
+                good = false;
+            }
+            else
+            {
+                smlTextHelp.InnerText = "";
+            }
+
+            if (!good)
+            {
                 return;
             }
 

@@ -66,7 +66,7 @@
                                 <asp:Label ID="lblSearchError" CssClass="text-danger" runat="server" Text="" Visible="false"></asp:Label>
                             </div>
                             
-                            <h3 id="searchTitle" class="text-center">Search</h3>
+                            <h2 id="searchTitle" class="text-center">Search</h2>
                             <div id="searchInput" class="searchInput mx-auto">
                                 <asp:TextBox ID="txtSearch" Placeholder="Enter a tag to search for..." CssClass="form-control searchTextBox" runat="server"></asp:TextBox>
                                 <div class="containerAdvancedSearch text-center">
@@ -107,7 +107,7 @@
                     </ContentTemplate>
                 </asp:UpdatePanel>
                 <div id="FollowsPanel" class="followsPanel">
-                    <h3 id="followsTitle" class="text-center mt-4">What's Trending?</h3>
+                    <h2 id="followsTitle" class="text-center mt-4">What's Trending?</h2>
                     <div id="trendingContainer" class="justify-content-center text-center">
                         <div class="row justify-content-center">
                             <div class="col-10">
@@ -124,7 +124,7 @@
         </div>
     </div>
     <div class="container" id="containerNewPost" runat="server" visible="false">
-        <h3 class="mb-5">Create a New Post!</h3>
+        <h2 class="mb-5">Create a New Post!</h2>
         <div class="form-group">
             <label>Post Text</label>
             <small id="Small1" runat="server" class="form-text text-danger mb-2">Required</small>

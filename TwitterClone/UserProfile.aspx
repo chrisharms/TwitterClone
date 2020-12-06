@@ -3,7 +3,7 @@
 <%@ Register Src="TagControl.ascx" TagName="Tag" TagPrefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container" runat="server" id="divMyProfile">
-        <h3 class="mt-3 mb-3 mr-3">My Profile</h3>
+        <h2 class="mt-3 mb-3 mr-3">My Profile</h2>
         <asp:ScriptManager runat="server" ID="ScriptManager">
              
         </asp:ScriptManager>
@@ -78,7 +78,7 @@
 
     </div>
     <div runat="server" class="container" id="divUpdateProfile"  visible="false">
-        <h3 class="mt-3 mb-5 mr-3">Update Profile</h3>
+        <h2 class="mt-3 mb-5 mr-3">Update Profile</h2>
         <div class="form-group">
             <label>Username</label>
             <asp:TextBox runat="server" ID="txtUsername" CssClass="form-control"></asp:TextBox>
@@ -150,7 +150,7 @@
         <div class="d-flex justify-content-center">
             <asp:UpdatePanel runat="server" ID="upFollows" UpdateMode="Conditional">
             <ContentTemplate>
-                <h3 class="mt-5 mb-5 text-center">My Follows</h3>
+                <h2 class="mt-5 mb-5 text-center">My Follows</h2>
                 <h5 runat="server" class="mt-5 mb-4" id="h5NoFollows" visible="false">You're not following anyone :/</h5>
                 <asp:ListView ID="lvFollows" runat="server" OnItemCommand="lvFollows_ItemCommand">
                     <LayoutTemplate>
@@ -197,7 +197,7 @@
     <div class="container" id="divFollowersContainer" runat="server" visible="false">
         <div class="d-flex justify-content-center">
             <div>
-                <h3 class="mt-5 mb-5 text-center">My Followers</h3>
+                <h2 class="mt-5 mb-5 text-center">My Followers</h2>
                 <h5 runat="server" class="mt-5 mb-4" id="h5NoFollowers" visible="false">You don't have any followers :/</h5>
                 <asp:ListView ID="lvFollowers" runat="server" OnItemCommand="lvFollowers_ItemCommand">
                     <LayoutTemplate>
@@ -235,7 +235,7 @@
     </div>
     
     <div runat="server" class="container text-center" id="divPostContainer" >
-        <h3 class="mt-5 mb-3 mr-3 text-left">My Posts</h3>
+        <h2 class="mt-5 mb-3 mr-3 text-left">My Posts</h2>
         <div class="row justify-content-center">
                 <div class="col-2"></div>
                 <div class="col-8 ">

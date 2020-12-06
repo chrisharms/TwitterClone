@@ -67,6 +67,15 @@ namespace TwitterClone {
         protected global::System.Web.UI.WebControls.TextBox txtRecipient;
         
         /// <summary>
+        /// smlRecipientHelp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl smlRecipientHelp;
+        
+        /// <summary>
         /// txtSubject control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace TwitterClone {
         protected global::System.Web.UI.WebControls.TextBox txtSubject;
         
         /// <summary>
+        /// smlSubjectHelp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl smlSubjectHelp;
+        
+        /// <summary>
         /// taPMText control.
         /// </summary>
         /// <remarks>
@@ -83,6 +101,15 @@ namespace TwitterClone {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea taPMText;
+        
+        /// <summary>
+        /// smlTextHelp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl smlTextHelp;
         
         /// <summary>
         /// btnSendNewPm control.

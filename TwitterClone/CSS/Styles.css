@@ -190,9 +190,10 @@ body {
 }
 
 .pmFormGroup {
-
-    border-style: solid !important;
+    background-color: #202E3A !important;
+    border-radius: calc(.25rem - 1px);
     border-color: #3D5466 !important;
+    border-style: solid;
 }
 
 #MainContent_txtRecipient{
