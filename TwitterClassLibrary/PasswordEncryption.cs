@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TwitterClassLibrary.BCrypt;
 
-namespace TwitterClassLibrary
+namespace TwitterClassLibrary.Encryption
 {
     public class PasswordEncryption
     {

@@ -336,7 +336,7 @@ namespace TwitterClone
             user1.Username = username;
             user1.FirstName = firstName;
             user1.LastName = lastName;
-            user1.Password = PasswordEncryption.EncryptPassword(password);
+            user1.Password = TwitterClassLibrary.Encryption.PasswordEncryption.EncryptPassword(password);
             user1.EmailAddress = emailAddress;
             user1.HomeAddress = homeAddress;
             user1.BillingAddress = billingAddress;
@@ -477,7 +477,7 @@ namespace TwitterClone
             }
 
             UserService.UserService proxy = new UserService.UserService();
-            bool updatePW = proxy.UpdatePassword(username, PasswordEncryption.EncryptPassword(password));
+            bool updatePW = proxy.UpdatePassword(username, TwitterClassLibrary.Encryption.PasswordEncryption.EncryptPassword(password));
             if (!updatePW)
             {
                 smlNewPasswordHelp.InnerText = "Password update failed, contact developers";
