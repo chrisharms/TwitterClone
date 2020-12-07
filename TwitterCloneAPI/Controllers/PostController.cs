@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TwitterClassLibrary.Encryption;
 using TwitterClassLibrary.Connection;
@@ -75,31 +71,6 @@ namespace TwitterCloneAPI.Controllers
 
             return posts;
         }
-
-
-        [HttpPost("CreatePostWithValidation")] //https://localhost:44312/api/Post/CreatePostWithValidation
-        public string CreatePostWithValidation(string text, string image, string username, string password)
-        {
-            Exception ex = null;
-            List<(string field, dynamic value, Type type)> filter = new List<(string field, dynamic value, Type type)>();
-            string encryptedPW = PasswordEncryption.EncryptPassword(password);
-
-            filter.Add(DBObjCreator.CreateFilter("Username", $"{username}", typeof(string)));
-            filter.Add(DBObjCreator.CreateFilter("Password", $"{encryptedPW}", typeof(string)));
-            List<object[]> records = DBObjCreator.ReadDBObjsWithWhere("TP_VerifyUser", ref ex, filter);
-
-            if (records.Count != 1)//Username/password combo not valid
-            {
-                return "Invalid credentials.";
-            }
-            int likes = 0;
-            string time = DateTime.Today.ToString("d");
-            Post newPost = new Post(-1, time, text, image, username, likes);
-            List<(bool, int, Exception)> errors = new List<(bool, int, Exception)>();
-            bool result = DBObjWriter.GenericWriteToDB<Post>(newPost, "TP_CreatePost", ref errors, new List<string>() { "Id" });
-            return "Post succesfully created";
-        }
-
 
         [HttpPost("CreatePost")] //https://localhost:44312/api/Post/CreatePost
         public int CreatePost([FromBody] Post post)

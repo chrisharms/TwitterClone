@@ -38,7 +38,7 @@ namespace TwitterCloneSOAP
 
             string hashPW = ds.Tables[0].Rows[0]["Password"].ToString();
 
-            return PasswordEncryption.DecryptPassword(password, hashPW);
+            return TwitterClassLibrary.Encryption.PasswordEncryption.DecryptPassword(password, hashPW);
         }
 
         [WebMethod]
