@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Services;
 using TwitterClassLibrary;
 using TwitterClassLibrary.Connection;
+using TwitterClassLibrary.Encryption;
 
 namespace TwitterCloneSOAP
 {
