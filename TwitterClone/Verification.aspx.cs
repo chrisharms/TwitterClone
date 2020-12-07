@@ -11,14 +11,23 @@ namespace TwitterClone
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Username"] == null && Session["Guest"] == null && Request.QueryString["mail"] == null)
+            if (Request.QueryString["mail"] == "true" && Request.QueryString["uname"] != null)
+            {
+                
+            }
+            else if ((Session["Username"] == null && Session["Guest"] == null && Request.QueryString["mail"] == null) || (Session["Username"] == null && Session["Guest"] == null && Request.QueryString["mail"] != null))
             {
                 Response.Redirect("Login.aspx");
             }
-            if (Session["Guest"] != null || Session["Username"] != null)
+            else if ((Session["Guest"] != null || Session["Username"] != null) && Request.QueryString["mail"] == null)
             {
                 Response.Redirect("Home.aspx");
             }
+            else if (Session["Guest"] != null && Request.QueryString["mail"] != null)
+            {
+                Response.Redirect("Home.aspx");
+            }
+
             string username;
             string mail = Request.QueryString["mail"].ToString();
             if (mail == "true")

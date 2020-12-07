@@ -41,7 +41,7 @@
                         <asp:Repeater ID="repeaterPMs" runat="server" OnItemDataBound="repeaterPMs_ItemDataBound">
                             <ItemTemplate>
                                     
-                                        <div class=" d-flex justify-content-center">
+                                        <div class=" d-flex justify-content-center mb-4">
                                             <%-- Private Message Form Start --%>
                                             <div class="card text-center pmCard pmHover" id="pmCard" runat="server">
                                                 <div class="card-header">

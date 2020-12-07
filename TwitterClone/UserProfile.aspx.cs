@@ -323,11 +323,12 @@ namespace TwitterClone
                 }
             }
 
-            divMyProfile.Visible = true;
-            divUpdateProfile.Visible = false;
-            divPostContainer.Visible = true;
+//            divMyProfile.Visible = true;
+//            divUpdateProfile.Visible = false;
+//            divPostContainer.Visible = true;
 
-            UpdatePanelProfile.Update();
+//            UpdatePanelProfile.Update();
+            Response.Redirect("UserProfile.aspx");
         }
 
         protected void btnCancelUpdate_Click(object sender, EventArgs e)
